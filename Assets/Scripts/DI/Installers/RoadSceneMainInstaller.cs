@@ -1,3 +1,5 @@
+using GameLogic.Controllers;
+using GameLogic.Interfaces;
 using Zenject;
 
 namespace DI.Installers
@@ -6,8 +8,7 @@ namespace DI.Installers
     {
         public override void InstallBindings()
         {
-               
-            
+            Container.Bind<ISegmentContainer>().To<SegmentContainer>().FromInstance(FindObjectOfType<SegmentContainer>()).AsSingle();
         }
     }
 }
