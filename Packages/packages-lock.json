@@ -1,5 +1,12 @@
 {
   "dependencies": {
+    "com.chebanovdd.unitymvvmtoolkit": {
+      "version": "1.1.8",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {},
+      "url": "https://package.openupm.com"
+    },
     "com.coffee.upm-git-extension": {
       "version": "https://github.com/mob-sakai/UpmGitExtension.git",
       "depth": 0,
