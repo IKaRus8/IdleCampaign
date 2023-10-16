@@ -1,11 +1,11 @@
-<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" uitk="UnityMvvmToolkit.UITK.BindableUIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/Scripts/UI/Style/InterfaceStyles.uss?fileID=7433441132597879392&amp;guid=d27a231580084d4499b13bcdc5c9e368&amp;type=3#InterfaceStyles" />
     <ui:VisualElement name="VerticalContainer" style="flex-grow: 1; margin-left: 10px; margin-right: 10px; margin-top: 10px; margin-bottom: 10px;">
         <ui:VisualElement name="TopContainer" style="height: 15%;" />
         <ui:VisualElement name="HorizontalContainer" style="flex-direction: row; flex-grow: 1; height: 70%;">
             <ui:VisualElement name="LeftContainer" style="position: relative; width: 25%; height: auto; flex-grow: 0; flex-direction: column-reverse; align-items: flex-start; margin-left: 25px;">
                 <ui:VisualElement name="Buttons" style="height: 15%; width: 70%; flex-direction: column-reverse; justify-content: flex-end; align-items: center;">
-                    <ui:Button text="+" display-tooltip-when-elided="true" name="AddUnitButton" class="buttonStyle" style="-unity-font-style: normal; border-left-width: 10px; border-right-width: 10px; border-top-width: 10px; border-bottom-width: 10px; width: 100%; height: 100%; -unity-text-align: middle-center;" />
+                    <UnityMvvmToolkit.UITK.BindableUIElements.BindableButton text="+" command="IncrementCommand" display-tooltip-when-elided="true" name="AddUnitButton" class="buttonStyle" style="width: 100%; height: 100%; border-left-width: 10px; border-right-width: 10px; border-top-width: 10px; border-bottom-width: 10px;" />
                 </ui:VisualElement>
             </ui:VisualElement>
             <ui:VisualElement name="CenterContainer" style="width: 50%; height: auto;" />
