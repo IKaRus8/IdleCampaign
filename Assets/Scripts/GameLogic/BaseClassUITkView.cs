@@ -3,7 +3,7 @@ using UnityMvvmToolkit.UITK;
 
 namespace Assets.Scripts.GameLogic
 {
-    public class UserInterfaceDocumentView : DocumentView<UserInterfaceController>
+    public class BaseClassUITkView : DocumentView<UserInterfaceController>
     {
     }
 }

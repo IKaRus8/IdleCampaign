@@ -12,11 +12,11 @@ namespace GameLogic.Controllers
 {
     public class UserInterfaceController : IBindingContext
     {
-        public ICommand IncrementCommand { get; set; }
+        public ICommand AddUnitCommand { get; set; }
 
         public UserInterfaceController()
         {
-            IncrementCommand = new Command(AddUnit);
+            AddUnitCommand = new Command(AddUnit);
         }
         private void AddUnit()
         {
