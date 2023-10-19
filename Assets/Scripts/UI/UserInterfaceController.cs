@@ -8,7 +8,7 @@ using UnityMvvmToolkit.Core.Interfaces;
 using Zenject;
 using UnityMvvmToolkit.UITK;
 
-namespace GameLogic.Controllers
+namespace Assets.Scripts.GameLogic.UI
 {
     public class UserInterfaceController : IBindingContext
     {
