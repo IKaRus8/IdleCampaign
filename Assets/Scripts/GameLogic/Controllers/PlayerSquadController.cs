@@ -8,14 +8,11 @@ namespace GameLogic.Controllers
         [SerializeField]
         private Rigidbody _rigidbody;
 
-        private void Awake()
-        {
-            
-        }
+        public float Velocity => 20f;
 
         private void Update()
         {
-            _rigidbody.velocity = Vector3.forward * 20;
+            _rigidbody.velocity = Vector3.forward * Velocity;
         }
     }
 }

@@ -43,8 +43,6 @@ namespace GameLogic.Controllers
             
                 _edgeSegment.SetPosition(new Vector3(0,0,wayPoint));
             }
-            
-            
         }
     }
 }

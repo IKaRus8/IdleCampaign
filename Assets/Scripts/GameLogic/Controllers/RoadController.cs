@@ -1,6 +1,6 @@
 using System;
 using GameLogic.Interfaces;
-using Models.Constants;
+using Models.Interfaces.Constants;
 using UnityEngine;
 
 namespace GameLogic.Controllers
