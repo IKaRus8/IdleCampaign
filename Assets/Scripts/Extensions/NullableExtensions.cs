@@ -47,5 +47,6 @@ namespace Extensions
         {
             return new InvalidOperationException($"Expected nullable (in {memberName} method) to have value");
         }
+
     }
 }
