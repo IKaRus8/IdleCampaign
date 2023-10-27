@@ -545,6 +545,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   level: {fileID: 165992871}
   characters: {fileID: 2070903139}
+  assetLabelReferences:
+  - m_LabelString: environment
+  - m_LabelString: player
 --- !u!4 &1559417881
 Transform:
   m_ObjectHideFlags: 0
