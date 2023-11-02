@@ -22,24 +22,6 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 214e08cd5e5d74c458e2a81b7ec2c84c
-    m_Address: DogPBR
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - player
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 45288819fde2143449a96207b14db0bb
-    m_Address: DogPolyart
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - player
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: da05e49adf02c134f88f541992ee78d2
-    m_Address: PBR
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - player
-    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: d845d0c089f20f04393348cf878bd9ff, type: 2}
   m_SchemaSet:

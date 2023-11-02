@@ -1,26 +1,24 @@
-using Assets.Scripts.UI.Services;
 using System;
-using UI.Services;
+using UI.Interfaces;
 using UI.UIController;
 using UnityEngine;
-using UnityEngine.SceneManagement;
+using UnityEngine.AddressableAssets;
 using UnityEngine.UIElements;
 using Zenject;
 
 public class MainMenuController : MonoBehaviour
 {
     private TabbedMenuController _tabbedMenuController;
-    private SceneLoadService _sceneLoadService;
+    private ISceneLoadService _sceneLoadService;
 
-    private string key = "";
 
     [Inject]
-    void Construct(SceneLoadService sceneLoadService)
+    void Construct(ISceneLoadService sceneLoadService)
     {
         _sceneLoadService = sceneLoadService;
     }
 
-    void OnEnable()
+    private void Awake()
     {
         UIDocument menu = GetComponent<UIDocument>();
         VisualElement root = menu.rootVisualElement;

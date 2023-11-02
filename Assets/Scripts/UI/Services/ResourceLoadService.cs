@@ -3,6 +3,7 @@ using JetBrains.Annotations;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using UI.Interfaces;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
@@ -11,10 +12,9 @@ using Object = UnityEngine.Object;
 namespace Assets.Scripts.UI.Services
 {
     [UsedImplicitly]
-    public class ResourceLoadService : IDisposable
+    public class ResourceLoadService : IResourceLoadService, IDisposable
     {
         private readonly List<AsyncOperationHandle> _handles = new();
-
         public void Dispose()
         {
             foreach (var handle in _handles) Addressables.Release(handle);
@@ -33,12 +33,16 @@ namespace Assets.Scripts.UI.Services
 #endif
                 return default;
             }
-
             return component;
         }
 
         public async UniTask<GameObject> LoadAsyncGO(string key)
         {
+            if (!AssetExists(key))
+            {
+                Debug.LogError($"asset {key} is null");
+                return null;
+            }
             var handle = Addressables.LoadAssetAsync<GameObject>(key);
 
             await handle.ToUniTask();
@@ -69,6 +73,11 @@ namespace Assets.Scripts.UI.Services
 
         public async UniTask<T> LoadAsyncObject<T>(string key) where T : Object
         {
+            if (!AssetExists(key))
+            {
+                Debug.LogError($"asset {key} is null");
+                return null;
+            }
             var handle = Addressables.LoadAssetAsync<T>(key);
 
             await handle.ToUniTask();
@@ -99,6 +108,11 @@ namespace Assets.Scripts.UI.Services
 
         public async UniTask<List<T>> LoadAssetsAsync<T>(string label)
         {
+            if (!AssetExists(label))
+            {
+                Debug.LogError($"label {label} is null");
+                return null;
+            }
             var handle = Addressables.LoadAssetsAsync<T>(label, null);
 
             await handle.ToUniTask();
@@ -159,6 +173,11 @@ namespace Assets.Scripts.UI.Services
 
         public async UniTask<GameObject> InstantiateAssetAsync(string key, Transform parent)
         {
+            if (!AssetExists(key))
+            {
+                Debug.LogError($"asset {key} is null");
+                return null;
+            }
             var handle = Addressables.InstantiateAsync(key, parent);
 
             await handle.ToUniTask();
@@ -185,7 +204,6 @@ namespace Assets.Scripts.UI.Services
             return asset;
         }
 
-        //TODO: It doesn't always work 
         private static bool AssetExists(string key)
         {
             foreach (var l in Addressables.ResourceLocators)

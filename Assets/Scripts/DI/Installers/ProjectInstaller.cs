@@ -1,10 +1,6 @@
 using Assets.Scripts.UI.Services;
-using GameLogic.Controllers;
-using GameLogic.Interfaces;
-using System.Collections;
-using System.Collections.Generic;
+using UI.Interfaces;
 using UI.Services;
-using UnityEngine;
 using Zenject;
 
 namespace DI.Installers
@@ -14,13 +10,13 @@ namespace DI.Installers
     {
         public override void InstallBindings()
         {
-            BindServices();
+            // Initialize addressable
+            AddressablesManager.InitAddressables();
+
+            //Bind Services
+            Container.Bind<IResourceLoadService>().To<ResourceLoadService>().AsSingle();
+            Container.Bind<ISceneLoadService>().To<SceneLoadService>().AsSingle();
         }
 
-        private void BindServices()
-        {
-            Container.Bind<ResourceLoadService>().AsSingle();
-            Container.Bind<SceneLoadService>().AsSingle();
-        }
     }
 }
