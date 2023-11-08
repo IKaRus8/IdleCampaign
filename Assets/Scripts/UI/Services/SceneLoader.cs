@@ -1,4 +1,5 @@
 using Cysharp.Threading.Tasks;
+using JetBrains.Annotations;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using UI.Interfaces;
@@ -6,44 +7,35 @@ using UnityEngine;
 using UnityEngine.AddressableAssets;
 using Zenject;
 
-public class SceneLoader : MonoBehaviour
+[UsedImplicitly]
+public class SceneLoader : IAsyncInitialization
 {
-
-    private IResourceLoadService _resourceLoadService;
-    private IUIContainerObjectsParents _uiContainerObjectsParents;
-
     private string playerKey = "PlayerSquad";
     private string environmentKey = "Environment";
 
     private Dictionary<string, Transform> initObjects;
 
-    [Inject]
-    private void Construct(IResourceLoadService resourceLoadService, IUIContainerObjectsParents uIContainerObjectsParents)
-    {
-        _resourceLoadService = resourceLoadService;
-        _uiContainerObjectsParents = uIContainerObjectsParents;
+    public AsyncLazy Initialization { get; }
 
-        FillDictionary();
-    }
-    private void Awake()
+    private SceneLoader(IResourceLoadService resourceLoadService, IUIContainerObjectsParents uiContainerObjectsParents)
     {
-        LoadResources().Forget();
+        Initialization = UniTask.Lazy(() => LoadResources(uiContainerObjectsParents,resourceLoadService));
     }
+    private async UniTask LoadResources(IUIContainerObjectsParents uiContainerObjectsParents, IResourceLoadService resourceLoadService)
+    {
+        initObjects = await GetFillDictionary(uiContainerObjectsParents);
 
-    private async UniTaskVoid LoadResources()
-    {
         foreach (var obj in initObjects)
         {
-            await _resourceLoadService.InstantiateAssetAsync(obj.Key, obj.Value);
+            await resourceLoadService.InstantiateAssetAsync(obj.Key, obj.Value);
         }
     }
-
-    private void FillDictionary()
+    private async UniTask<Dictionary<string, Transform>> GetFillDictionary(IUIContainerObjectsParents uiContainerObjectsParents)
     {
-        initObjects = new Dictionary<string, Transform>
+        return new Dictionary<string, Transform>
         {
-            { playerKey, _uiContainerObjectsParents.GetPlayerParent() },
-            { environmentKey, _uiContainerObjectsParents.GetEnvironmnetParent() }
+            { playerKey, uiContainerObjectsParents.PlayerParent },
+            { environmentKey, uiContainerObjectsParents.EnvironmnetParent }
         };
     }
 }

@@ -5,6 +5,7 @@ using GameLogic.Interfaces;
 using UnityEngine;
 using UniRx;
 using Extensions;
+using Zenject;
 
 namespace GameLogic.Controllers
 {
@@ -18,7 +19,6 @@ namespace GameLogic.Controllers
         public ReactiveProperty<IRoadController> ActiveRoadRx { get; } = new();
 
         private IRoadController _edgeSegment;
-
         private void Update()
         {
             var currentSegment = _roads.FirstOrDefault(r => r.IsActive);

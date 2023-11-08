@@ -12,18 +12,10 @@ public class UIContainer : MonoBehaviour, IUIContainer, IUIContainerObjectsParen
 
     public GameObject ScreenBack { get; }
 
-    [SerializeField]
-    private Transform EnvironmnetParent;
+    [field: SerializeField]
+    public Transform EnvironmnetParent { get; private set; }
 
-    [SerializeField]
-    private Transform PlayerParent;
+    [field: SerializeField]
+    public Transform PlayerParent { get; private set; }
 
-    public Transform GetEnvironmnetParent()
-    {
-        return EnvironmnetParent;
-    }
-    public Transform GetPlayerParent()
-    {
-        return PlayerParent;
-    }
 }

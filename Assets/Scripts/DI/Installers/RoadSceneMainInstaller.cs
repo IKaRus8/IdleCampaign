@@ -15,8 +15,11 @@ namespace DI.Installers
         {
             //Bind Containers
             Container.Bind<IUIContainerObjectsParents>().FromInstance(uiContainer);
-
             Container.Bind<ISegmentContainer>().To<SegmentContainer>().FromInstance(FindObjectOfType<SegmentContainer>()).AsSingle();
+
+            //Bind resources
+            Container.Bind<IAsyncInitialization>().To<SceneLoader>().AsSingle();
+
         }
     }
 }

@@ -10,10 +10,9 @@ namespace DI.Installers
     {
         public override void InstallBindings()
         {
-            // Initialize addressable
-            AddressablesManager.InitAddressables();
-
             //Bind Services
+            Container.Bind<AddressablesManager>().AsSingle().NonLazy();
+
             Container.Bind<IResourceLoadService>().To<ResourceLoadService>().AsSingle();
             Container.Bind<ISceneLoadService>().To<SceneLoadService>().AsSingle();
         }
