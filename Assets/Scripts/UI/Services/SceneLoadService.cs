@@ -15,7 +15,7 @@ namespace UI.Services
 {
 
         private const string LevelSceneAssetKey = "RoadScene";
-        private const string MenuSceneAssetKey = "MenuScene";
+        private const string MenuSceneAssetKey = "StartMenuScene";
 
         public void LoadLevelScene()
         {

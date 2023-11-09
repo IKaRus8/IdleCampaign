@@ -1,5 +1,6 @@
-using GameLogic.Controllers;
+﻿using GameLogic.Controllers;
 using GameLogic.Interfaces;
+using System.Collections.Generic;
 using UI.Interfaces;
 using UnityEngine;
 using Zenject;
@@ -19,7 +20,6 @@ namespace DI.Installers
 
             //Bind resources
             Container.Bind<IAsyncInitialization>().To<SceneLoader>().AsSingle();
-
         }
     }
 }
