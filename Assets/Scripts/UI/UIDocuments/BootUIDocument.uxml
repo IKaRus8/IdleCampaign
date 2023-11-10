@@ -1,0 +1,21 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/Scripts/UI/UIStyle/TabbedMenu.uss?fileID=7433441132597879392&amp;guid=6468c6e2fdf51d84a91a5f943ba063c6&amp;type=3#TabbedMenu" />
+    <ui:VisualElement style="flex-grow: 1; background-color: rgb(255, 255, 255); width: 100%; height: 100%;">
+        <ui:VisualElement name="tabContent" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); height: 90%; padding-left: 1px; padding-right: 1px; padding-top: 1px; padding-bottom: 1px; border-left-color: rgb(0, 0, 0); border-right-color: rgb(0, 0, 0); border-top-color: rgb(0, 0, 0); border-bottom-color: rgb(0, 0, 0); border-left-width: 3px; border-right-width: 3px; border-top-width: 3px; border-bottom-width: 3px; margin-left: 1px; margin-right: 1px; margin-top: 1px; margin-bottom: 1px;">
+            <ui:VisualElement name="StoreContent" class="unselectedContent" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); height: 100%;">
+                <ui:Label tabindex="-1" text="Store&#10;" display-tooltip-when-elided="true" name="Label" style="font-size: 100px;" />
+            </ui:VisualElement>
+            <ui:VisualElement name="HomeContent" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); height: 100%; align-items: center; justify-content: center;">
+                <ui:Button text="Play" display-tooltip-when-elided="true" name="PlayButton" style="font-size: 100px; width: 30%;" />
+            </ui:VisualElement>
+            <ui:VisualElement name="SquadContent" class="unselectedContent" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); height: 100%;">
+                <ui:Label tabindex="-1" text="Squad" display-tooltip-when-elided="true" style="font-size: 100px;" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement name="tabs" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); width: 100%; height: 10%; flex-direction: row;">
+            <ui:Button text="Store" display-tooltip-when-elided="true" name="StoreTab" class="tab button" />
+            <ui:Button text="Home" display-tooltip-when-elided="true" name="HomeTab" class="tab currentlySelectedTab button" />
+            <ui:Button text="Squad" display-tooltip-when-elided="true" name="SquadTab" class="tab button" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>
