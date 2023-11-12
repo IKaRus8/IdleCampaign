@@ -12,13 +12,13 @@ namespace GameLogic.Controllers
     public class SegmentContainer : MonoBehaviour, ISegmentContainer
     {
         private const float SegmentLength = 100;
-        
+
         [SerializeField]
         private List<RoadController> _roads;
-
         public ReactiveProperty<IRoadController> ActiveRoadRx { get; } = new();
 
         private IRoadController _edgeSegment;
+
         private void Update()
         {
             var currentSegment = _roads.FirstOrDefault(r => r.IsActive);

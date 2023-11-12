@@ -7,9 +7,8 @@ using UnityEngine;
 
 namespace UI.Interfaces
 {
-    public interface IUIContainerObjectsParents
+    public interface IUIPrefabs
     {
-        Transform PlayerParent { get;}
-        Transform EnemyContainer { get; }
+        GameObject EnemyPrefab { get; set; }
     }
 }

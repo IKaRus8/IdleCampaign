@@ -1,3 +1,4 @@
+using Assets.Scripts.UI.Services;
 using Cysharp.Threading.Tasks;
 using JetBrains.Annotations;
 using System.Collections.Generic;
@@ -11,18 +12,20 @@ using Zenject;
 public class SceneLoader : IAsyncInitialization
 {
     private string playerKey = "PlayerSquad";
-    private string environmentKey = "Environment";
+    private string enemyKey = "DogPolyart";
 
     private Dictionary<string, Transform> initObjects;
 
     public AsyncLazy Initialization { get; }
 
-    private SceneLoader(IResourceLoadService resourceLoadService, IUIContainerObjectsParents uiContainerObjectsParents)
+    private SceneLoader(IResourceLoadService resourceLoadService, IUIContainerObjectsParents uiContainerObjectsParents, IUIPrefabs uiPrefabs)
     {
-        Initialization = UniTask.Lazy(() => LoadResources(uiContainerObjectsParents,resourceLoadService));
+        Initialization = UniTask.Lazy(() => LoadResources(uiContainerObjectsParents,resourceLoadService, uiPrefabs));
     }
-    private async UniTask LoadResources(IUIContainerObjectsParents uiContainerObjectsParents, IResourceLoadService resourceLoadService)
+    private async UniTask LoadResources(IUIContainerObjectsParents uiContainerObjectsParents, IResourceLoadService resourceLoadService, IUIPrefabs uiPrefabs)
     {
+        uiPrefabs.EnemyPrefab = await resourceLoadService.LoadAsyncGO(enemyKey);
+
         initObjects = await GetFillDictionary(uiContainerObjectsParents);
 
         foreach (var obj in initObjects)
@@ -30,12 +33,12 @@ public class SceneLoader : IAsyncInitialization
             await resourceLoadService.InstantiateAssetAsync(obj.Key, obj.Value);
         }
     }
+
     private async UniTask<Dictionary<string, Transform>> GetFillDictionary(IUIContainerObjectsParents uiContainerObjectsParents)
     {
         return new Dictionary<string, Transform>
         {
-            { playerKey, uiContainerObjectsParents.PlayerParent },
-            { environmentKey, uiContainerObjectsParents.EnvironmnetParent }
+            { playerKey, uiContainerObjectsParents.PlayerParent }
         };
     }
 }
