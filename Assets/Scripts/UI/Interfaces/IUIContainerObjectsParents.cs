@@ -10,6 +10,7 @@ namespace UI.Interfaces
     public interface IUIContainerObjectsParents
     {
         Transform PlayerParent { get;}
-        Transform EnemyContainer { get; }
+        Transform EnemiesParent { get; }
+        Transform EnemyContainerParent { get; }
     }
 }

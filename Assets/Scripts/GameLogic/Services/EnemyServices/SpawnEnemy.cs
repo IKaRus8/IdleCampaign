@@ -15,30 +15,29 @@ namespace GameLogic.Services
 {
     public class SpawnEnemy : IDisposable
     {
-        [Range(0,100)]
-        private const float chance = 70f;
+        private const float chance = 60f;
 
         private readonly RandomGeneration _randomGeneration;
         private readonly ICreateEnemy _createEnemy;
         private readonly IDisposable _disposable;
-
         public SpawnEnemy(ISegmentContainer segmentContainer, RandomGeneration randomGeneration, ICreateEnemy createEnemy)
         {
             _randomGeneration = randomGeneration;
             _createEnemy = createEnemy;
 
-            _disposable = segmentContainer.ActiveRoadRx.Subscribe(_ => EnemyGeneration());
-
+            _disposable = segmentContainer.ActiveRoadRx.Subscribe(EnemyGeneration);
         }
-        private void EnemyGeneration()
+        private void EnemyGeneration(IRoadController roadController)
         {
+            if(roadController==null)
+            {
+                return;
+            }
            if(!_randomGeneration.IsCreateObject(chance))
             {
                 return;
             }
-            _createEnemy.CreateEnemyOnScene();
-
-           //добавление врага на сцену, размещение контейнера в нужном месте
+            _createEnemy.CreateEnemyOnScene(roadController.WayPoint);
         }
         public void Dispose()
         {

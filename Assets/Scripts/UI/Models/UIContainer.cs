@@ -6,17 +6,24 @@ using System.Threading.Tasks;
 using UI.Interfaces;
 using UnityEngine;
 
-public class UIContainer : MonoBehaviour, IUIContainer, IUIContainerObjectsParents, IUIPrefabs
+public class UIContainer : MonoBehaviour, IUIContainer, IUIContainerObjectsParents, IUIContainerPrefabs
 {
+    //IUIContainer
     public Transform PopupContainer { get; }
 
     public GameObject ScreenBack { get; }
+
+    //IUIContainerObjectsParents
 
     [field: SerializeField]
     public Transform PlayerParent { get; private set; }
     
     [field: SerializeField]
-    public Transform EnemyContainer { get; private set; }
+    public Transform EnemiesParent { get; private set; }
 
+    [field: SerializeField]
+    public Transform EnemyContainerParent { get; private set; }
+
+    //IUIContainerPrefabs
     public GameObject EnemyPrefab { get; set; }
 }

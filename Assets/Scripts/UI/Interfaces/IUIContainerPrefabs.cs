@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace UI.Interfaces
 {
-    public interface IUIPrefabs
+    public interface IUIContainerPrefabs
     {
         GameObject EnemyPrefab { get; set; }
     }

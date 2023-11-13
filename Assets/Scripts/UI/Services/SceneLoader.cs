@@ -18,11 +18,11 @@ public class SceneLoader : IAsyncInitialization
 
     public AsyncLazy Initialization { get; }
 
-    private SceneLoader(IResourceLoadService resourceLoadService, IUIContainerObjectsParents uiContainerObjectsParents, IUIPrefabs uiPrefabs)
+    private SceneLoader(IResourceLoadService resourceLoadService, IUIContainerObjectsParents uiContainerObjectsParents, IUIContainerPrefabs uiPrefabs)
     {
         Initialization = UniTask.Lazy(() => LoadResources(uiContainerObjectsParents,resourceLoadService, uiPrefabs));
     }
-    private async UniTask LoadResources(IUIContainerObjectsParents uiContainerObjectsParents, IResourceLoadService resourceLoadService, IUIPrefabs uiPrefabs)
+    private async UniTask LoadResources(IUIContainerObjectsParents uiContainerObjectsParents, IResourceLoadService resourceLoadService, IUIContainerPrefabs uiPrefabs)
     {
         uiPrefabs.EnemyPrefab = await resourceLoadService.LoadAsyncGO(enemyKey);
 
