@@ -1,3 +1,5 @@
+using GameLogic.Interfaces;
+using GameLogic.Services;
 using UnityEngine;
 
 namespace GameLogic.Controllers
@@ -7,11 +9,17 @@ namespace GameLogic.Controllers
         [SerializeField]
         private Rigidbody _rigidbody;
 
+        private PlayerState playerState;
         public float Velocity => 20f;
 
+        private void Awake()
+        {
+            playerState = new PlayerState(Velocity);
+        }
         private void Update()
         {
-            _rigidbody.velocity = Vector3.forward * Velocity;
+            playerState.Movement(_rigidbody);
+            //_rigidbody.velocity = Vector3.forward * Velocity;
         }
     }
 }
