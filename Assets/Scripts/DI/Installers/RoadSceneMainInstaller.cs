@@ -24,8 +24,8 @@ namespace DI.Installers
 
             //Bind GameLogic services
             Container.Bind<RandomGeneration>().AsSingle();
-            Container.Bind<ICreateEnemy>().To<EnemyFactory>().AsSingle();
-            Container.BindInterfacesTo<SpawnEnemy>().AsSingle().NonLazy();
+            Container.Bind<IEnemyFactory>().To<EnemyFactory>().AsSingle();
+            Container.BindInterfacesTo<SpawnEnemy>().AsSingle();
 
         }
 

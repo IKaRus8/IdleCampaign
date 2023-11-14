@@ -1,47 +1,30 @@
-﻿using GameLogic.Controllers;
-using GameLogic.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.ExceptionServices;
-using System.Text;
-using System.Threading.Tasks;
-using UI.Interfaces;
-using UniRx;
-using UnityEngine;
-using Zenject;
+﻿using GameLogic.Interfaces;
+using Models.Interfaces;
 
 namespace GameLogic.Services
 {
-    public class SpawnEnemy : IDisposable
+    public class SpawnEnemy : ISpawnEnemy
     {
         private const float chance = 60f;
 
         private readonly RandomGeneration _randomGeneration;
-        private readonly ICreateEnemy _createEnemy;
-        private readonly IDisposable _disposable;
-        public SpawnEnemy(ISegmentContainer segmentContainer, RandomGeneration randomGeneration, ICreateEnemy createEnemy)
+        private readonly IEnemyFactory _createEnemy;
+        public SpawnEnemy(RandomGeneration randomGeneration, IEnemyFactory createEnemy)
         {
             _randomGeneration = randomGeneration;
             _createEnemy = createEnemy;
-
-            _disposable = segmentContainer.ActiveRoadRx.Subscribe(EnemyGeneration);
         }
-        private void EnemyGeneration(IRoadController roadController)
+        public IEnemy EnemyGeneration(IRoadController roadController)
         {
-            if(roadController==null)
+            if (roadController == null)
             {
-                return;
+                return null;
             }
-           if(!_randomGeneration.IsCreateObject(chance))
+            if (!_randomGeneration.IsCreateObject(chance))
             {
-                return;
+                return null;
             }
-            _createEnemy.CreateEnemyOnScene(roadController.WayPoint);
-        }
-        public void Dispose()
-        {
-            _disposable?.Dispose();
+            return _createEnemy.CreateEnemyOnScene(roadController.WayPoint);
         }
 
     }

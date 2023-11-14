@@ -2,7 +2,8 @@
     "name": "GameLogic.Interfaces",
     "rootNamespace": "",
     "references": [
-        "GUID:560b04d1a97f54a4e82edc0cbbb69285"
+        "GUID:560b04d1a97f54a4e82edc0cbbb69285",
+        "GUID:4c2e7a8fb4304c0a862a64bb1b1e6b71"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

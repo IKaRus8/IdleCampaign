@@ -289,7 +289,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <PlayerParent>k__BackingField: {fileID: 2070903139}
-  <EnemyContainer>k__BackingField: {fileID: 612060416}
+  <EnemiesParent>k__BackingField: {fileID: 612060416}
+  <EnemyContainerParent>k__BackingField: {fileID: 787579834}
 --- !u!4 &258323358
 Transform:
   m_ObjectHideFlags: 0
