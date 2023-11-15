@@ -17,8 +17,8 @@ MonoBehaviour:
     m_SerializedData: []
   m_GUID: 96ff8c3b29c41b54d9965c0237e77d27
   m_SerializeEntries:
-  - m_GUID: 943722462a19f4bbfb6ccb84b338b9c8
-    m_Address: PlayerSquad
+  - m_GUID: 214e08cd5e5d74c458e2a81b7ec2c84c
+    m_Address: DogPBR
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

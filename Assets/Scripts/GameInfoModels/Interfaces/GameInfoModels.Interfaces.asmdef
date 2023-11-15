@@ -1,3 +1,16 @@
 {
-  "name": "GameInfoModels.Interfaces"
+    "name": "GameInfoModels.Interfaces",
+    "rootNamespace": "",
+    "references": [
+        "GUID:4c2e7a8fb4304c0a862a64bb1b1e6b71"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
 }

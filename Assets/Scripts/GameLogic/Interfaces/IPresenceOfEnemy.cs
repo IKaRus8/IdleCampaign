@@ -1,15 +1,16 @@
-﻿using Models.Interfaces;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UniRx;
 using UnityEngine;
 
 namespace GameLogic.Interfaces
 {
-    public interface IEnemyFactory
+    public interface IPresenceOfEnemy
     {
-        IEnemy CreateEnemyOnScene(Vector3 enemyPosition);
+        ReactiveProperty<bool> EnemyOnScene { get;}
+        Vector3 enemyPosition { get; }
     }
 }

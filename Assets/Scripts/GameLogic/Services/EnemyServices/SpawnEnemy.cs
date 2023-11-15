@@ -1,5 +1,6 @@
 ﻿using GameLogic.Interfaces;
 using Models.Interfaces;
+using UnityEngine;
 
 namespace GameLogic.Services
 {
@@ -14,17 +15,14 @@ namespace GameLogic.Services
             _randomGeneration = randomGeneration;
             _createEnemy = createEnemy;
         }
-        public IEnemy EnemyGeneration(IRoadController roadController)
+        public IEnemy EnemyGeneration(Vector3 enemyPosition)
         {
-            if (roadController == null)
-            {
-                return null;
-            }
+
             if (!_randomGeneration.IsCreateObject(chance))
             {
                 return null;
             }
-            return _createEnemy.CreateEnemyOnScene(roadController.WayPoint);
+            return _createEnemy.CreateEnemyOnScene(enemyPosition);
         }
 
     }

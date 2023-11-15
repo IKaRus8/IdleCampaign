@@ -1,28 +1,23 @@
-﻿using GameInfoModels;
-using GameLogic.Controllers;
-using GameLogic.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using GameLogic.Interfaces;
 using UnityEngine;
 
 namespace GameLogic.Services
 {
     public class PlayerBattleState : PlayerBaseState
     {
-        public PlayerBattleState(PlayerState stationMonobehavior):base(stationMonobehavior, GameState.Battle)
-        { }
-        public override void RunCurrentState(Rigidbody playerRigidbody, bool enemyOnScene)
-        {
-            if (enemyOnScene)
-            {
+        private float approachRadius = 20f;
+        private float velocity;
 
-            }
-            else
+        public PlayerBattleState(PlayerState playerState, float Velocity) : base(playerState, GameState.Battle)
+        {
+            velocity = Velocity;
+        }
+        public override void RunCurrentState(Rigidbody playerRigidbody, IPresenceOfEnemy presenceOfEnemy)
+        {
+            if ((presenceOfEnemy.enemyPosition.z - playerRigidbody.transform.localPosition.z) > (approachRadius+velocity))
             {
-                _stationMonobehavior.SwitchState<PlayerNormalState>();
+                playerRigidbody.velocity = Vector3.forward * velocity;
+                return;
             }
         }
     }

@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.Playables;
 using Zenject.SpaceFighter;
 
 namespace GameLogic.Services
@@ -18,16 +19,9 @@ namespace GameLogic.Services
         {
             velocity = Velocity;
         }
-        public override void RunCurrentState(Rigidbody playerRigidbody, bool enemyOnScene)
+        public override void RunCurrentState(Rigidbody playerRigidbody, IPresenceOfEnemy presenceOfEnemy)
         {
-            if (!enemyOnScene)
-            {
-                playerRigidbody.velocity = Vector3.forward * velocity;
-            }
-            else
-            {
-                _stationMonobehavior.SwitchState<PlayerBattleState>();
-            }
+            playerRigidbody.velocity = Vector3.forward * velocity;
         }
     }
 }

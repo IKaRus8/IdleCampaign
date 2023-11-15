@@ -4,11 +4,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UnityEngine;
 
 namespace GameLogic.Interfaces
 {
     public interface ISpawnEnemy
     {
-        IEnemy EnemyGeneration(IRoadController roadController);
+        IEnemy EnemyGeneration(Vector3 enemyPosition);
     }
 }

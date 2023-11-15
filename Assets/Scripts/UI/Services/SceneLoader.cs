@@ -11,7 +11,7 @@ using Zenject;
 [UsedImplicitly]
 public class SceneLoader : IAsyncInitialization
 {
-    private string playerKey = "PlayerSquad";
+    private string playerKey = "DogPBR";
     private string enemyKey = "DogPolyart";
 
     private Dictionary<string, Transform> initObjects;
