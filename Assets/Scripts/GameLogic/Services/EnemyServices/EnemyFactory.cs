@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UI.Interfaces;
 using UnityEngine;
+using Zenject;
 
 namespace GameLogic.Services
 {
@@ -16,9 +17,10 @@ namespace GameLogic.Services
     {
         private readonly IUIContainerPrefabs _uiPrefabs;
         private readonly IUIContainerObjectsParents _uiContainerObjectsParents;
-
-        public EnemyFactory(IUIContainerPrefabs uiPrefabs, IUIContainerObjectsParents uiContainerObjectsParents)
+        private readonly DiContainer _diContainer;
+        public EnemyFactory(DiContainer diContainer,IUIContainerPrefabs uiPrefabs, IUIContainerObjectsParents uiContainerObjectsParents)
         {
+            _diContainer = diContainer;
             _uiPrefabs = uiPrefabs;
             _uiContainerObjectsParents = uiContainerObjectsParents;
         }
@@ -27,7 +29,7 @@ namespace GameLogic.Services
         {
             if (_uiPrefabs.EnemyPrefab != null)
             {
-                GameObject enemy = GameObject.Instantiate(_uiPrefabs.EnemyPrefab, _uiContainerObjectsParents.EnemiesParent);
+                GameObject enemy = _diContainer.InstantiatePrefab(_uiPrefabs.EnemyPrefab, _uiContainerObjectsParents.EnemiesParent);
                 ChangeContainerLocation(wayPoint);
                 return SetCreatedEnemy(enemy);
             }
