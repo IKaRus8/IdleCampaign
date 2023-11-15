@@ -15,8 +15,6 @@ namespace DI.Installers
         private UIContainer uiContainer;
         [SerializeField]
         private SegmentContainer segmentContainer;
-        [SerializeField]
-        private PlayerSquadController playerSquadController;
         public override void InstallBindings()
         {
             Container.Bind<ISegmentContainer>().FromInstance(segmentContainer).AsSingle();
