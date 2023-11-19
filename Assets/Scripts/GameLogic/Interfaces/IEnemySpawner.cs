@@ -1,4 +1,5 @@
-﻿using Models.Interfaces;
+﻿using Cysharp.Threading.Tasks;
+using Models.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,8 +9,8 @@ using UnityEngine;
 
 namespace GameLogic.Interfaces
 {
-    public interface ISpawnEnemy
+    public interface IEnemySpawner
     {
-        IEnemy EnemyGeneration(Vector3 enemyPosition);
+       UniTask<IEnemy> Spawn(Vector3 enemyPosition, string enemyKey);
     }
 }

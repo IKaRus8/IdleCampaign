@@ -12,21 +12,27 @@ namespace GameLogic.Controllers
         private Rigidbody _rigidbody;
 
         private PlayerState playerState;
-        public IPresenceOfEnemy _presenceOfEnemy;
+        private IEnemyProvider _enemyProvider;
         public float Velocity => 20f;
+        public float _approachRadius;
 
         [Inject]
-        void Construct(IPresenceOfEnemy presenceOfEnemy)
+        void Construct(IEnemyProvider enemyProvider)
         {
-            _presenceOfEnemy = presenceOfEnemy;
+            _enemyProvider = enemyProvider;
         }
         private void Awake()
         {
-            playerState = new PlayerState(Velocity, _presenceOfEnemy);
+            playerState = new PlayerState(_enemyProvider, Velocity, _approachRadius);
         }
         private void FixedUpdate()
         {
             playerState.Movement(_rigidbody);
+        }
+        private void OnDrawGizmos()
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireSphere(transform.position, _approachRadius);
         }
     }
 }

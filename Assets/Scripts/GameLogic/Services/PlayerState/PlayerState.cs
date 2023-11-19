@@ -1,59 +1,86 @@
-﻿using GameInfoModels;
-using GameLogic.Controllers;
-using GameLogic.Interfaces;
-using System;
+﻿using Data.Enums;
+using GameInfoModels.Interface;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UniRx;
 using UnityEngine;
 
 namespace GameLogic.Services
 {
-    public class PlayerState : IDisposable
+    public class PlayerState
     {
-        private readonly IPresenceOfEnemy _presenceOfEnemy;
-        private readonly IDisposable _disposable;
+        private readonly IEnemyProvider _enemyProvider;
+
         private PlayerBaseState _currentState;
+
         List<PlayerBaseState> _allStates;
 
-        public PlayerState(float Velocity, IPresenceOfEnemy presenceOfEnemy)
+        private float _approachRadius;
+        private bool isEnemyNotExist => _enemyProvider.Enemies.Count == 0;
+        private bool isEnemyInApproachRadius;
+        public PlayerState(IEnemyProvider enemyProvider, float Velocity, float approachRadius)
         {
-            _presenceOfEnemy = presenceOfEnemy;
+            _enemyProvider = enemyProvider;
+            _approachRadius = approachRadius;
 
             _allStates = new List<PlayerBaseState>()
             {
                 new PlayerNormalState(this,Velocity),
-                new PlayerBattleState(this,Velocity)
+                new PlayerBattleState(this)
             };
-            _disposable = presenceOfEnemy.EnemyOnScene.Subscribe(ChangeEnemyOnSceneBool);
 
-            _currentState = _allStates.FirstOrDefault(state=>state._gameState==GameState.Normal);
+            _currentState = _allStates.FirstOrDefault(state => state._gameState == GameState.Normal);
         }
         public void Movement(Rigidbody playerRigidbody)
         {
-            _currentState.RunCurrentState(playerRigidbody, _presenceOfEnemy);
+            CheckEnemyNearby(playerRigidbody);
+
+            var isStateChanged = SwitchState();
+            if(isStateChanged)
+                ChangePlayerBehaviour(playerRigidbody);
+
+            _currentState.RunCurrentState(playerRigidbody);
         }
-        public void SwitchState<T>() where T : PlayerBaseState
+        private void CheckEnemyNearby(Rigidbody playerRigidbody)
         {
-            var currentState = _allStates.FirstOrDefault(s=>s is T);
-            _currentState = currentState;
-        }
-        private void ChangeEnemyOnSceneBool(bool enemyOnScene)
-        {
-           if(_presenceOfEnemy.EnemyOnScene.Value)
+            if (!isEnemyNotExist)
             {
-                SwitchState<PlayerBattleState>();
-                return;
+                var enemyPositionZ = -_enemyProvider.Enemies[0].enemyObject.transform.localPosition.z;
+                isEnemyInApproachRadius = (enemyPositionZ - playerRigidbody.transform.localPosition.z) < _approachRadius;
             }
-            SwitchState<PlayerNormalState>();
-
         }
-        public void Dispose()
+
+        public bool SwitchState()
         {
-            _disposable?.Dispose();
-        }
+            GameState gameState = GameState.Normal;
+            if (isEnemyNotExist)
+            {
+                gameState = GameState.Normal;
+            }
+            else if(isEnemyInApproachRadius)
+            {
+                gameState = GameState.Battle;
+            }
 
+            if (_currentState._gameState != gameState)
+            {
+                var currentState = _allStates.FirstOrDefault(s => s._gameState == gameState);
+                _currentState = currentState;
+                return true;
+            }
+
+            return false;
+        }
+        private void ChangePlayerBehaviour(Rigidbody playerRB)
+        {
+            switch (_currentState._gameState)
+            {
+                case GameState.Battle:
+                    playerRB.velocity = Vector3.forward;
+                    break;
+                default:
+                    break;
+            }
+        }
     }
 }

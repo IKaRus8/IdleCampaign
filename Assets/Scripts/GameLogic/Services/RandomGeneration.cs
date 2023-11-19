@@ -6,7 +6,7 @@ namespace GameLogic.Services
     public class RandomGeneration
     {
         Random rnd = new Random();
-        public bool IsCreateObject(float chance)
+        public bool IsRandomEventSuccessful(float chance)
         {
             var pick = rnd.Next(101);
             if(pick <= chance)

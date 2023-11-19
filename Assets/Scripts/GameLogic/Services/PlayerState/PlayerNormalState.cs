@@ -1,4 +1,5 @@
-﻿using GameLogic.Interfaces;
+﻿using Data.Enums;
+using GameLogic.Interfaces;
 using UnityEngine;
 
 namespace GameLogic.Services
@@ -10,7 +11,7 @@ namespace GameLogic.Services
         {
             velocity = Velocity;
         }
-        public override void RunCurrentState(Rigidbody playerRigidbody, IPresenceOfEnemy presenceOfEnemy)
+        public override void RunCurrentState(Rigidbody playerRigidbody)
         {
             playerRigidbody.velocity = Vector3.forward * velocity;
         }

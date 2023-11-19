@@ -26,13 +26,14 @@ namespace DI.Installers
             Container.Bind<IAsyncInitialization>().To<SceneLoader>().AsSingle();
 
             //Bind models
-            Container.Bind<IEnemySquadInfo>().To<EnemySquadInfo>().AsSingle();
+            Container.Bind<IEnemyProvider>().To<EnemyProvider>().AsSingle();
 
             //Bind GameLogic services
             Container.Bind<RandomGeneration>().AsSingle();
+            Container.Bind<TestService>().AsSingle();
             Container.Bind<IEnemyFactory>().To<EnemyFactory>().AsSingle();
-            Container.Bind<ISpawnEnemy>().To<SpawnEnemy>().AsSingle();
-            Container.Bind<IPresenceOfEnemy>().To<EnemyManager>().AsSingle();
+            Container.Bind<IEnemySpawner>().To<EnemySpawner>().AsSingle();
+            Container.Bind<EnemyManager>().AsSingle().NonLazy();
 
 
         }

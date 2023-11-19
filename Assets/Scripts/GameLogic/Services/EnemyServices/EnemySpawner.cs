@@ -1,28 +1,29 @@
-﻿using GameLogic.Interfaces;
+﻿using Cysharp.Threading.Tasks;
+using GameLogic.Interfaces;
 using Models.Interfaces;
 using UnityEngine;
 
 namespace GameLogic.Services
 {
-    public class SpawnEnemy : ISpawnEnemy
+    public class EnemySpawner : IEnemySpawner
     {
         private const float chance = 60f;
 
         private readonly RandomGeneration _randomGeneration;
         private readonly IEnemyFactory _createEnemy;
-        public SpawnEnemy(RandomGeneration randomGeneration, IEnemyFactory createEnemy)
+        public EnemySpawner(RandomGeneration randomGeneration, IEnemyFactory createEnemy)
         {
             _randomGeneration = randomGeneration;
             _createEnemy = createEnemy;
         }
-        public IEnemy EnemyGeneration(Vector3 enemyPosition)
+        public async UniTask<IEnemy> Spawn(Vector3 enemyPosition, string enemyKey)
         {
 
-            if (!_randomGeneration.IsCreateObject(chance))
+            if (!_randomGeneration.IsRandomEventSuccessful(chance))
             {
                 return null;
             }
-            return _createEnemy.CreateEnemyOnScene(enemyPosition);
+            return await _createEnemy.CreateEnemy(enemyPosition, enemyKey);
         }
 
     }

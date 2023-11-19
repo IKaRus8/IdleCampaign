@@ -11,6 +11,5 @@ namespace UI.Interfaces
     {
         Transform PlayerParent { get;}
         Transform EnemiesParent { get; }
-        Transform EnemyContainerParent { get; }
     }
 }

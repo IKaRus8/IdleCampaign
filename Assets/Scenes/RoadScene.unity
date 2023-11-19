@@ -524,7 +524,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 787579833}
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: 0, y: 0, z: -5.35}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -712,6 +712,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _rigidbody: {fileID: 889315573}
+  _approachRadius: 10
 --- !u!1 &914182262
 GameObject:
   m_ObjectHideFlags: 0
@@ -1024,7 +1025,7 @@ MonoBehaviour:
   m_FollowOffset: {x: 0, y: 8.21, z: -12.96}
   m_XDamping: 1
   m_YDamping: 1
-  m_ZDamping: 1
+  m_ZDamping: 2
   m_AngularDampingMode: 0
   m_PitchDamping: 0
   m_YawDamping: 0
@@ -1353,7 +1354,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1449777617}
-  m_LocalRotation: {x: 0.27860343, y: 3e-45, z: -1e-45, w: 0.96040624}
+  m_LocalRotation: {x: 0.27860343, y: -1e-45, z: -0, w: 0.96040624}
   m_LocalPosition: {x: 0, y: 8.210001, z: -12.960014}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1486,7 +1487,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1526319012}
-  m_LocalRotation: {x: 0.27860343, y: 3e-45, z: -1e-45, w: 0.96040624}
+  m_LocalRotation: {x: 0.27860343, y: -1e-45, z: 0, w: 0.96040624}
   m_LocalPosition: {x: 7.888535, y: 20.75098, z: -164.41014}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1650,7 +1651,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   uiContainer: {fileID: 258323357}
   segmentContainer: {fileID: 1621583830}
-  playerSquadController: {fileID: 889315574}
 --- !u!114 &1818789920
 MonoBehaviour:
   m_ObjectHideFlags: 0

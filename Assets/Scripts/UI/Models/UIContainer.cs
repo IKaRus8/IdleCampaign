@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using UI.Interfaces;
 using UnityEngine;
 
-public class UIContainer : MonoBehaviour, IUIContainer, IUIContainerObjectsParents, IUIContainerPrefabs
+public class UIContainer : MonoBehaviour, IUIContainer, IUIContainerObjectsParents
 {
     //IUIContainer
     public Transform PopupContainer { get; }
@@ -21,9 +21,4 @@ public class UIContainer : MonoBehaviour, IUIContainer, IUIContainerObjectsParen
     [field: SerializeField]
     public Transform EnemiesParent { get; private set; }
 
-    [field: SerializeField]
-    public Transform EnemyContainerParent { get; private set; }
-
-    //IUIContainerPrefabs
-    public GameObject EnemyPrefab { get; set; }
 }

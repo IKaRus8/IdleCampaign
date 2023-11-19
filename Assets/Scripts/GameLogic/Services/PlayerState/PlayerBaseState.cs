@@ -1,3 +1,4 @@
+using Data.Enums;
 using GameLogic.Interfaces;
 using UnityEngine;
 
@@ -13,6 +14,6 @@ namespace GameLogic.Services
             _gameState = state;
         }
 
-        public abstract void RunCurrentState(Rigidbody playerRigidbody, IPresenceOfEnemy presenceOfEnemy);
+        public abstract void RunCurrentState(Rigidbody playerRigidbody);
     }
 }

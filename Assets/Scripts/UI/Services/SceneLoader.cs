@@ -12,20 +12,17 @@ using Zenject;
 public class SceneLoader : IAsyncInitialization
 {
     private string playerKey = "DogPBR";
-    private string enemyKey = "DogPolyart";
 
     private Dictionary<string, Transform> initObjects;
 
     public AsyncLazy Initialization { get; }
 
-    private SceneLoader(IResourceLoadService resourceLoadService, IUIContainerObjectsParents uiContainerObjectsParents, IUIContainerPrefabs uiPrefabs)
+    private SceneLoader(IResourceLoadService resourceLoadService, IUIContainerObjectsParents uiContainerObjectsParents)
     {
-        Initialization = UniTask.Lazy(() => LoadResources(uiContainerObjectsParents,resourceLoadService, uiPrefabs));
+        Initialization = UniTask.Lazy(() => LoadResources(uiContainerObjectsParents,resourceLoadService));
     }
-    private async UniTask LoadResources(IUIContainerObjectsParents uiContainerObjectsParents, IResourceLoadService resourceLoadService, IUIContainerPrefabs uiPrefabs)
+    private async UniTask LoadResources(IUIContainerObjectsParents uiContainerObjectsParents, IResourceLoadService resourceLoadService)
     {
-        uiPrefabs.EnemyPrefab = await resourceLoadService.LoadAsyncGO(enemyKey);
-
         initObjects = await GetFillDictionary(uiContainerObjectsParents);
 
         foreach (var obj in initObjects)
