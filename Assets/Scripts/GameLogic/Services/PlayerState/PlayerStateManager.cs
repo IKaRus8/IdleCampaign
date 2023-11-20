@@ -7,28 +7,28 @@ using UnityEngine;
 
 namespace GameLogic.Services
 {
-    public class PlayerState
+    public class PlayerStateManager
     {
         private readonly IEnemyProvider _enemyProvider;
 
         private PlayerBaseState _currentState;
 
-        List<PlayerBaseState> _allStates;
+        private List<PlayerBaseState> _allStates;
 
         private float _approachRadius;
         private bool isEnemyInApproachRadius;
-        public PlayerState(IEnemyProvider enemyProvider, float Velocity, float approachRadius)
+        public PlayerStateManager(IEnemyProvider enemyProvider, float Velocity, float approachRadius)
         {
             _enemyProvider = enemyProvider;
             _approachRadius = approachRadius;
 
             _allStates = new List<PlayerBaseState>()
             {
-                new PlayerNormalState(this,Velocity),
-                new PlayerBattleState(this)
+                new PlayerNormalState(Velocity),
+                new PlayerBattleState()
             };
 
-            _currentState = _allStates.FirstOrDefault(state => state._gameState == GameState.Normal);
+            _currentState = _allStates.FirstOrDefault(state => state.GameState == GameState.Normal);
         }
         public void Movement(Rigidbody playerRigidbody)
         {
@@ -42,11 +42,11 @@ namespace GameLogic.Services
         }
         private void CheckEnemyNearby(Rigidbody playerRigidbody)
         {
-            if (!_enemyProvider.isEnemyNotExist)
+            if (!_enemyProvider.IsEnemyNotExist)
             {
-                var enemyPositionZ = -_enemyProvider.Enemies[0].enemyPosition.z;
-                var playerPositionZ = playerRigidbody.transform.localPosition.z;
-                isEnemyInApproachRadius = (enemyPositionZ - playerPositionZ) < _approachRadius;
+                var enemyPosition = -_enemyProvider.Enemies[0].EnemyPosition;
+                var playerPosition = playerRigidbody.transform.localPosition;
+                isEnemyInApproachRadius = Vector3.Distance(enemyPosition,playerPosition) < _approachRadius;
                 return;
             }
             isEnemyInApproachRadius = false;
@@ -56,9 +56,9 @@ namespace GameLogic.Services
         {
             GameState gameState = isEnemyInApproachRadius ? GameState.Battle : GameState.Normal;
 
-            if (_currentState._gameState != gameState)
+            if (_currentState.GameState != gameState)
             {
-                var currentState = _allStates.FirstOrDefault(s => s._gameState == gameState);
+                var currentState = _allStates.FirstOrDefault(s => s.GameState == gameState);
                 _currentState = currentState;
                 return true;
             }
@@ -67,7 +67,7 @@ namespace GameLogic.Services
         }
         private void ChangePlayerBehaviour(Rigidbody playerRB)
         {
-            switch (_currentState._gameState)
+            switch (_currentState.GameState)
             {
                 case GameState.Battle:
                     playerRB.velocity = Vector3.forward;

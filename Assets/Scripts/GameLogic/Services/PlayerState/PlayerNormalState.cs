@@ -7,7 +7,7 @@ namespace GameLogic.Services
     public class PlayerNormalState : PlayerBaseState
     {
         private float velocity;
-        public PlayerNormalState(PlayerState playerState, float Velocity) : base(playerState, GameState.Normal)
+        public PlayerNormalState(float Velocity) : base(GameState.Normal)
         {
             velocity = Velocity;
         }

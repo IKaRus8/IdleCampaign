@@ -9,5 +9,7 @@ namespace GameInfoModels
         public List<IEnemy> Enemies { get; set; } = new List<IEnemy>();
 
         public float SquadHealth { get; }
+
+        public bool IsEnemyNotExist  => Enemies.Count == 0;
     }
 }

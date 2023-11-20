@@ -5,14 +5,14 @@ namespace Models
 {
     public class Enemy : IEnemy
     {
-        public GameObject enemyObject { get; set; }
+        public GameObject EnemyObject { get; set; }
         public float MaxHealth { get; }
         public float Attack { get; }
-
+        public Vector3 EnemyPosition => EnemyObject.transform.localPosition;
         public Enemy(GameObject enemyObject,Vector3 Position)
         {
-            this.enemyObject = enemyObject;
-            this.enemyObject.transform.localPosition = Position;
+            EnemyObject = enemyObject;
+            EnemyObject.transform.localPosition = Position;
         }
     }
 }

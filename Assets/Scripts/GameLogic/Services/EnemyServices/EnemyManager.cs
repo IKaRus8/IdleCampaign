@@ -39,7 +39,7 @@ namespace GameLogic.Services
         }
         public void EnemyDestroy(IEnemy enemyDestroy)
         {
-            UnityEngine.Object.Destroy(enemyDestroy.enemyObject);
+            UnityEngine.Object.Destroy(enemyDestroy.EnemyObject);
 
             _enemyProvider.Enemies.Remove(enemyDestroy);
         }
