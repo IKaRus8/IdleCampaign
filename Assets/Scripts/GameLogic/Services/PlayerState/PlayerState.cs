@@ -16,7 +16,6 @@ namespace GameLogic.Services
         List<PlayerBaseState> _allStates;
 
         private float _approachRadius;
-        private bool isEnemyNotExist => _enemyProvider.Enemies.Count == 0;
         private bool isEnemyInApproachRadius;
         public PlayerState(IEnemyProvider enemyProvider, float Velocity, float approachRadius)
         {
@@ -43,24 +42,19 @@ namespace GameLogic.Services
         }
         private void CheckEnemyNearby(Rigidbody playerRigidbody)
         {
-            if (!isEnemyNotExist)
+            if (!_enemyProvider.isEnemyNotExist)
             {
-                var enemyPositionZ = -_enemyProvider.Enemies[0].enemyObject.transform.localPosition.z;
-                isEnemyInApproachRadius = (enemyPositionZ - playerRigidbody.transform.localPosition.z) < _approachRadius;
+                var enemyPositionZ = -_enemyProvider.Enemies[0].enemyPosition.z;
+                var playerPositionZ = playerRigidbody.transform.localPosition.z;
+                isEnemyInApproachRadius = (enemyPositionZ - playerPositionZ) < _approachRadius;
+                return;
             }
+            isEnemyInApproachRadius = false;
         }
 
         public bool SwitchState()
         {
-            GameState gameState = GameState.Normal;
-            if (isEnemyNotExist)
-            {
-                gameState = GameState.Normal;
-            }
-            else if(isEnemyInApproachRadius)
-            {
-                gameState = GameState.Battle;
-            }
+            GameState gameState = isEnemyInApproachRadius ? GameState.Battle : GameState.Normal;
 
             if (_currentState._gameState != gameState)
             {

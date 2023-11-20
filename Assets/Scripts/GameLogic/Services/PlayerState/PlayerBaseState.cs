@@ -7,7 +7,7 @@ namespace GameLogic.Services
     public abstract class PlayerBaseState
     {
         protected readonly PlayerState _playerState;
-        public GameState _gameState;
+        public GameState _gameState { get; }
         public PlayerBaseState(PlayerState playerState, GameState state)
         {
             _playerState = playerState;

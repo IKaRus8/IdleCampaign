@@ -9,5 +9,6 @@ namespace GameInfoModels.Interface
 
         public float SquadHealth { get; }
 
+        public bool isEnemyNotExist => Enemies.Count == 0;
     }
 }

@@ -11,17 +11,15 @@ namespace GameLogic.Services
     {
         private readonly IDisposable _disposable;
         private readonly IEnemySpawner _enemySpawner;
-        private readonly TestService _testService;
         private IEnemyProvider _enemyProvider;
 
         private string enemyKey = "DogPolyart";
         private bool isSpawnEnemy = false;
         public EnemyManager(ISegmentContainer segmentContainer, IEnemySpawner enemySpawner, 
-                            IEnemyProvider enemyProvider, TestService testService)
+                            IEnemyProvider enemyProvider)
         {
             _enemyProvider = enemyProvider;
             _enemySpawner = enemySpawner;
-            _testService = testService;
 
             _disposable = segmentContainer.EdgeSegmentPos.Subscribe(SpawnEnemy);
         }
@@ -40,15 +38,12 @@ namespace GameLogic.Services
             isSpawnEnemy = true;
             _enemyProvider.Enemies.Add(enemy);
 
-            if (_testService != null)
-                _testService.RunMethodAfterSeconds(EnemyDestroy, 0, 15);
         }
-        public void EnemyDestroy(int index)
+        public void EnemyDestroy(IEnemy enemyDestroy)
         {
-            var enemy = _enemyProvider.Enemies[index];
-            UnityEngine.Object.Destroy(enemy.enemyObject);
+            UnityEngine.Object.Destroy(enemyDestroy.enemyObject);
 
-            _enemyProvider.Enemies.Remove(enemy);
+            _enemyProvider.Enemies.Remove(enemyDestroy);
             if (_enemyProvider.Enemies.Count == 0)
                 isSpawnEnemy = false;
         }

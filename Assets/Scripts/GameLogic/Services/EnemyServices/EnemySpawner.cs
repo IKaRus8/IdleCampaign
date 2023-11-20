@@ -10,11 +10,11 @@ namespace GameLogic.Services
         private const float chance = 60f;
 
         private readonly RandomGeneration _randomGeneration;
-        private readonly IEnemyFactory _createEnemy;
-        public EnemySpawner(RandomGeneration randomGeneration, IEnemyFactory createEnemy)
+        private readonly IEnemyFactory _enemyFactory;
+        public EnemySpawner(RandomGeneration randomGeneration, IEnemyFactory enemyFactory)
         {
             _randomGeneration = randomGeneration;
-            _createEnemy = createEnemy;
+            _enemyFactory = enemyFactory;
         }
         public async UniTask<IEnemy> Spawn(Vector3 enemyPosition, string enemyKey)
         {
@@ -23,7 +23,7 @@ namespace GameLogic.Services
             {
                 return null;
             }
-            return await _createEnemy.CreateEnemy(enemyPosition, enemyKey);
+            return await _enemyFactory.CreateEnemy(enemyPosition, enemyKey);
         }
 
     }

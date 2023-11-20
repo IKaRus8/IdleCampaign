@@ -13,7 +13,6 @@ namespace Models
         {
             this.enemyObject = enemyObject;
             this.enemyObject.transform.localPosition = Position;
-
         }
     }
 }

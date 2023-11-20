@@ -29,10 +29,9 @@ namespace DI.Installers
             Container.Bind<IEnemyProvider>().To<EnemyProvider>().AsSingle();
 
             //Bind GameLogic services
-            Container.Bind<RandomGeneration>().AsSingle();
-            Container.Bind<TestService>().AsSingle();
             Container.Bind<IEnemyFactory>().To<EnemyFactory>().AsSingle();
             Container.Bind<IEnemySpawner>().To<EnemySpawner>().AsSingle();
+            Container.Bind<RandomGeneration>().AsSingle();
             Container.Bind<EnemyManager>().AsSingle().NonLazy();
 
 
