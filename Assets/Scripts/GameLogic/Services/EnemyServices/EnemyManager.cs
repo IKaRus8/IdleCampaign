@@ -14,7 +14,6 @@ namespace GameLogic.Services
         private IEnemyProvider _enemyProvider;
 
         private string enemyKey = "DogPolyart";
-        private bool isSpawnEnemy = false;
         public EnemyManager(ISegmentContainer segmentContainer, IEnemySpawner enemySpawner, 
                             IEnemyProvider enemyProvider)
         {
@@ -25,7 +24,7 @@ namespace GameLogic.Services
         }
         public async void SpawnEnemy(float edgeSegmentPos)
         {
-            if (edgeSegmentPos == 0 || isSpawnEnemy)
+            if (edgeSegmentPos == 0)
             {
                 return;
             }
@@ -35,7 +34,6 @@ namespace GameLogic.Services
             {
                 return;
             }
-            isSpawnEnemy = true;
             _enemyProvider.Enemies.Add(enemy);
 
         }
@@ -44,8 +42,6 @@ namespace GameLogic.Services
             UnityEngine.Object.Destroy(enemyDestroy.enemyObject);
 
             _enemyProvider.Enemies.Remove(enemyDestroy);
-            if (_enemyProvider.Enemies.Count == 0)
-                isSpawnEnemy = false;
         }
         public void Dispose()
         {
