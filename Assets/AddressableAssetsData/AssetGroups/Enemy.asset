@@ -10,15 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
-  m_Name: Environment
+  m_Name: Enemy
   m_EditorClassIdentifier: 
-  m_GroupName: Packed Assets
+  m_GroupName: Enemy
   m_Data:
     m_SerializedData: []
-  m_GUID: 626ec2456ef46ef4f87d557a2a3f6421
+  m_GUID: f79822d002158ad4d9002f00f09a0ee9
   m_SerializeEntries:
-  - m_GUID: feaa23be5e0784e89920fdc4206e1cb1
-    m_Address: RoadPart
+  - m_GUID: 45288819fde2143449a96207b14db0bb
+    m_Address: DogPolyart
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -26,5 +26,5 @@ MonoBehaviour:
   m_Settings: {fileID: 11400000, guid: d845d0c089f20f04393348cf878bd9ff, type: 2}
   m_SchemaSet:
     m_Schemas:
-    - {fileID: 11400000, guid: 866a2b3e8bac49a44aa0e20a170e5572, type: 2}
-    - {fileID: 11400000, guid: 4e477044ca779c64ba649c82bc2810b1, type: 2}
+    - {fileID: 11400000, guid: 343bb7bcb4ee7254286f43dd4a8f127a, type: 2}
+    - {fileID: 11400000, guid: 6c5b80e0f97385f429a91f8f84b38127, type: 2}

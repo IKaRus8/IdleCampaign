@@ -1,4 +1,17 @@
 {
-  "name": "GameInfoModels",
-  "references":[ "GUID:4c2e7a8fb4304c0a862a64bb1b1e6b71" ]
+    "name": "GameInfoModels",
+    "rootNamespace": "",
+    "references": [
+        "GUID:4c2e7a8fb4304c0a862a64bb1b1e6b71",
+        "GUID:3ac1ad3034cd4c8d84aa0284ae5bad15"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
 }

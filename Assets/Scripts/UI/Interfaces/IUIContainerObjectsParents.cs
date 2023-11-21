@@ -9,8 +9,7 @@ namespace UI.Interfaces
 {
     public interface IUIContainerObjectsParents
     {
-        Transform EnvironmnetParent { get;}
-
         Transform PlayerParent { get;}
+        Transform EnemiesParent { get; }
     }
 }

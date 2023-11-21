@@ -1,3 +1,4 @@
+using Assets.Scripts.UI.Services;
 using Cysharp.Threading.Tasks;
 using JetBrains.Annotations;
 using System.Collections.Generic;
@@ -10,8 +11,7 @@ using Zenject;
 [UsedImplicitly]
 public class SceneLoader : IAsyncInitialization
 {
-    private string playerKey = "PlayerSquad";
-    private string environmentKey = "Environment";
+    private string playerKey = "DogPBR";
 
     private Dictionary<string, Transform> initObjects;
 
@@ -30,12 +30,12 @@ public class SceneLoader : IAsyncInitialization
             await resourceLoadService.InstantiateAssetAsync(obj.Key, obj.Value);
         }
     }
+
     private async UniTask<Dictionary<string, Transform>> GetFillDictionary(IUIContainerObjectsParents uiContainerObjectsParents)
     {
         return new Dictionary<string, Transform>
         {
-            { playerKey, uiContainerObjectsParents.PlayerParent },
-            { environmentKey, uiContainerObjectsParents.EnvironmnetParent }
+            { playerKey, uiContainerObjectsParents.PlayerParent }
         };
     }
 }
