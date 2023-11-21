@@ -10,11 +10,12 @@ namespace GameLogic.Controllers
     {
         [SerializeField]
         private Rigidbody _rigidbody;
+        [SerializeField]
+        private float _approachRadius;
 
         private PlayerStateManager _playerStateManager;
         private IEnemyProvider _enemyProvider;
         public float Velocity => 20f;
-        public float ApproachRadius;
 
         [Inject]
         void Construct(IEnemyProvider enemyProvider)
@@ -23,7 +24,7 @@ namespace GameLogic.Controllers
         }
         private void Awake()
         {
-            _playerStateManager = new PlayerStateManager(_enemyProvider, Velocity, ApproachRadius);
+            _playerStateManager = new PlayerStateManager(_enemyProvider, Velocity, _approachRadius);
         }
         private void FixedUpdate()
         {
@@ -32,7 +33,7 @@ namespace GameLogic.Controllers
         private void OnDrawGizmos()
         {
             Gizmos.color = Color.red;
-            Gizmos.DrawWireSphere(transform.position, ApproachRadius);
+            Gizmos.DrawWireSphere(transform.position, _approachRadius);
         }
     }
 }
