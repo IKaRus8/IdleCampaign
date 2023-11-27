@@ -6,6 +6,8 @@ using UnityEngine;
 using UniRx;
 using Extensions;
 using Zenject;
+using UnityEngine.AI;
+using Unity.AI.Navigation;
 
 namespace GameLogic.Controllers
 {
@@ -17,9 +19,15 @@ namespace GameLogic.Controllers
         private List<RoadController> _roads;
         public ReactiveProperty<IRoadController> ActiveRoadRx { get; } = new();
         public ReactiveProperty<float> EdgeSegmentPos { get; } = new();
+        
+        private NavMeshSurface _navMeshSurface;
 
         private IRoadController _edgeSegment;
 
+        private void Awake()
+        {
+            _navMeshSurface = GetComponent<NavMeshSurface>();
+        }
         private void Update()
         {
             var currentSegment = _roads.FirstOrDefault(r => r.IsActive);
@@ -43,6 +51,8 @@ namespace GameLogic.Controllers
                 var wayPoint = _edgeSegment.WayPoint + _roads.Count * SegmentLength;
                 EdgeSegmentPos.Value = wayPoint;
                 _edgeSegment.SetPosition(new Vector3(0,0,wayPoint));
+
+                _navMeshSurface.BuildNavMesh();
             }
         }
     }
