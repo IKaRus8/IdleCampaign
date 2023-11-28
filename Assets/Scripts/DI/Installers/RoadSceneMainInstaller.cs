@@ -1,4 +1,5 @@
-﻿using GameInfoModels;
+﻿using Assets.Scripts.GameLogic.Interfaces;
+using GameInfoModels;
 using GameInfoModels.Interface;
 using GameLogic.Controllers;
 using GameLogic.Interfaces;
@@ -27,6 +28,7 @@ namespace DI.Installers
 
             //Bind models
             Container.Bind<IEnemyProvider>().To<EnemyProvider>().AsSingle();
+            Container.Bind<IPlayerProvider>().To<PlayerProvider>().AsSingle();
 
             //Bind GameLogic services
             Container.Bind<IEnemyFactory>().To<EnemyFactory>().AsSingle();

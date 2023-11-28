@@ -1,7 +1,11 @@
+using Assets.Scripts.GameLogic.Interfaces;
 using GameInfoModels.Interface;
 using GameLogic.Interfaces;
 using GameLogic.Services;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using UnityEngine.AI;
 using Zenject;
 
 namespace GameLogic.Controllers
@@ -13,18 +17,20 @@ namespace GameLogic.Controllers
         [SerializeField]
         private float _approachRadius;
 
-        private PlayerStateManager _playerStateManager;
         private IEnemyProvider _enemyProvider;
+        private IPlayerProvider _playerProvider;
+        private PlayerStateManager _playerStateManager;
         public float Velocity => 20f;
 
         [Inject]
-        void Construct(IEnemyProvider enemyProvider)
+        void Construct(IEnemyProvider enemyProvider, IPlayerProvider playerProvider)
         {
             _enemyProvider = enemyProvider;
+            _playerProvider = playerProvider;
         }
-        private void Awake()
+        private void Start()
         {
-            _playerStateManager = new PlayerStateManager(_enemyProvider, Velocity, _approachRadius);
+            _playerStateManager = new PlayerStateManager(_enemyProvider, _playerProvider, Velocity, _approachRadius);
         }
         private void FixedUpdate()
         {

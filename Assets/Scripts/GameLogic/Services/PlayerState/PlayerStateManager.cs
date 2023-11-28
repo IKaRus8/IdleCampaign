@@ -1,4 +1,5 @@
-﻿using Data.Enums;
+﻿using Assets.Scripts.GameLogic.Interfaces;
+using Data.Enums;
 using GameInfoModels.Interface;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +11,7 @@ namespace GameLogic.Services
     public class PlayerStateManager
     {
         private readonly IEnemyProvider _enemyProvider;
+        private readonly IPlayerProvider _playerProvider;
 
         private PlayerBaseState _currentState;
 
@@ -17,14 +19,15 @@ namespace GameLogic.Services
 
         private float _approachRadius;
         private bool isEnemyInApproachRadius;
-        public PlayerStateManager(IEnemyProvider enemyProvider, float Velocity, float approachRadius)
+        public PlayerStateManager(IEnemyProvider enemyProvider, IPlayerProvider playerProvider, float velocity, float approachRadius)
         {
             _enemyProvider = enemyProvider;
+            _playerProvider = playerProvider;
             _approachRadius = approachRadius;
 
             _allStates = new List<PlayerBaseState>()
             {
-                new PlayerNormalState(Velocity),
+                new PlayerNormalState(velocity),
                 new PlayerBattleState()
             };
 
