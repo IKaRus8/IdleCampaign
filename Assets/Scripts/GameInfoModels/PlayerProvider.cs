@@ -1,24 +1,31 @@
 ﻿using Assets.Scripts.GameLogic.Interfaces;
-using System;
+using Models;
+using Models.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UnityEngine.AI;
+using UnityEngine;
 
 namespace GameInfoModels
 {
     public class PlayerProvider : IPlayerProvider
     {
-        public List<NavMeshAgent> _units { get; set; } = new List<NavMeshAgent>();
-        public void AddUnit(NavMeshAgent agent)
+        public List<IPlayer> Units { get; set; } = new List<IPlayer>();
+        public void AddUnit(IPlayer unit)
         {
-            _units.Add(agent);
+            Units.Add(unit);
         }
-        public void RemoveUnit(NavMeshAgent agent)
+        public void AddUnit(GameObject unit)
         {
-            _units.Remove(agent);
+            Player player = new(unit);
+            Units.Add(player);
         }
-
+        public void RemoveUnit(IPlayer unit)
+        {
+            Units.Remove(unit);
+        }
+        public T GetComponent<T>(IPlayer unit) where T : Component
+        {
+            return Units.FirstOrDefault(c => c == unit).PlayerObject.GetComponent<T>();
+        }
     }
 }

@@ -16,6 +16,8 @@ namespace GameLogic.Controllers
         private Rigidbody _rigidbody;
         [SerializeField]
         private float _approachRadius;
+        [SerializeField]
+        private float _attackRadius;
 
         private IEnemyProvider _enemyProvider;
         private IPlayerProvider _playerProvider;
@@ -30,15 +32,17 @@ namespace GameLogic.Controllers
         }
         private void Start()
         {
-            _playerStateManager = new PlayerStateManager(_enemyProvider, _playerProvider, Velocity, _approachRadius);
+            _playerStateManager = new PlayerStateManager(_enemyProvider, _playerProvider, _rigidbody, Velocity, _approachRadius, _attackRadius);
         }
         private void FixedUpdate()
         {
-            _playerStateManager.Movement(_rigidbody);
+            _playerStateManager.Movement();
         }
         private void OnDrawGizmos()
         {
             Gizmos.color = Color.red;
+            Gizmos.DrawWireSphere(transform.position, _attackRadius);
+            Gizmos.color = Color.yellow;
             Gizmos.DrawWireSphere(transform.position, _approachRadius);
         }
     }

@@ -7,6 +7,7 @@ using GameLogic.Services;
 using UI.Interfaces;
 using UnityEngine;
 using Zenject;
+using UI.Services;
 
 namespace DI.Installers
 {

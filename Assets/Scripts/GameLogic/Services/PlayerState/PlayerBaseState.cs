@@ -12,6 +12,6 @@ namespace GameLogic.Services
             GameState = state;
         }
 
-        public abstract void RunCurrentState(Rigidbody playerRigidbody);
+        public abstract void RunCurrentState();
     }
 }

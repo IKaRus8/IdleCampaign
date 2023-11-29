@@ -6,7 +6,9 @@
         "Extensions",
         "Unity.Addressables",
         "UniTask",
-        "Unity.ResourceManager"
+        "Unity.ResourceManager",
+        "GameInfoModels.Interfaces",
+        "Models.Interfaces"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

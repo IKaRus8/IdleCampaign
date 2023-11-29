@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UniRx;
 using UnityEngine;
+using UnityEngine.AI;
 
 namespace GameLogic.Services
 {
@@ -17,63 +18,75 @@ namespace GameLogic.Services
 
         private List<PlayerBaseState> _allStates;
 
+        private Rigidbody _rigidbody;
         private float _approachRadius;
+        private float _attackRadius;
         private bool isEnemyInApproachRadius;
-        public PlayerStateManager(IEnemyProvider enemyProvider, IPlayerProvider playerProvider, float velocity, float approachRadius)
+        private bool isEnemyInAttackRadius;
+        public PlayerStateManager(IEnemyProvider enemyProvider, IPlayerProvider playerProvider, Rigidbody rigidbody, 
+                                    float velocity, float approachRadius, float attackRadius)
         {
             _enemyProvider = enemyProvider;
             _playerProvider = playerProvider;
+            _rigidbody = rigidbody;
             _approachRadius = approachRadius;
+            _attackRadius = attackRadius;
 
             _allStates = new List<PlayerBaseState>()
             {
-                new PlayerNormalState(velocity),
+                new PlayerNormalState(velocity, rigidbody),
+                new PLayerChaseState(enemyProvider,playerProvider,attackRadius),
                 new PlayerBattleState()
             };
 
             _currentState = _allStates.FirstOrDefault(state => state.GameState == GameState.Normal);
         }
-        public void Movement(Rigidbody playerRigidbody)
+        public void Movement()
         {
-            CheckEnemyNearby(playerRigidbody);
+            if (_playerProvider.Units.Count == 0)
+            {
+                return;
+            }
+            CheckEnemyNearby();
+            SwitchState();
 
-            var isStateChanged = SwitchState();
-            if(isStateChanged)
-                ChangePlayerBehaviour(playerRigidbody);
-
-            _currentState.RunCurrentState(playerRigidbody);
+            _currentState.RunCurrentState();
         }
-        private void CheckEnemyNearby(Rigidbody playerRigidbody)
+        private void CheckEnemyNearby()
         {
             if (!_enemyProvider.IsEnemyNotExist)
             {
                 var enemyPosition = -_enemyProvider.Enemies[0].EnemyPosition;
-                var playerPosition = playerRigidbody.transform.localPosition;
-                isEnemyInApproachRadius = Vector3.Distance(enemyPosition,playerPosition) < _approachRadius;
+                var playerPosition = _rigidbody.transform.localPosition;
+                var distance = Vector3.Distance(enemyPosition, playerPosition);
+                isEnemyInApproachRadius = distance < _approachRadius;
+                isEnemyInAttackRadius = distance < _attackRadius;
                 return;
             }
+            isEnemyInAttackRadius = false;
             isEnemyInApproachRadius = false;
         }
 
-        public bool SwitchState()
+        public void SwitchState()
         {
-            GameState gameState = isEnemyInApproachRadius ? GameState.Battle : GameState.Normal;
+            GameState gameState = isEnemyInAttackRadius ? GameState.Battle : isEnemyInApproachRadius ? GameState.Chase : GameState.Normal;
 
             if (_currentState.GameState != gameState)
             {
                 var currentState = _allStates.FirstOrDefault(s => s.GameState == gameState);
                 _currentState = currentState;
-                return true;
+                if(gameState==GameState.Chase)
+                {
+                    ChangePlayerBehaviour();
+                }
             }
-
-            return false;
         }
-        private void ChangePlayerBehaviour(Rigidbody playerRB)
+        private void ChangePlayerBehaviour()
         {
             switch (_currentState.GameState)
             {
-                case GameState.Battle:
-                    playerRB.velocity = Vector3.forward;
+                case GameState.Chase:
+                    _rigidbody.velocity = Vector3.forward;
                     break;
                 default:
                     break;

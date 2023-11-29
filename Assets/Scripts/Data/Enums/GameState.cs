@@ -9,6 +9,7 @@ namespace Data.Enums
     public enum GameState
     {
         Normal,
+        Chase,
         Battle
     }
 }

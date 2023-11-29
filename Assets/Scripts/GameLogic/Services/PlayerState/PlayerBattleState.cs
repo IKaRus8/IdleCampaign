@@ -9,7 +9,7 @@ namespace GameLogic.Services
         public PlayerBattleState() : base(GameState.Battle)
         {
         }
-        public override void RunCurrentState(Rigidbody playerRigidbody)
+        public override void RunCurrentState()
         {
         }
     }
