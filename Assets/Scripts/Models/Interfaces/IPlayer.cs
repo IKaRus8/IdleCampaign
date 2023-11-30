@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Models.Interfaces
 {
@@ -14,6 +9,7 @@ namespace Models.Interfaces
         Vector3 PlayerPosition { get; }
         float MaxHealth { get; }
         float Attack { get; }
+        T GetComponent<T>() where T : Component;
 
     }
 }

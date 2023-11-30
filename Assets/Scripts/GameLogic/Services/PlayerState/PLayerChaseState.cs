@@ -22,7 +22,7 @@ namespace GameLogic.Services
         {
             foreach (var player in _playerProvider.Units)
             {
-                var playerNavMesh = _playerProvider.GetComponent<NavMeshAgent>(player);
+                var playerNavMesh = player.GetComponent<NavMeshAgent>();
                 var nearestEnemy = player.TargetToPursue != null
                     ? player.TargetToPursue
                     : FindNearestEnemy(playerNavMesh);

@@ -23,9 +23,5 @@ namespace GameInfoModels
         {
             Units.Remove(unit);
         }
-        public T GetComponent<T>(IPlayer unit) where T : Component
-        {
-            return Units.FirstOrDefault(c => c == unit).PlayerObject.GetComponent<T>();
-        }
     }
 }

@@ -1,11 +1,6 @@
 ﻿using Models.Interfaces;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
-using UnityEngine.AI;
 
 namespace GameLogic.Interfaces
 {
@@ -15,6 +10,5 @@ namespace GameLogic.Interfaces
         void AddUnit(IPlayer unit);
         void AddUnit(GameObject unit);
         void RemoveUnit(IPlayer unit);
-        T GetComponent<T>(IPlayer unit) where T : Component;
     }
 }

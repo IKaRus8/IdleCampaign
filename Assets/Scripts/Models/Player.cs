@@ -19,6 +19,10 @@ namespace Models
         {
             PlayerObject = playerObject;
         }
+        public T GetComponent<T>() where T : Component
+        {
+            return PlayerObject.GetComponent<T>();
+        }
 
     }
 }
