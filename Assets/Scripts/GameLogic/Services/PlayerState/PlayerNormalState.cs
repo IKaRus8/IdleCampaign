@@ -1,5 +1,4 @@
-﻿using Assets.Scripts.GameLogic.Interfaces;
-using Data.Enums;
+﻿using Data.Enums;
 using UnityEngine;
 
 namespace GameLogic.Services

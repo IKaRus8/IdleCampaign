@@ -1,4 +1,4 @@
-using Assets.Scripts.GameLogic.Interfaces;
+using GameLogic.Interfaces;
 using Cysharp.Threading.Tasks;
 using JetBrains.Annotations;
 using System.Collections.Generic;

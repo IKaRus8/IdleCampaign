@@ -1,4 +1,4 @@
-﻿using Assets.Scripts.GameLogic.Interfaces;
+﻿using GameLogic.Interfaces;
 using Models;
 using Models.Interfaces;
 using System.Collections.Generic;

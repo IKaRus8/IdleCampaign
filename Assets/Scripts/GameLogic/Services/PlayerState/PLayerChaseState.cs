@@ -1,4 +1,4 @@
-﻿using Assets.Scripts.GameLogic.Interfaces;
+﻿using GameLogic.Interfaces;
 using Data.Enums;
 using GameInfoModels.Interface;
 using Models.Interfaces;
@@ -11,8 +11,7 @@ namespace GameLogic.Services
     {
         private readonly IEnemyProvider _enemyProvider;
         private readonly IPlayerProvider _playerProvider;
-        private Vector3 lastPosEnemy = Vector3.zero;
-        private float _attackRadius;
+        private readonly float _attackRadius;
         public PLayerChaseState(IEnemyProvider enemyProvider, IPlayerProvider playerProvider, float attackRadius) : base(GameState.Chase)
         {
             _enemyProvider = enemyProvider;
@@ -24,23 +23,20 @@ namespace GameLogic.Services
             foreach (var player in _playerProvider.Units)
             {
                 var playerNavMesh = _playerProvider.GetComponent<NavMeshAgent>(player);
-                IEnemy nearestEnemy;
-                if (player.TargetToPursue != null)
+                var nearestEnemy = player.TargetToPursue != null
+                    ? player.TargetToPursue
+                    : FindNearestEnemy(playerNavMesh);
+
+                if (nearestEnemy == null || nearestEnemy.EnemyPosition == Vector3.zero)
                 {
-                    nearestEnemy = player.TargetToPursue;
-                    if (playerNavMesh.destination == player.TargetToPursue.EnemyPosition || playerNavMesh.destination == player.PlayerPosition)
-                    {
-                        return;
-                    }
+                    continue;
                 }
-                else
+
+                if (playerNavMesh.destination == nearestEnemy.EnemyPosition)
                 {
-                    nearestEnemy = FindNearestEnemy(playerNavMesh);
+                    continue;
                 }
-                if (nearestEnemy.EnemyPosition == Vector3.zero)
-                {
-                    return;
-                }
+
                 if (playerNavMesh.SetDestination(nearestEnemy.EnemyPosition))
                 {
                     playerNavMesh.stoppingDistance = _attackRadius;

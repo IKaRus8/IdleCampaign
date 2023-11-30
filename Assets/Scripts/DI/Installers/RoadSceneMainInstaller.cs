@@ -1,8 +1,7 @@
-﻿using Assets.Scripts.GameLogic.Interfaces;
+﻿using GameLogic.Interfaces;
 using GameInfoModels;
 using GameInfoModels.Interface;
 using GameLogic.Controllers;
-using GameLogic.Interfaces;
 using GameLogic.Services;
 using UI.Interfaces;
 using UnityEngine;

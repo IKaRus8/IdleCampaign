@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AI;
 
-namespace Assets.Scripts.GameLogic.Interfaces
+namespace GameLogic.Interfaces
 {
     public interface IPlayerProvider
     {

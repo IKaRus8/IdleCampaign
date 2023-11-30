@@ -4,7 +4,6 @@ using Models.Interfaces;
 using System;
 using UniRx;
 using UnityEngine;
-using UnityEngine.AI;
 
 namespace GameLogic.Services
 {
