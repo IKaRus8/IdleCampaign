@@ -12,7 +12,6 @@ namespace GameLogic.Services
         private readonly IEnemyProvider _enemyProvider;
         private readonly IPlayerProvider _playerProvider;
         private Vector3 lastPosEnemy = Vector3.zero;
-        private IEnemy lastNearestEnemy = null;
         private float _attackRadius;
         public PLayerChaseState(IEnemyProvider enemyProvider, IPlayerProvider playerProvider, float attackRadius) : base(GameState.Chase)
         {
@@ -22,32 +21,35 @@ namespace GameLogic.Services
         }
         public override void RunCurrentState()
         {
-            var firstUnit = _playerProvider.Units[0];
-            var unitNavMesh = _playerProvider.GetComponent<NavMeshAgent>(firstUnit);
-            Vector3 nearestEnemyPos;
-            if (lastNearestEnemy == null)
+            foreach (var player in _playerProvider.Units)
             {
-                nearestEnemyPos = FindNearestEnemy(unitNavMesh);
+                var playerNavMesh = _playerProvider.GetComponent<NavMeshAgent>(player);
+                IEnemy nearestEnemy;
+                if (player.TargetToPursue != null)
+                {
+                    nearestEnemy = player.TargetToPursue;
+                    if (playerNavMesh.destination == player.TargetToPursue.EnemyPosition || playerNavMesh.destination == player.PlayerPosition)
+                    {
+                        return;
+                    }
+                }
+                else
+                {
+                    nearestEnemy = FindNearestEnemy(playerNavMesh);
+                }
+                if (nearestEnemy.EnemyPosition == Vector3.zero)
+                {
+                    return;
+                }
+                if (playerNavMesh.SetDestination(nearestEnemy.EnemyPosition))
+                {
+                    playerNavMesh.stoppingDistance = _attackRadius;
+                    player.TargetToPursue = nearestEnemy;
+                }
             }
-            else
-            {
-                nearestEnemyPos = lastNearestEnemy.EnemyPosition;
-            }
-            if (nearestEnemyPos == Vector3.zero)
-            {
-                return;
-            }
-            if (lastPosEnemy == nearestEnemyPos)
-            {
-                return;
-            }
-            lastPosEnemy = nearestEnemyPos;
-            unitNavMesh.SetDestination(nearestEnemyPos);
-            unitNavMesh.stoppingDistance = _attackRadius;
         }
-        private Vector3 FindNearestEnemy(NavMeshAgent unit)
+        private IEnemy FindNearestEnemy(NavMeshAgent unit)
         {
-            Vector3 nearestEnemyVector = Vector3.zero;
             IEnemy nearestEnemy = null;
             float nearestDistance = Mathf.Infinity;
             foreach (IEnemy enemy in _enemyProvider.Enemies)
@@ -58,13 +60,11 @@ namespace GameLogic.Services
 
                 if (distanceToEnemy < nearestDistance)
                 {
-                    nearestEnemyVector = enemyPos;
                     nearestDistance = distanceToEnemy;
                     nearestEnemy = enemy;
                 }
             }
-            lastNearestEnemy = nearestEnemy;
-            return nearestEnemyVector;
+            return nearestEnemy;
         }
 
     }

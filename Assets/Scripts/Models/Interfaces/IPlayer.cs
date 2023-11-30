@@ -9,10 +9,11 @@ namespace Models.Interfaces
 {
     public interface IPlayer
     {
-        public GameObject PlayerObject { get; set; }
-        public float MaxHealth { get; }
-        public float Attack { get; }
-        public Vector3 PlayerPosition { get; }
+        IEnemy TargetToPursue { get; set; }
+        GameObject PlayerObject { get; set; }
+        Vector3 PlayerPosition { get; }
+        float MaxHealth { get; }
+        float Attack { get; }
 
     }
 }

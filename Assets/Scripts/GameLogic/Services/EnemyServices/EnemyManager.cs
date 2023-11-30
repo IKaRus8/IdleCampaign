@@ -4,6 +4,7 @@ using Models.Interfaces;
 using System;
 using UniRx;
 using UnityEngine;
+using UnityEngine.AI;
 
 namespace GameLogic.Services
 {
@@ -30,6 +31,7 @@ namespace GameLogic.Services
             }
             Vector3 enemyPos = new Vector3(0, 0, -edgeSegmentPos);
             IEnemy enemy = await _enemySpawner.Spawn(enemyPos, enemyKey);
+
             if (enemy == null)
             {
                 return;

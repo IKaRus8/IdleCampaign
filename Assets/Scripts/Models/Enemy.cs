@@ -8,7 +8,7 @@ namespace Models
         public GameObject EnemyObject { get; set; }
         public float MaxHealth { get; }
         public float Attack { get; }
-        public Vector3 EnemyPosition => EnemyObject.transform.localPosition;
+        public Vector3 EnemyPosition => EnemyObject.transform.position;
         public Enemy(GameObject enemyObject,Vector3 Position)
         {
             EnemyObject = enemyObject;

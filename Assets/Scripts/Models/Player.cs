@@ -10,6 +10,7 @@ namespace Models
 {
     public class Player : IPlayer
     {
+        public IEnemy TargetToPursue { get; set; }
         public GameObject PlayerObject { get; set; }
         public float MaxHealth { get; }
         public float Attack { get; }

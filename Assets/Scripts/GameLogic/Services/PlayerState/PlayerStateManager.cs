@@ -56,8 +56,8 @@ namespace GameLogic.Services
         {
             if (!_enemyProvider.IsEnemyNotExist)
             {
-                var enemyPosition = -_enemyProvider.Enemies[0].EnemyPosition;
-                var playerPosition = _rigidbody.transform.localPosition;
+                var enemyPosition = _enemyProvider.Enemies[0].EnemyPosition;
+                var playerPosition = _rigidbody.transform.position;
                 var distance = Vector3.Distance(enemyPosition, playerPosition);
                 isEnemyInApproachRadius = distance < _approachRadius;
                 isEnemyInAttackRadius = distance < _attackRadius;
