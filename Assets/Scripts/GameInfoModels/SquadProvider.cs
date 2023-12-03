@@ -7,19 +7,19 @@ using UnityEngine;
 
 namespace GameInfoModels
 {
-    public class PlayerProvider : IPlayerProvider
+    public class SquadProvider : ISquadProvider
     {
-        public List<IPlayer> Units { get; set; } = new List<IPlayer>();
-        public void AddUnit(IPlayer unit)
+        public List<IUnit> Units { get; set; } = new List<IUnit>();
+        public void AddUnit(IUnit unit)
         {
             Units.Add(unit);
         }
         public void AddUnit(GameObject unit)
         {
-            Player player = new(unit);
+            Unit player = new(unit);
             Units.Add(player);
         }
-        public void RemoveUnit(IPlayer unit)
+        public void RemoveUnit(IUnit unit)
         {
             Units.Remove(unit);
         }

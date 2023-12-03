@@ -4,10 +4,10 @@ using UnityEngine;
 
 namespace GameLogic.Services
 {
-    public abstract class PlayerBaseState
+    public abstract class BaseState
     {
         public GameState GameState { get; }
-        public PlayerBaseState( GameState state)
+        public BaseState( GameState state)
         {
             GameState = state;
         }

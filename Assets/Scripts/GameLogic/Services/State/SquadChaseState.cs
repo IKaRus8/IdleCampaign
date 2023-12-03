@@ -7,40 +7,49 @@ using UnityEngine.AI;
 
 namespace GameLogic.Services
 {
-    public class PLayerChaseState : PlayerBaseState
+    public class SquadChaseState : BaseState
     {
         private readonly IEnemyProvider _enemyProvider;
-        private readonly IPlayerProvider _playerProvider;
+        private readonly ISquadProvider _playerProvider;
         private readonly float _attackRadius;
-        public PLayerChaseState(IEnemyProvider enemyProvider, IPlayerProvider playerProvider, float attackRadius) : base(GameState.Chase)
+        private readonly SquadStateManager _squadStateManager;
+        private bool _isInAttackRange = false;
+        public SquadChaseState(IEnemyProvider enemyProvider, ISquadProvider playerProvider, float attackRadius, SquadStateManager squadStateManager) : base(GameState.Chase)
         {
+            _squadStateManager = squadStateManager;
             _enemyProvider = enemyProvider;
             _playerProvider = playerProvider;
             _attackRadius = attackRadius;
         }
         public override void RunCurrentState()
         {
-            foreach (var player in _playerProvider.Units)
+            if (_isInAttackRange)
             {
-                var playerNavMesh = player.GetComponent<NavMeshAgent>();
-                var nearestEnemy = player.TargetToPursue != null
-                    ? player.TargetToPursue
-                    : FindNearestEnemy(playerNavMesh);
+                _squadStateManager.SwitchState(GameState.Attack);
+                return;
+            }
+
+            foreach (var unit in _playerProvider.Units)
+            {
+                var unitNavMesh = unit.Agent;
+                var nearestEnemy = unit.TargetToPursue != null
+                    ? unit.TargetToPursue
+                    : FindNearestEnemy(unitNavMesh);
 
                 if (nearestEnemy == null || nearestEnemy.EnemyPosition == Vector3.zero)
                 {
                     continue;
                 }
 
-                if (playerNavMesh.destination == nearestEnemy.EnemyPosition)
+                if (unitNavMesh.destination == nearestEnemy.EnemyPosition)
                 {
                     continue;
                 }
 
-                if (playerNavMesh.SetDestination(nearestEnemy.EnemyPosition))
+                if (unitNavMesh.SetDestination(nearestEnemy.EnemyPosition))
                 {
-                    playerNavMesh.stoppingDistance = _attackRadius;
-                    player.TargetToPursue = nearestEnemy;
+                    unitNavMesh.stoppingDistance = _attackRadius;
+                    unit.TargetToPursue = nearestEnemy;
                 }
             }
         }

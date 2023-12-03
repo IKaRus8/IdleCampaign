@@ -8,8 +8,8 @@ namespace Data.Enums
 {
     public enum GameState
     {
-        Normal,
+        Walk,
         Chase,
-        Battle
+        Attack
     }
 }

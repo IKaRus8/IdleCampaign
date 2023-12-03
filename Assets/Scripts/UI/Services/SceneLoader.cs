@@ -16,11 +16,11 @@ namespace UI.Services
 
         public AsyncLazy Initialization { get; }
 
-        private SceneLoader(IResourceLoadService resourceLoadService, IUIContainerObjectsParents uiContainerObjectsParents, IPlayerProvider playerProvider)
+        private SceneLoader(IResourceLoadService resourceLoadService, IUIContainerObjectsParents uiContainerObjectsParents, ISquadProvider playerProvider)
         {
             Initialization = UniTask.Lazy(() => LoadResources(uiContainerObjectsParents, resourceLoadService, playerProvider));
         }
-        private async UniTask LoadResources(IUIContainerObjectsParents uiContainerObjectsParents, IResourceLoadService resourceLoadService, IPlayerProvider playerProvider)
+        private async UniTask LoadResources(IUIContainerObjectsParents uiContainerObjectsParents, IResourceLoadService resourceLoadService, ISquadProvider playerProvider)
         {
             //initObjects = await GetFillDictionary(uiContainerObjectsParents);
 

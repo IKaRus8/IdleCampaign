@@ -5,24 +5,21 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.AI;
 
 namespace Models
 {
-    public class Player : IPlayer
+    public class Unit : IUnit
     {
         public IEnemy TargetToPursue { get; set; }
         public GameObject PlayerObject { get; set; }
         public float MaxHealth { get; }
         public float Attack { get; }
+        public NavMeshAgent Agent => PlayerObject.GetComponent<NavMeshAgent>();
         public Vector3 PlayerPosition => PlayerObject.transform.position;
-        public Player(GameObject playerObject)
+        public Unit(GameObject playerObject)
         {
             PlayerObject = playerObject;
         }
-        public T GetComponent<T>() where T : Component
-        {
-            return PlayerObject.GetComponent<T>();
-        }
-
     }
 }

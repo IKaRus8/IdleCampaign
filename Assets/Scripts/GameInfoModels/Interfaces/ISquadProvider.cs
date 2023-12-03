@@ -4,11 +4,11 @@ using UnityEngine;
 
 namespace GameLogic.Interfaces
 {
-    public interface IPlayerProvider
+    public interface ISquadProvider
     {
-        List<IPlayer> Units { get; set; }
-        void AddUnit(IPlayer unit);
+        List<IUnit> Units { get; set; }
+        void AddUnit(IUnit unit);
         void AddUnit(GameObject unit);
-        void RemoveUnit(IPlayer unit);
+        void RemoveUnit(IUnit unit);
     }
 }

@@ -28,7 +28,7 @@ namespace DI.Installers
 
             //Bind models
             Container.Bind<IEnemyProvider>().To<EnemyProvider>().AsSingle();
-            Container.Bind<IPlayerProvider>().To<PlayerProvider>().AsSingle();
+            Container.Bind<ISquadProvider>().To<SquadProvider>().AsSingle();
 
             //Bind GameLogic services
             Container.Bind<IEnemyFactory>().To<EnemyFactory>().AsSingle();
