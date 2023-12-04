@@ -8,6 +8,7 @@ namespace Data.Enums
 {
     public enum GameState
     {
+        Idle,
         Walk,
         Chase,
         Attack

@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace GameInfoModels
 {
-    public class SquadProvider : ISquadProvider
+    public class SquadUnitsProvider : ISquadUnitsProvider
     {
         public List<IUnit> Units { get; set; } = new List<IUnit>();
         public void AddUnit(IUnit unit)

@@ -1,10 +1,7 @@
 using GameInfoModels.Interface;
 using GameLogic.Interfaces;
-using GameLogic.Services;
-using System.Collections.Generic;
-using System.Linq;
+using GameLogic.State;
 using UnityEngine;
-using UnityEngine.AI;
 using Zenject;
 
 namespace GameLogic.Controllers
@@ -14,24 +11,26 @@ namespace GameLogic.Controllers
         [SerializeField]
         private Rigidbody _rigidbody;
         [SerializeField]
-        private float _approachRadius;
+        private float _squadChaseRadius;
         [SerializeField]
-        private float _attackRadius;
+        private float _squadAttackRadius;
+        [SerializeField]
+        private float _unitAttackRadius;
 
         private IEnemyProvider _enemyProvider;
-        private ISquadProvider _playerProvider;
+        private ISquadUnitsProvider _playerProvider;
         private SquadStateManager _playerStateManager;
         public float Velocity => 20f;
 
         [Inject]
-        void Construct(IEnemyProvider enemyProvider, ISquadProvider playerProvider)
+        void Construct(IEnemyProvider enemyProvider, ISquadUnitsProvider playerProvider)
         {
             _enemyProvider = enemyProvider;
             _playerProvider = playerProvider;
         }
         private void Start()
         {
-            _playerStateManager = new SquadStateManager(_enemyProvider, _playerProvider, _rigidbody, Velocity, _approachRadius, _attackRadius);
+            _playerStateManager = new SquadStateManager(_enemyProvider, _playerProvider, _rigidbody, Velocity, _squadChaseRadius, _unitAttackRadius, _squadAttackRadius);
         }
         private void FixedUpdate()
         {
@@ -40,9 +39,9 @@ namespace GameLogic.Controllers
         private void OnDrawGizmos()
         {
             Gizmos.color = Color.red;
-            Gizmos.DrawWireSphere(transform.position, _attackRadius);
+            Gizmos.DrawWireSphere(transform.position, _unitAttackRadius);
             Gizmos.color = Color.yellow;
-            Gizmos.DrawWireSphere(transform.position, _approachRadius);
+            Gizmos.DrawWireSphere(transform.position, _squadChaseRadius);
         }
     }
 }

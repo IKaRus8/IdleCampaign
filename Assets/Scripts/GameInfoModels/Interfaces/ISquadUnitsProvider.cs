@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace GameLogic.Interfaces
 {
-    public interface ISquadProvider
+    public interface ISquadUnitsProvider
     {
         List<IUnit> Units { get; set; }
         void AddUnit(IUnit unit);

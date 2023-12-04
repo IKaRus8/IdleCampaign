@@ -1,43 +1,51 @@
-﻿using GameLogic.Interfaces;
-using Data.Enums;
+﻿using Data.Enums;
 using GameInfoModels.Interface;
+using GameLogic.Interfaces;
+using Models;
 using Models.Interfaces;
 using UnityEngine;
 using UnityEngine.AI;
 
-namespace GameLogic.Services
+namespace GameLogic.State
 {
-    public class SquadChaseState : BaseState
+    public class SquadAttackState : BaseState
     {
         private readonly IEnemyProvider _enemyProvider;
-        private readonly ISquadProvider _playerProvider;
+        private readonly ISquadUnitsProvider _squadUnitsProvider;
         private readonly float _attackRadius;
         private readonly SquadStateManager _squadStateManager;
         private bool _isInAttackRange = false;
-        public SquadChaseState(IEnemyProvider enemyProvider, ISquadProvider playerProvider, float attackRadius, SquadStateManager squadStateManager) : base(GameState.Chase)
+        private UnitStateManager _unitStateManager;
+        public SquadAttackState(IEnemyProvider enemyProvider, ISquadUnitsProvider squadUnitsProvider, float attackRadius, SquadStateManager squadStateManager) : base(GameState.Attack)
         {
             _squadStateManager = squadStateManager;
             _enemyProvider = enemyProvider;
-            _playerProvider = playerProvider;
+            _squadUnitsProvider = squadUnitsProvider;
             _attackRadius = attackRadius;
+            _unitStateManager = new UnitStateManager();
         }
         public override void RunCurrentState()
         {
-            if (_isInAttackRange)
+            foreach (var unit in _squadUnitsProvider.Units)
             {
-                _squadStateManager.SwitchState(GameState.Attack);
-                return;
-            }
-
-            foreach (var unit in _playerProvider.Units)
-            {
+                if (unit.UnitState == GameState.Attack && unit.TargetToPursue!=null)
+                {
+                    _unitStateManager.RunCurrentStateUnit(unit);
+                    continue;
+                }
                 var unitNavMesh = unit.Agent;
+                if (unitNavMesh.remainingDistance <= unitNavMesh.stoppingDistance && !unitNavMesh.pathPending)
+                {
+                    unit.UnitState = GameState.Attack;
+                    continue;
+                }
                 var nearestEnemy = unit.TargetToPursue != null
                     ? unit.TargetToPursue
                     : FindNearestEnemy(unitNavMesh);
 
                 if (nearestEnemy == null || nearestEnemy.EnemyPosition == Vector3.zero)
                 {
+                    unit.UnitState = GameState.Idle;
                     continue;
                 }
 
@@ -45,13 +53,17 @@ namespace GameLogic.Services
                 {
                     continue;
                 }
+                unit.UnitState = GameState.Chase;
 
-                if (unitNavMesh.SetDestination(nearestEnemy.EnemyPosition))
-                {
-                    unitNavMesh.stoppingDistance = _attackRadius;
-                    unit.TargetToPursue = nearestEnemy;
-                }
+                //if (unitNavMesh.SetDestination(nearestEnemy.EnemyPosition))
+                //{
+                //    unitNavMesh.stoppingDistance = _attackRadius;
+                //    unit.TargetToPursue = nearestEnemy;
+                //}
+
+                _unitStateManager.RunCurrentStateUnit(unit);
             }
+
         }
         private IEnemy FindNearestEnemy(NavMeshAgent unit)
         {

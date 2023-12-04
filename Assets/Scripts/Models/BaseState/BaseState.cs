@@ -1,8 +1,6 @@
 using Data.Enums;
-using GameLogic.Interfaces;
-using UnityEngine;
 
-namespace GameLogic.Services
+namespace Models
 {
     public abstract class BaseState
     {

@@ -1,4 +1,5 @@
-﻿using Models.Interfaces;
+﻿using Data.Enums;
+using Models.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,11 +13,13 @@ namespace Models
     public class Unit : IUnit
     {
         public IEnemy TargetToPursue { get; set; }
+        public GameState UnitState { get; set; }
         public GameObject PlayerObject { get; set; }
-        public float MaxHealth { get; }
-        public float Attack { get; }
         public NavMeshAgent Agent => PlayerObject.GetComponent<NavMeshAgent>();
         public Vector3 PlayerPosition => PlayerObject.transform.position;
+        public float MaxHealth { get; }
+        public float Attack { get; }
+
         public Unit(GameObject playerObject)
         {
             PlayerObject = playerObject;
