@@ -6,6 +6,7 @@ namespace Models
     public class Enemy : IEnemy
     {
         public GameObject EnemyObject { get; set; }
+        public bool IsDied { get; set; }
         public float MaxHealth { get; }
         public float Attack { get; }
         public Vector3 EnemyPosition => EnemyObject.transform.position;
@@ -13,6 +14,7 @@ namespace Models
         {
             EnemyObject = enemyObject;
             EnemyObject.transform.localPosition = Position;
+            IsDied = false;
         }
     }
 }

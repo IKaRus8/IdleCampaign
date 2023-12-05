@@ -41,6 +41,8 @@ namespace GameLogic.Controllers
             Gizmos.color = Color.red;
             Gizmos.DrawWireSphere(transform.position, _unitAttackRadius);
             Gizmos.color = Color.yellow;
+            Gizmos.DrawWireSphere(transform.position, _squadAttackRadius);
+            Gizmos.color = Color.black;
             Gizmos.DrawWireSphere(transform.position, _squadChaseRadius);
         }
     }

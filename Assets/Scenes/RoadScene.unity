@@ -726,7 +726,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 16
+  m_Constraints: 80
   m_CollisionDetection: 0
 --- !u!114 &889315574
 MonoBehaviour:
@@ -741,8 +741,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _rigidbody: {fileID: 889315573}
-  _approachRadius: 20
-  _attackRadius: 2
+  _squadChaseRadius: 235
+  _squadAttackRadius: 20
+  _unitAttackRadius: 3
 --- !u!1 &914182262
 GameObject:
   m_ObjectHideFlags: 0
@@ -1474,7 +1475,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1449777617}
-  m_LocalRotation: {x: 0.27860343, y: 1e-45, z: -0, w: 0.96040624}
+  m_LocalRotation: {x: 0.27860343, y: -3e-45, z: 1e-45, w: 0.96040624}
   m_LocalPosition: {x: 0, y: 8.210001, z: -12.960014}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1607,7 +1608,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1526319012}
-  m_LocalRotation: {x: 0.27860343, y: 1e-45, z: 0, w: 0.96040624}
+  m_LocalRotation: {x: 0.27860343, y: -3e-45, z: 1e-45, w: 0.96040624}
   m_LocalPosition: {x: 7.888535, y: 20.75098, z: -164.41014}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0

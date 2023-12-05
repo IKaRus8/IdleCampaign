@@ -8,9 +8,9 @@ namespace Models.Interfaces
     {
         IEnemy TargetToPursue { get; set; }
         GameState UnitState { get; set; }
-        GameObject PlayerObject { get; set; }
+        GameObject UnitObject { get; set; }
         NavMeshAgent Agent { get; }
-        Vector3 PlayerPosition { get; }
+        Vector3 UnitPosition { get; }
         float MaxHealth { get; }
         float Attack { get; }
     }

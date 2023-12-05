@@ -1,4 +1,5 @@
-﻿using GameInfoModels.Interface;
+﻿using Codice.Client.Common;
+using GameInfoModels.Interface;
 using GameLogic.Interfaces;
 using Models.Interfaces;
 using System;
@@ -37,11 +38,17 @@ namespace GameLogic.Services
             }
             _enemyProvider.Enemies.Add(enemy);
 
+            Observable.Timer(TimeSpan.FromSeconds(20))
+                .Subscribe(_ =>
+                {
+                    EnemyDestroy(enemy);
+                });
+
         }
         public void EnemyDestroy(IEnemy enemyDestroy)
         {
+            enemyDestroy.IsDied = true;
             UnityEngine.Object.Destroy(enemyDestroy.EnemyObject);
-
             _enemyProvider.Enemies.Remove(enemyDestroy);
         }
         public void Dispose()

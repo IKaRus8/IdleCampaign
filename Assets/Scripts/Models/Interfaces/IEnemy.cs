@@ -5,9 +5,10 @@ namespace Models.Interfaces
 {
     public interface IEnemy
     {
-        public GameObject EnemyObject { get; set; }
-        public float MaxHealth { get; }
-        public float Attack { get; }
-        public Vector3 EnemyPosition { get; }
+        GameObject EnemyObject { get; set; }
+        bool IsDied { get; set; }
+        float MaxHealth { get; }
+        float Attack { get; }
+        Vector3 EnemyPosition { get; }
     }
 }
