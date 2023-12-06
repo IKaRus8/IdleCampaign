@@ -21,6 +21,11 @@ namespace GameLogic.State
         {
             var unitNavMesh = unit.Agent;
 
+            if (unitNavMesh.destination == unit.TargetToPursue.EnemyPosition)
+            {
+                return;
+            }
+
             if (unitNavMesh.SetDestination(unit.TargetToPursue.EnemyPosition))
             {
                 unitNavMesh.isStopped = false;

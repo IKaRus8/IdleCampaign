@@ -7,10 +7,12 @@ using UnityEngine;
 
 namespace GameLogic.State
 {
-    public class SquadStateManager
+    public class SquadUnitsStateManager
     {
         private readonly ISquadUnitsProvider _squadUnitsProvider;
         private readonly IEnemyProvider _enemyProvider;
+
+        private readonly Rigidbody _squadRigidbody;
 
         private readonly float _squadChaseRadius;
         private readonly float _squadAttackRadius;
@@ -19,21 +21,20 @@ namespace GameLogic.State
 
         private Dictionary<GameState, BaseState> _allStates;
 
-        private Rigidbody _squadRigidbody;
-        public SquadStateManager(IEnemyProvider enemyProvider, ISquadUnitsProvider squadProvider, Rigidbody rigidbody,
-                                    float velocity, float squadChaseRadius, float unitAttackRadius, float squadAttackRadius)
+        public SquadUnitsStateManager(IEnemyProvider enemyProvider, ISquadUnitsProvider squadUnitsProvider, Rigidbody squadRigidbody,
+                                    float squadVelocity, float squadChaseRadius, float squadAttackRadius, float unitAttackRadius)
         {
             _enemyProvider = enemyProvider;
+            _squadUnitsProvider = squadUnitsProvider;
             _squadChaseRadius = squadChaseRadius;
             _squadAttackRadius = squadAttackRadius;
-            _squadUnitsProvider = squadProvider;
-            _squadRigidbody = rigidbody;
+            _squadRigidbody = squadRigidbody;
 
             _allStates = new Dictionary<GameState, BaseState>()
             {
-                { GameState.Walk, new SquadWalkState(velocity,rigidbody) },
-                { GameState.Chase, new SquadChaseState(velocity,rigidbody) },
-                { GameState.Attack, new SquadAttackState(enemyProvider,squadProvider,unitAttackRadius,squadAttackRadius) }
+                { GameState.Walk, new SquadWalkState(squadVelocity,squadRigidbody) },
+                { GameState.Chase, new SquadChaseState(squadVelocity,squadRigidbody) },
+                { GameState.Attack, new SquadAttackState(enemyProvider,squadUnitsProvider,unitAttackRadius,squadAttackRadius) }
             };
 
             _currentState = _allStates[GameState.Walk];
@@ -97,6 +98,7 @@ namespace GameLogic.State
             foreach (var unit in _squadUnitsProvider.Units)
             {
                 unit.Agent.isStopped = true;
+                unit.UnitState = GameState.Idle;
             }
             SwitchState(GameState.Walk);
         }

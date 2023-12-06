@@ -35,6 +35,7 @@ namespace Models
     public Unit(GameObject playerObject)
     {
         UnitObject = playerObject;
+        UnitState = GameState.Idle;
     }
 }
 }

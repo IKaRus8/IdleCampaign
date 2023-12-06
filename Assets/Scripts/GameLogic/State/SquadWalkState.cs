@@ -8,15 +8,15 @@ namespace GameLogic.State
     public class SquadWalkState : BaseState
     {
         private readonly Rigidbody _squadRigidbody;
-        private readonly float velocity;
+        private readonly float _velocity;
         public SquadWalkState(float Velocity, Rigidbody squadRigidbody) : base(GameState.Walk)
         {
             _squadRigidbody = squadRigidbody;
-            velocity = Velocity;
+            _velocity = Velocity;
         }
         public override void RunCurrentState()
         {
-            _squadRigidbody.velocity = Vector3.forward * velocity;
+            _squadRigidbody.velocity = Vector3.forward * _velocity;
         }
     }
 }

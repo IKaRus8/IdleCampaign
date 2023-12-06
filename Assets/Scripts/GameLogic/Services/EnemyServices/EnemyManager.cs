@@ -38,12 +38,6 @@ namespace GameLogic.Services
             }
             _enemyProvider.Enemies.Add(enemy);
 
-            Observable.Timer(TimeSpan.FromSeconds(20))
-                .Subscribe(_ =>
-                {
-                    EnemyDestroy(enemy);
-                });
-
         }
         public void EnemyDestroy(IEnemy enemyDestroy)
         {
