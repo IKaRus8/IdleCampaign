@@ -49,27 +49,54 @@ namespace GameLogic.State
             {
                 var enemyContainerPosition = _enemyProvider.Enemies[0].EnemyPosition;
                 var distance = Vector3.Distance(enemyContainerPosition, _squadRigidbody.position);
-                var state = distance <= _squadAttackRadius ?
-                    GameState.Attack :
-                    distance <= _squadChaseRadius ? GameState.Chase :
-                                                    GameState.Walk;
-
-                if (state != _currentState.GameState)
+                switch (_currentState.GameState)
                 {
-                    if (_currentState.GameState == GameState.Attack)
-                    {
-                        foreach(var unit in _squadUnitsProvider.Units)
-                        {
-                            unit.Agent.isStopped = true;
-                        }
-                        SwitchState(GameState.Walk);
-                    }
-                    else
-                    {
-                        SwitchState(state);
-                    }
+                    case GameState.Walk:
+                        CheckEnemyForWalkState(distance);
+                        break;
+                    case GameState.Chase:
+                        CheckEnemyForChaseState(distance);
+                        break;
+                    case GameState.Attack:
+                        CheckEnemyForAttackState(distance);
+                        break;
+                    default:
+                        break;
                 }
                 return;
+            }
+            SwitchState(GameState.Walk);
+        }
+        private void CheckEnemyForWalkState(float distance)
+        {
+            if (distance > _squadChaseRadius)
+            {
+                return;
+            }
+            SwitchState(GameState.Chase);
+        }
+        private void CheckEnemyForChaseState(float distance)
+        {
+            if (distance < _squadAttackRadius)
+            {
+                SwitchState(GameState.Attack);
+                return;
+            }
+            if(distance< _squadChaseRadius)
+            {
+                return;
+            }
+            SwitchState(GameState.Walk);
+        }
+        private void CheckEnemyForAttackState(float distance)
+        {
+            if (distance < _squadAttackRadius)
+            {
+                return;
+            }
+            foreach (var unit in _squadUnitsProvider.Units)
+            {
+                unit.Agent.isStopped = true;
             }
             SwitchState(GameState.Walk);
         }
@@ -86,19 +113,28 @@ namespace GameLogic.State
             switch (_currentState.GameState)
             {
                 case GameState.Walk:
-                    foreach (var unit in _squadUnitsProvider.Units)
-                    {
-                        unit.UnitObject.transform.localPosition = Vector3.zero;
-                        unit.UnitObject.transform.localRotation = Quaternion.identity;
-                    }
+                    ChangeStateInWalk();
                     break;
                 case GameState.Attack:
-                    _squadRigidbody.velocity = Vector3.forward;
+                    ChangeStateInAttack();
                     break;
                 default:
                     break;
             }
             Debug.Log(_currentState.GameState);
+        }
+        private void ChangeStateInWalk()
+        {
+            foreach (var unit in _squadUnitsProvider.Units)
+            {
+                unit.UnitObject.transform.localPosition = Vector3.zero;
+                unit.UnitObject.transform.localRotation = Quaternion.identity;
+            }
+
+        }
+        private void ChangeStateInAttack()
+        {
+            _squadRigidbody.velocity = Vector3.forward;
         }
     }
 }

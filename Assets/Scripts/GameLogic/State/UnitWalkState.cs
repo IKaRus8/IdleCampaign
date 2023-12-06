@@ -10,9 +10,9 @@ using UnityEngine;
 
 namespace GameLogic.State
 {
-    public class UnitIdleState : UnitBaseState
+    public class UnitWalkState : UnitBaseState
     {
-        public UnitIdleState() : base(GameState.Idle)
+        public UnitWalkState() : base(GameState.Walk)
         {
         }
 

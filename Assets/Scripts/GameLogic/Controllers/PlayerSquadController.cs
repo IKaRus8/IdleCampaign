@@ -18,23 +18,23 @@ namespace GameLogic.Controllers
         private float _unitAttackRadius;
 
         private IEnemyProvider _enemyProvider;
-        private ISquadUnitsProvider _playerProvider;
-        private SquadStateManager _playerStateManager;
+        private ISquadUnitsProvider _squadUnitsProvider;
+        private SquadStateManager _squadStateManager;
         public float Velocity => 20f;
 
         [Inject]
-        void Construct(IEnemyProvider enemyProvider, ISquadUnitsProvider playerProvider)
+        void Construct(IEnemyProvider enemyProvider, ISquadUnitsProvider squadUnitsProvider)
         {
             _enemyProvider = enemyProvider;
-            _playerProvider = playerProvider;
+            _squadUnitsProvider = squadUnitsProvider;
         }
         private void Start()
         {
-            _playerStateManager = new SquadStateManager(_enemyProvider, _playerProvider, _rigidbody, Velocity, _squadChaseRadius, _unitAttackRadius, _squadAttackRadius);
+            _squadStateManager = new SquadStateManager(_enemyProvider, _squadUnitsProvider, _rigidbody, Velocity, _squadChaseRadius, _unitAttackRadius, _squadAttackRadius);
         }
         private void FixedUpdate()
         {
-            _playerStateManager.RunState();
+            _squadStateManager.RunState();
         }
         private void OnDrawGizmos()
         {

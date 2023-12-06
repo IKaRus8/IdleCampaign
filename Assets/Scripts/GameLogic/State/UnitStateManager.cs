@@ -24,7 +24,7 @@ namespace GameLogic.State
             _chaseRadius = chaseRadius;
             _allStates = new Dictionary<GameState, UnitBaseState>
             {
-                {GameState.Idle, new UnitIdleState()},
+                {GameState.Walk, new UnitWalkState()},
                 {GameState.Chase, new UnitChaseState(unitAttackRadius)},
                 {GameState.Attack, new UnitAttackState()}
             };
@@ -69,7 +69,7 @@ namespace GameLogic.State
 
             if (nearestEnemy == null || nearestEnemy.EnemyPosition == Vector3.zero)
             {
-                unit.UnitState = GameState.Idle;
+                unit.UnitState = GameState.Walk;
                 RunCurrentStateUnit(unit);
                 return;
             }
