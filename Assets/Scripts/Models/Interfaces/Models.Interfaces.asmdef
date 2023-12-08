@@ -1,3 +1,16 @@
 {
-  "name": "Models.Interfaces"
+    "name": "Models.Interfaces",
+    "rootNamespace": "",
+    "references": [
+        "GUID:117c6049de8a62f4da3b788050ce2d2f"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
 }

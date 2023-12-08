@@ -599,6 +599,36 @@ PrefabInstance:
       propertyPath: m_Name
       value: RoadPart (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 210131698397962495, guid: feaa23be5e0784e89920fdc4206e1cb1,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1176420329301520048, guid: feaa23be5e0784e89920fdc4206e1cb1,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1263056654901056547, guid: feaa23be5e0784e89920fdc4206e1cb1,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2024522820184814782, guid: feaa23be5e0784e89920fdc4206e1cb1,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5760702419330200116, guid: feaa23be5e0784e89920fdc4206e1cb1,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7396357497827502456, guid: feaa23be5e0784e89920fdc4206e1cb1,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -696,7 +726,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 80
   m_CollisionDetection: 0
 --- !u!114 &889315574
 MonoBehaviour:
@@ -711,7 +741,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _rigidbody: {fileID: 889315573}
-  _approachRadius: 20
+  _squadChaseRadius: 235
+  _squadAttackRadius: 20
+  _unitAttackRadius: 3
 --- !u!1 &914182262
 GameObject:
   m_ObjectHideFlags: 0
@@ -942,6 +974,36 @@ PrefabInstance:
       propertyPath: m_Name
       value: RoadPart (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 210131698397962495, guid: feaa23be5e0784e89920fdc4206e1cb1,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1176420329301520048, guid: feaa23be5e0784e89920fdc4206e1cb1,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1263056654901056547, guid: feaa23be5e0784e89920fdc4206e1cb1,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2024522820184814782, guid: feaa23be5e0784e89920fdc4206e1cb1,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5760702419330200116, guid: feaa23be5e0784e89920fdc4206e1cb1,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7396357497827502456, guid: feaa23be5e0784e89920fdc4206e1cb1,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1115,6 +1177,36 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: RoadPart (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 210131698397962495, guid: feaa23be5e0784e89920fdc4206e1cb1,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1176420329301520048, guid: feaa23be5e0784e89920fdc4206e1cb1,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1263056654901056547, guid: feaa23be5e0784e89920fdc4206e1cb1,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2024522820184814782, guid: feaa23be5e0784e89920fdc4206e1cb1,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5760702419330200116, guid: feaa23be5e0784e89920fdc4206e1cb1,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7396357497827502456, guid: feaa23be5e0784e89920fdc4206e1cb1,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1324,6 +1416,36 @@ PrefabInstance:
       propertyPath: m_Name
       value: RoadPart (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 210131698397962495, guid: feaa23be5e0784e89920fdc4206e1cb1,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1176420329301520048, guid: feaa23be5e0784e89920fdc4206e1cb1,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1263056654901056547, guid: feaa23be5e0784e89920fdc4206e1cb1,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2024522820184814782, guid: feaa23be5e0784e89920fdc4206e1cb1,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5760702419330200116, guid: feaa23be5e0784e89920fdc4206e1cb1,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7396357497827502456, guid: feaa23be5e0784e89920fdc4206e1cb1,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1353,7 +1475,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1449777617}
-  m_LocalRotation: {x: 0.27860343, y: 3e-45, z: -1e-45, w: 0.96040624}
+  m_LocalRotation: {x: 0.27860343, y: 1e-45, z: -0, w: 0.96040624}
   m_LocalPosition: {x: 0, y: 8.210001, z: -12.960014}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1486,7 +1608,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1526319012}
-  m_LocalRotation: {x: 0.27860343, y: 3e-45, z: -1e-45, w: 0.96040624}
+  m_LocalRotation: {x: 0.27860343, y: 1e-45, z: 0, w: 0.96040624}
   m_LocalPosition: {x: 7.888535, y: 20.75098, z: -164.41014}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1556,12 +1678,13 @@ GameObject:
   m_Component:
   - component: {fileID: 1621583829}
   - component: {fileID: 1621583830}
+  - component: {fileID: 1621583831}
   m_Layer: 0
   m_Name: Roads
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &1621583829
 Transform:
@@ -1600,6 +1723,37 @@ MonoBehaviour:
   - {fileID: 1615084999}
   - {fileID: 686798326}
   - {fileID: 1736820575}
+--- !u!114 &1621583831
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1621583828}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a5ac11cc976e418e8d13136b07e1f52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_AgentTypeID: 0
+  m_CollectObjects: 0
+  m_Size: {x: 10, y: 10, z: 10}
+  m_Center: {x: 0, y: 2, z: 0}
+  m_LayerMask:
+    serializedVersion: 2
+    m_Bits: 55
+  m_UseGeometry: 0
+  m_DefaultArea: 0
+  m_GenerateLinks: 0
+  m_IgnoreNavMeshAgent: 1
+  m_IgnoreNavMeshObstacle: 1
+  m_OverrideTileSize: 0
+  m_TileSize: 256
+  m_OverrideVoxelSize: 0
+  m_VoxelSize: 0.13333334
+  m_MinRegionArea: 2
+  m_NavMeshData: {fileID: 23800000, guid: 910c282a976b6584987cf5af72641b05, type: 2}
+  m_BuildHeightMesh: 0
 --- !u!4 &1736820574 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 210131698397962491, guid: feaa23be5e0784e89920fdc4206e1cb1,
@@ -1764,6 +1918,36 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: StartPart
+      objectReference: {fileID: 0}
+    - target: {fileID: 210131698397962495, guid: feaa23be5e0784e89920fdc4206e1cb1,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1176420329301520048, guid: feaa23be5e0784e89920fdc4206e1cb1,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1263056654901056547, guid: feaa23be5e0784e89920fdc4206e1cb1,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2024522820184814782, guid: feaa23be5e0784e89920fdc4206e1cb1,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5760702419330200116, guid: feaa23be5e0784e89920fdc4206e1cb1,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7396357497827502456, guid: feaa23be5e0784e89920fdc4206e1cb1,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

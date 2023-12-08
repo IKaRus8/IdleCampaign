@@ -1,4 +1,5 @@
-﻿using GameInfoModels.Interface;
+﻿using Codice.Client.Common;
+using GameInfoModels.Interface;
 using GameLogic.Interfaces;
 using Models.Interfaces;
 using System;
@@ -30,6 +31,7 @@ namespace GameLogic.Services
             }
             Vector3 enemyPos = new Vector3(0, 0, -edgeSegmentPos);
             IEnemy enemy = await _enemySpawner.Spawn(enemyPos, enemyKey);
+
             if (enemy == null)
             {
                 return;
@@ -39,8 +41,8 @@ namespace GameLogic.Services
         }
         public void EnemyDestroy(IEnemy enemyDestroy)
         {
+            enemyDestroy.IsDied = true;
             UnityEngine.Object.Destroy(enemyDestroy.EnemyObject);
-
             _enemyProvider.Enemies.Remove(enemyDestroy);
         }
         public void Dispose()

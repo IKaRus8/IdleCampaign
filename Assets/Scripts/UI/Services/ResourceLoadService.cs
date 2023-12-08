@@ -9,7 +9,7 @@ using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using Object = UnityEngine.Object;
 
-namespace Assets.Scripts.UI.Services
+namespace UI.Services
 {
     [UsedImplicitly]
     public class ResourceLoadService : IResourceLoadService, IDisposable

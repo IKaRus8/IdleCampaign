@@ -5,7 +5,6 @@ using Cysharp.Threading.Tasks;
 using UnityEngine.ResourceManagement.ResourceProviders;
 using System.Diagnostics;
 using System;
-using Assets.Scripts.UI.Services;
 
 namespace UI.Services
 

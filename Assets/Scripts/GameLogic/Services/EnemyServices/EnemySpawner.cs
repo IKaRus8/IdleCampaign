@@ -7,7 +7,7 @@ namespace GameLogic.Services
 {
     public class EnemySpawner : IEnemySpawner
     {
-        private const float chance = 60f;
+        private const float chance = 80f;
 
         private readonly RandomGeneration _randomGeneration;
         private readonly IEnemyFactory _enemyFactory;

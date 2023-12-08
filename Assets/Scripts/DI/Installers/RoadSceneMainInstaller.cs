@@ -1,11 +1,12 @@
-﻿using GameInfoModels;
+﻿using GameLogic.Interfaces;
+using GameInfoModels;
 using GameInfoModels.Interface;
 using GameLogic.Controllers;
-using GameLogic.Interfaces;
 using GameLogic.Services;
 using UI.Interfaces;
 using UnityEngine;
 using Zenject;
+using UI.Services;
 
 namespace DI.Installers
 {
@@ -27,6 +28,7 @@ namespace DI.Installers
 
             //Bind models
             Container.Bind<IEnemyProvider>().To<EnemyProvider>().AsSingle();
+            Container.Bind<ISquadUnitsProvider>().To<SquadUnitsProvider>().AsSingle();
 
             //Bind GameLogic services
             Container.Bind<IEnemyFactory>().To<EnemyFactory>().AsSingle();

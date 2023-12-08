@@ -1,6 +1,6 @@
 using GameInfoModels.Interface;
 using GameLogic.Interfaces;
-using GameLogic.Services;
+using GameLogic.State;
 using UnityEngine;
 using Zenject;
 
@@ -11,29 +11,39 @@ namespace GameLogic.Controllers
         [SerializeField]
         private Rigidbody _rigidbody;
         [SerializeField]
-        private float _approachRadius;
+        private float _squadChaseRadius;
+        [SerializeField]
+        private float _squadAttackRadius;
+        [SerializeField]
+        private float _unitAttackRadius;
 
-        private PlayerStateManager _playerStateManager;
         private IEnemyProvider _enemyProvider;
+        private ISquadUnitsProvider _squadUnitsProvider;
+        private SquadUnitsStateManager _squadUnitsStateManager;
         public float Velocity => 20f;
 
         [Inject]
-        void Construct(IEnemyProvider enemyProvider)
+        void Construct(IEnemyProvider enemyProvider, ISquadUnitsProvider squadUnitsProvider)
         {
             _enemyProvider = enemyProvider;
+            _squadUnitsProvider = squadUnitsProvider;
         }
-        private void Awake()
+        private void Start()
         {
-            _playerStateManager = new PlayerStateManager(_enemyProvider, Velocity, _approachRadius);
+            _squadUnitsStateManager = new SquadUnitsStateManager(_enemyProvider, _squadUnitsProvider, _rigidbody, Velocity, _squadChaseRadius, _squadAttackRadius, _unitAttackRadius);
         }
         private void FixedUpdate()
         {
-            _playerStateManager.Movement(_rigidbody);
+            _squadUnitsStateManager.RunState();
         }
         private void OnDrawGizmos()
         {
             Gizmos.color = Color.red;
-            Gizmos.DrawWireSphere(transform.position, _approachRadius);
+            Gizmos.DrawWireSphere(transform.position, _unitAttackRadius);
+            Gizmos.color = Color.yellow;
+            Gizmos.DrawWireSphere(transform.position, _squadAttackRadius);
+            Gizmos.color = Color.black;
+            Gizmos.DrawWireSphere(transform.position, _squadChaseRadius);
         }
     }
 }

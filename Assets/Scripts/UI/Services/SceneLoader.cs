@@ -1,41 +1,39 @@
-using Assets.Scripts.UI.Services;
+using GameLogic.Interfaces;
 using Cysharp.Threading.Tasks;
 using JetBrains.Annotations;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using UI.Interfaces;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
-using Zenject;
 
-[UsedImplicitly]
-public class SceneLoader : IAsyncInitialization
+namespace UI.Services
 {
-    private string playerKey = "DogPBR";
-
-    private Dictionary<string, Transform> initObjects;
-
-    public AsyncLazy Initialization { get; }
-
-    private SceneLoader(IResourceLoadService resourceLoadService, IUIContainerObjectsParents uiContainerObjectsParents)
+    [UsedImplicitly]
+    public class SceneLoader : IAsyncInitialization
     {
-        Initialization = UniTask.Lazy(() => LoadResources(uiContainerObjectsParents,resourceLoadService));
-    }
-    private async UniTask LoadResources(IUIContainerObjectsParents uiContainerObjectsParents, IResourceLoadService resourceLoadService)
-    {
-        initObjects = await GetFillDictionary(uiContainerObjectsParents);
+        private string playerKey = "DogPBR";
 
-        foreach (var obj in initObjects)
+        private Dictionary<string, Transform> initObjects;
+
+        public AsyncLazy Initialization { get; }
+
+        private SceneLoader(IResourceLoadService resourceLoadService, IUIContainerObjectsParents uiContainerObjectsParents, ISquadUnitsProvider playerProvider)
         {
-            await resourceLoadService.InstantiateAssetAsync(obj.Key, obj.Value);
+            Initialization = UniTask.Lazy(() => LoadResources(uiContainerObjectsParents, resourceLoadService, playerProvider));
         }
-    }
-
-    private async UniTask<Dictionary<string, Transform>> GetFillDictionary(IUIContainerObjectsParents uiContainerObjectsParents)
-    {
-        return new Dictionary<string, Transform>
+        private async UniTask LoadResources(IUIContainerObjectsParents uiContainerObjectsParents, IResourceLoadService resourceLoadService, ISquadUnitsProvider playerProvider)
         {
-            { playerKey, uiContainerObjectsParents.PlayerParent }
-        };
+            //initObjects = await GetFillDictionary(uiContainerObjectsParents);
+
+            var player = await resourceLoadService.InstantiateAssetAsync(playerKey, uiContainerObjectsParents.PlayerParent);
+            playerProvider.AddUnit(player);
+        }
+
+        //private async UniTask<Dictionary<string, Transform>> GetFillDictionary(IUIContainerObjectsParents uiContainerObjectsParents)
+        //{
+        //    return new Dictionary<string, Transform>
+        //    {
+        //        { playerKey, uiContainerObjectsParents.PlayerParent }
+        //    };
+        //}
     }
 }

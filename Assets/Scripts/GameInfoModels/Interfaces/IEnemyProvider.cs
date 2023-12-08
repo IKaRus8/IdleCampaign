@@ -1,14 +1,14 @@
 using Models.Interfaces;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace GameInfoModels.Interface
 {
     public interface IEnemyProvider
     {
-        public List<IEnemy> Enemies { get; }
+        List<IEnemy> Enemies { get; }
+        float SquadHealth { get; }
 
-        public float SquadHealth { get; }
-
-        public bool IsEnemyNotExist { get; }
+        bool IsEnemyNotExist { get; }
     }
 }
