@@ -4,7 +4,7 @@ using UnityEngine.AI;
 
 namespace Models.Interfaces
 {
-    public interface IUnit
+    public interface IUnit : IDamagable
     {
         IEnemy TargetToPursue { get; set; }
         GameState UnitState { get; set; }
