@@ -16,6 +16,8 @@ namespace Models
             EnemyObject = enemyObject;
             EnemyObject.transform.localPosition = Position;
             IsDead = false;
+            MaxHealth = 50;
+            Attack = 5;
             CurrentHealth = MaxHealth;
         }
 
@@ -27,6 +29,7 @@ namespace Models
                 CurrentHealth = 0;
                 IsDead = true;
                 GameObject.Destroy(EnemyObject);
+                EnemyObject = null;
             }
         }
     }

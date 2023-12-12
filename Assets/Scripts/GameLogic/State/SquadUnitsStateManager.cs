@@ -46,7 +46,7 @@ namespace GameLogic.State
         }
         private void CheckEnemy()
         {
-            if (!_enemyProvider.IsEnemyNotExist)
+            if (!_enemyProvider.IsEnemyNotExist && !_enemyProvider.Enemies[0].IsDead)
             {
                 var enemyContainerPosition = _enemyProvider.Enemies[0].EnemyPosition;
                 var distance = Vector3.Distance(enemyContainerPosition, _squadRigidbody.position);
@@ -95,11 +95,6 @@ namespace GameLogic.State
             {
                 return;
             }
-            foreach (var unit in _squadUnitsProvider.Units)
-            {
-                unit.Agent.isStopped = true;
-                unit.UnitState = GameState.Idle;
-            }
             SwitchState(GameState.Walk);
         }
         public void SwitchState(GameState gameState)
@@ -131,6 +126,8 @@ namespace GameLogic.State
             {
                 unit.UnitObject.transform.localPosition = Vector3.zero;
                 unit.UnitObject.transform.localRotation = Quaternion.identity;
+                unit.Agent.isStopped = true;
+                unit.UnitState = GameState.Idle;
             }
 
         }

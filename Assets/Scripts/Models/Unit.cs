@@ -53,6 +53,7 @@ namespace Models
                 CurrentHealth = 0;
                 IsDead = true;
                 GameObject.Destroy(UnitObject);
+                UnitObject = null;
             }
         }
     }

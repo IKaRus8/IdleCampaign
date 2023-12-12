@@ -113,6 +113,10 @@ namespace GameLogic.State
 
             foreach (IEnemy enemy in _enemyProvider.Enemies)
             {
+                if(enemy.IsDead)
+                {
+                    continue;
+                }
                 var enemyPos = enemy.EnemyPosition;
                 float distanceToEnemy = Vector3.Distance(unitPos, enemyPos);
                 if (distanceToEnemy > _chaseRadius)

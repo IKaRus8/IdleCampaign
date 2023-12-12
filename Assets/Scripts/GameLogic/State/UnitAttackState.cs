@@ -23,7 +23,7 @@ namespace GameLogic.State
         public override void RunCurrentState(IUnit unit)
         {
             if(!_isAttacking)
-            Observable.FromCoroutine(()=>(AttackEnemy(unit.TargetToPursue,unit.Attack)));
+                MainThreadDispatcher.StartCoroutine(AttackEnemy(unit.TargetToPursue,unit.Attack));
         }
         IEnumerator AttackEnemy(IEnemy enemy, float unitAttack)
         {
