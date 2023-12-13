@@ -3,6 +3,7 @@ using GameInfoModels.Interface;
 using GameLogic.Interfaces;
 using Models;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace GameLogic.State
@@ -122,6 +123,7 @@ namespace GameLogic.State
         }
         private void ChangeStateInWalk()
         {
+            _squadUnitsProvider.Units.RemoveAll(u=>u.IsDead==true);
             foreach (var unit in _squadUnitsProvider.Units)
             {
                 unit.UnitObject.transform.localPosition = Vector3.zero;
