@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Models.Interfaces
 {
-    public interface IDamagable
+    public interface IDamageable
     {
         void TakeDamage(float Damage);
     }

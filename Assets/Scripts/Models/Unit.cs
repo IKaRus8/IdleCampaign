@@ -29,18 +29,19 @@ namespace Models
         }
         public GameState UnitState { get; set; }
         public GameObject UnitObject { get; set; }
+        public bool IsAttacking { get; set; }
+        public bool IsDead { get; set; }
+        public float CurrentHealth { get; private set; }
         public NavMeshAgent Agent => UnitObject.GetComponent<NavMeshAgent>();
         public Vector3 UnitPosition => UnitObject.transform.position;
-        public float CurrentHealth { get; private set; }
+
         public float MaxHealth { get; }
         public float Attack { get; }
-        public bool IsDead { get; set; }
-        public Unit(GameObject playerObject)
+
+        public Unit(GameObject unitObject)
         {
-            UnitObject = playerObject;
+            UnitObject = unitObject;
             UnitState = GameState.Idle;
-            MaxHealth = 100;
-            Attack = 20;
             IsDead = false;
             CurrentHealth = MaxHealth;
         }

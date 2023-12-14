@@ -123,15 +123,8 @@ namespace GameLogic.State
         }
         private void ChangeStateInWalk()
         {
-            _squadUnitsProvider.Units.RemoveAll(u=>u.IsDead==true);
-            foreach (var unit in _squadUnitsProvider.Units)
-            {
-                unit.UnitObject.transform.localPosition = Vector3.zero;
-                unit.UnitObject.transform.localRotation = Quaternion.identity;
-                unit.Agent.isStopped = true;
-                unit.UnitState = GameState.Idle;
-            }
-
+            _squadUnitsProvider.RemoveDeadUnits();
+            _squadUnitsProvider.ResetUnitPosition();
         }
         private void ChangeStateInAttack()
         {

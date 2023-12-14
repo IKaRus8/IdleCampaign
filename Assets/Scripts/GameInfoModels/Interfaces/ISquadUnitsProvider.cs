@@ -9,6 +9,7 @@ namespace GameLogic.Interfaces
         List<IUnit> Units { get; set; }
         void AddUnit(IUnit unit);
         void AddUnit(GameObject unit);
-        void RemoveUnit(IUnit unit);
+        void RemoveDeadUnits();
+        void ResetUnitPosition();
     }
 }

@@ -7,23 +7,23 @@ namespace Models
     {
         public GameObject EnemyObject { get; set; }
         public bool IsDead { get; set; }
-        public float MaxHealth { get; }
         public float CurrentHealth { get; private set; }
-        public float Attack { get; }
         public Vector3 EnemyPosition => EnemyObject.transform.position;
+
+        public float MaxHealth { get; }
+        public float Attack { get; }
         public Enemy(GameObject enemyObject,Vector3 Position)
         {
             EnemyObject = enemyObject;
             EnemyObject.transform.localPosition = Position;
             IsDead = false;
-            MaxHealth = 50;
-            Attack = 5;
             CurrentHealth = MaxHealth;
         }
 
         public void TakeDamage(float damageAmount)
         {
             CurrentHealth -= damageAmount;
+            Debug.Log(CurrentHealth);
             if (CurrentHealth <= 0)
             {
                 CurrentHealth = 0;

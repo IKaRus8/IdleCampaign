@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Models.Interfaces
 {
-    public interface IEnemy : IDamagable
+    public interface IEnemy : IDamageable
     {
         GameObject EnemyObject { get; set; }
         bool IsDead { get; set; }
