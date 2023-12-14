@@ -9,7 +9,10 @@ namespace GameInfoModels
     public class EnemyProvider : IEnemyProvider
     {
         public List<IEnemy> Enemies { get; set; } = new List<IEnemy>();
-        public float SquadHealth { get; }
         public bool IsEnemyNotExist => Enemies.Count == 0;
+        public void RemoveDeadEnemies()
+        {
+            Enemies.RemoveAll(u => u.IsDead == true);
+        }
     }
 }
