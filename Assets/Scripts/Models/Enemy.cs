@@ -23,7 +23,6 @@ namespace Models
         public void TakeDamage(float damageAmount)
         {
             CurrentHealth -= damageAmount;
-            Debug.Log(CurrentHealth);
             if (CurrentHealth <= 0)
             {
                 CurrentHealth = 0;

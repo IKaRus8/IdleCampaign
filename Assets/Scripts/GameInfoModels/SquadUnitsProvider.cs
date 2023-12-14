@@ -23,7 +23,7 @@ namespace GameInfoModels
         {
             Units.RemoveAll(u => u.IsDead == true);
         }
-        public void ResetUnitPosition()
+        public void ResetUnitsPosition()
         {
             foreach (var unit in Units)
             {

@@ -47,7 +47,7 @@ namespace GameLogic.State
         }
         private void CheckEnemy()
         {
-            if (!_enemyProvider.IsEnemyNotExist && !_enemyProvider.Enemies[0].IsDead)
+            if (!_enemyProvider.IsEnemyNotExist)
             {
                 var enemyContainerPosition = _enemyProvider.Enemies[0].EnemyPosition;
                 var distance = Vector3.Distance(enemyContainerPosition, _squadRigidbody.position);
@@ -124,7 +124,7 @@ namespace GameLogic.State
         private void ChangeStateInWalk()
         {
             _squadUnitsProvider.RemoveDeadUnits();
-            _squadUnitsProvider.ResetUnitPosition();
+            _squadUnitsProvider.ResetUnitsPosition();
         }
         private void ChangeStateInAttack()
         {
