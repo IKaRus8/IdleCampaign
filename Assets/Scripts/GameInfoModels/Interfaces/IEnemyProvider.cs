@@ -7,8 +7,7 @@ namespace GameInfoModels.Interface
     public interface IEnemyProvider
     {
         List<IEnemy> Enemies { get; }
-        float SquadHealth { get; }
-
         bool IsEnemyNotExist { get; }
+        void RemoveDeadEnemies();
     }
 }

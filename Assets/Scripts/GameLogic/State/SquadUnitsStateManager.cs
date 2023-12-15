@@ -3,6 +3,7 @@ using GameInfoModels.Interface;
 using GameLogic.Interfaces;
 using Models;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace GameLogic.State
@@ -95,11 +96,6 @@ namespace GameLogic.State
             {
                 return;
             }
-            foreach (var unit in _squadUnitsProvider.Units)
-            {
-                unit.Agent.isStopped = true;
-                unit.UnitState = GameState.Idle;
-            }
             SwitchState(GameState.Walk);
         }
         public void SwitchState(GameState gameState)
@@ -127,12 +123,8 @@ namespace GameLogic.State
         }
         private void ChangeStateInWalk()
         {
-            foreach (var unit in _squadUnitsProvider.Units)
-            {
-                unit.UnitObject.transform.localPosition = Vector3.zero;
-                unit.UnitObject.transform.localRotation = Quaternion.identity;
-            }
-
+            _squadUnitsProvider.RemoveDeadUnits();
+            _squadUnitsProvider.ResetUnitsPosition();
         }
         private void ChangeStateInAttack()
         {

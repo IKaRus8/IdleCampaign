@@ -41,9 +41,8 @@ namespace GameLogic.Services
         }
         public void EnemyDestroy(IEnemy enemyDestroy)
         {
-            enemyDestroy.IsDied = true;
+            enemyDestroy.IsDead = true;
             UnityEngine.Object.Destroy(enemyDestroy.EnemyObject);
-            _enemyProvider.Enemies.Remove(enemyDestroy);
         }
         public void Dispose()
         {

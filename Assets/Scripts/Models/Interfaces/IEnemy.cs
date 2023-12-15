@@ -3,10 +3,10 @@ using UnityEngine;
 
 namespace Models.Interfaces
 {
-    public interface IEnemy
+    public interface IEnemy : IDamageable
     {
         GameObject EnemyObject { get; set; }
-        bool IsDied { get; set; }
+        bool IsDead { get; set; }
         float MaxHealth { get; }
         float Attack { get; }
         Vector3 EnemyPosition { get; }

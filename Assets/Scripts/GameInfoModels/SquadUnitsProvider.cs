@@ -1,8 +1,8 @@
-﻿using GameLogic.Interfaces;
+﻿using Data.Enums;
+using GameLogic.Interfaces;
 using Models;
 using Models.Interfaces;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 namespace GameInfoModels
@@ -16,12 +16,22 @@ namespace GameInfoModels
         }
         public void AddUnit(GameObject unit)
         {
-            Unit player = new(unit);
-            Units.Add(player);
+            Unit newUnit = new(unit);
+            Units.Add(newUnit);
         }
-        public void RemoveUnit(IUnit unit)
+        public void RemoveDeadUnits()
         {
-            Units.Remove(unit);
+            Units.RemoveAll(u => u.IsDead == true);
+        }
+        public void ResetUnitsPosition()
+        {
+            foreach (var unit in Units)
+            {
+                unit.UnitObject.transform.localPosition = Vector3.zero;
+                unit.UnitObject.transform.localRotation = Quaternion.identity;
+                unit.Agent.isStopped = true;
+                unit.UnitState = GameState.Idle;
+            }
         }
     }
 }
