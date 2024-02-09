@@ -29,11 +29,11 @@ public class EnemySquadsController : MonoBehaviour
 	}
 	private void Start()
 	{
-		_enemySquadStateManager = new EnemySquadStateManager();
+		_enemySquadStateManager = new EnemySquadStateManager(_enemySquadsProvider,_squadUnitsProvider);
 	}
 	private void FixedUpdate()
 	{
-		//_squadUnitsStateManager.RunState();
+		_enemySquadStateManager.RunState();
 	}
 
 
