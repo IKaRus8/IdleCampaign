@@ -1,5 +1,5 @@
 ﻿using Data.Enums;
-using GameInfoModels.Interface;
+using GameInfoModels.Interfaces;
 using Models;
 using UnityEngine;
 

@@ -1,4 +1,4 @@
-using GameInfoModels.Interface;
+using GameInfoModels.Interfaces;
 using Models.Interfaces;
 using System.Collections.Generic;
 using UI.Interfaces;

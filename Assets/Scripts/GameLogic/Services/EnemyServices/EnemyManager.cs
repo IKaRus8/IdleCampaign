@@ -1,5 +1,5 @@
 ﻿using Codice.Client.Common;
-using GameInfoModels.Interface;
+using GameInfoModels.Interfaces;
 using GameLogic.Interfaces;
 using Models.Interfaces;
 using System;

@@ -1,4 +1,4 @@
-﻿using GameInfoModels.Interface;
+﻿using GameInfoModels.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +9,8 @@ namespace GameInfoModels.Interfaces
 {
 	public interface IEnemySquadsProvider
 	{
-		List<IEnemyProvider> Enemies { get; set; }
+		List<IEnemyProvider> EnemySquads { get; set; }
+
+		void RemoveSquadEnemy(IEnemyProvider enemyProvider);
 	}
 }

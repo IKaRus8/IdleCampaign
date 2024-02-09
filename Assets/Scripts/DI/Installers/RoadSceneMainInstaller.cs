@@ -1,6 +1,6 @@
 ﻿using GameLogic.Interfaces;
 using GameInfoModels;
-using GameInfoModels.Interface;
+using GameInfoModels.Interfaces;
 using GameLogic.Controllers;
 using GameLogic.Services;
 using UI.Interfaces;
@@ -27,7 +27,7 @@ namespace DI.Installers
             Container.Bind<IAsyncInitialization>().To<SceneLoader>().AsSingle();
 
             //Bind models
-            Container.Bind<IEnemyProvider>().To<EnemyProvider>().AsSingle();
+            Container.Bind<IEnemySquadsProvider>().To<EnemySquadsProvider>().AsSingle();
             Container.Bind<ISquadUnitsProvider>().To<SquadUnitsProvider>().AsSingle();
 
             //Bind GameLogic services

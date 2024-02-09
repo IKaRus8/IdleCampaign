@@ -2,7 +2,7 @@ using Models.Interfaces;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace GameInfoModels.Interface
+namespace GameInfoModels.Interfaces
 {
     public interface IEnemyProvider
     {

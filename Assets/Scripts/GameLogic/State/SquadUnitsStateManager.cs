@@ -1,5 +1,6 @@
 ﻿using Data.Enums;
-using GameInfoModels.Interface;
+using GameInfoModels.Interfaces;
+using GameInfoModels.Interfaces;
 using GameLogic.Interfaces;
 using Models;
 using System.Collections.Generic;
@@ -11,7 +12,7 @@ namespace GameLogic.State
     public class SquadUnitsStateManager
     {
         private readonly ISquadUnitsProvider _squadUnitsProvider;
-        private readonly IEnemyProvider _enemyProvider;
+        private readonly IEnemySquadsProvider _enemySquadsProvider;
 
         private readonly Rigidbody _squadRigidbody;
 
@@ -22,10 +23,10 @@ namespace GameLogic.State
 
         private Dictionary<GameState, BaseState> _allStates;
 
-        public SquadUnitsStateManager(IEnemyProvider enemyProvider, ISquadUnitsProvider squadUnitsProvider, Rigidbody squadRigidbody,
+        public SquadUnitsStateManager(IEnemySquadsProvider enemySquadsProvider, ISquadUnitsProvider squadUnitsProvider, Rigidbody squadRigidbody,
                                     float squadVelocity, float squadChaseRadius, float squadAttackRadius, float unitAttackRadius)
         {
-            _enemyProvider = enemyProvider;
+            _enemySquadsProvider = enemySquadsProvider;
             _squadUnitsProvider = squadUnitsProvider;
             _squadChaseRadius = squadChaseRadius;
             _squadAttackRadius = squadAttackRadius;
@@ -35,7 +36,7 @@ namespace GameLogic.State
             {
                 { GameState.Walk, new SquadWalkState(squadVelocity,squadRigidbody) },
                 { GameState.Chase, new SquadChaseState(squadVelocity,squadRigidbody) },
-                { GameState.Attack, new SquadAttackState(enemyProvider,squadUnitsProvider,unitAttackRadius,squadAttackRadius) }
+                { GameState.Attack, new SquadAttackState(enemySquadsProvider,squadUnitsProvider,unitAttackRadius,squadAttackRadius) }
             };
 
             _currentState = _allStates[GameState.Walk];
@@ -47,9 +48,9 @@ namespace GameLogic.State
         }
         private void CheckEnemy()
         {
-            if (!_enemyProvider.IsEnemyNotExist)
+            if (_enemySquadsProvider.EnemySquads.Count()!=0)
             {
-                var enemyContainerPosition = _enemyProvider.Enemies[0].EnemyPosition;
+                var enemyContainerPosition = _enemySquadsProvider.EnemySquads[0].Enemies[0].EnemyPosition;
                 var distance = Vector3.Distance(enemyContainerPosition, _squadRigidbody.position);
                 switch (_currentState.GameState)
                 {

@@ -1,4 +1,5 @@
-using GameInfoModels.Interface;
+using GameInfoModels.Interfaces;
+using GameInfoModels.Interfaces;
 using GameLogic.Interfaces;
 using GameLogic.State;
 using UnityEngine;
@@ -17,20 +18,20 @@ namespace GameLogic.Controllers
         [SerializeField]
         private float _unitAttackRadius;
 
-        private IEnemyProvider _enemyProvider;
+        private IEnemySquadsProvider _enemySquadsProvider;
         private ISquadUnitsProvider _squadUnitsProvider;
         private SquadUnitsStateManager _squadUnitsStateManager;
         public float Velocity => 20f;
 
         [Inject]
-        void Construct(IEnemyProvider enemyProvider, ISquadUnitsProvider squadUnitsProvider)
+        void Construct(IEnemySquadsProvider enemySquadsProvider, ISquadUnitsProvider squadUnitsProvider)
         {
-            _enemyProvider = enemyProvider;
+            _enemySquadsProvider = enemySquadsProvider;
             _squadUnitsProvider = squadUnitsProvider;
         }
         private void Start()
         {
-            _squadUnitsStateManager = new SquadUnitsStateManager(_enemyProvider, _squadUnitsProvider, _rigidbody, Velocity, _squadChaseRadius, _squadAttackRadius, _unitAttackRadius);
+            _squadUnitsStateManager = new SquadUnitsStateManager(_enemySquadsProvider, _squadUnitsProvider, _rigidbody, Velocity, _squadChaseRadius, _squadAttackRadius, _unitAttackRadius);
         }
         private void FixedUpdate()
         {

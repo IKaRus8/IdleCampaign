@@ -1,5 +1,5 @@
 ﻿using Data.Enums;
-using GameInfoModels.Interface;
+using GameInfoModels.Interfaces;
 using Models;
 using Models.Interfaces;
 using System.Collections.Generic;
@@ -10,16 +10,16 @@ namespace GameLogic.State
 {
     public class UnitStateManager
     {
-        private readonly IEnemyProvider _enemyProvider;
+        private readonly IEnemySquadsProvider _enemySquadsProvider;
 
         private readonly float _attackRadius;
         private readonly float _chaseRadius;
 
         private Dictionary<GameState, UnitBaseState> _allStates;
 
-        public UnitStateManager(float unitAttackRadius, float chaseRadius, IEnemyProvider enemyProvider)
+        public UnitStateManager(float unitAttackRadius, float chaseRadius, IEnemySquadsProvider enemySquadsProvider)
         {
-            _enemyProvider = enemyProvider;
+            _enemySquadsProvider = enemySquadsProvider;
             _chaseRadius = chaseRadius;
 
             _allStates = new Dictionary<GameState, UnitBaseState>
@@ -111,7 +111,7 @@ namespace GameLogic.State
             float nearestDistance = Mathf.Infinity;
             var unitPos = unit.transform.position;
 
-            foreach (IEnemy enemy in _enemyProvider.Enemies)
+            foreach (IEnemy enemy in _enemySquadsProvider.EnemySquads[0].Enemies)
             {
                 if(enemy.IsDead)
                 {

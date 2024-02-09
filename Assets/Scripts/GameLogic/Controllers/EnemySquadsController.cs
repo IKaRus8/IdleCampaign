@@ -1,6 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using GameInfoModels.Interface;
+using GameInfoModels.Interfaces;
 using GameInfoModels.Interfaces;
 using GameLogic.Interfaces;
 using GameLogic.State;
@@ -29,7 +29,7 @@ public class EnemySquadsController : MonoBehaviour
 	}
 	private void Start()
 	{
-		_enemySquadStateManager = new EnemySquadStateManager(_enemySquadsProvider,_squadUnitsProvider);
+		_enemySquadStateManager = new EnemySquadStateManager(_enemySquadsProvider,_squadUnitsProvider, _enemySquadAttackRadius,_enemySquadChaseRadius,_enemyUnitAttackRadius);
 	}
 	private void FixedUpdate()
 	{
