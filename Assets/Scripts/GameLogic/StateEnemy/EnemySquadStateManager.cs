@@ -16,7 +16,7 @@ namespace GameLogic.StateEnemy
 		private IEnemySquadsProvider _enemySquadsProvider;
 		private ISquadUnitsProvider _squadUnitsProvider;
 
-		private Dictionary<GameState, BaseState> _allStates;
+		private Dictionary<GameState, EnemySquadBaseState> _allStates;
 
 		private BaseState _currentState;
 
@@ -26,6 +26,13 @@ namespace GameLogic.StateEnemy
 		{
 			_enemySquadsProvider = enemySquadsProvider;
 			_squadUnitsProvider = squadUnitsProvider;
+
+			_allStates = new Dictionary<GameState, EnemySquadBaseState>()
+			{
+				{GameState.Idle, new EnemySquadIdleState() },
+				{GameState.Chase, new EnemySquadChaseState() },
+				{GameState.Attack, new EnemySquadAttackState() }
+			};
 		}
 		public void RunState()
 		{
