@@ -35,7 +35,7 @@ namespace GameLogic.StateEnemy
 			_allStates = new Dictionary<GameState, EnemySquadBaseState>()
 			{
 				{GameState.Idle, new EnemySquadIdleState() },
-				{GameState.Chase, new EnemySquadChaseState() },
+				{GameState.Chase, new EnemySquadChaseState(enemySquadsProvider) },
 				{GameState.Attack, new EnemySquadAttackState() }
 			};
 			_currentState = _allStates[GameState.Idle];
@@ -141,7 +141,7 @@ namespace GameLogic.StateEnemy
 			switch (_currentState.GameState)
 			{
 				case GameState.Idle:
-					//
+					ChangeStateInIdle();
 					break;
 				case GameState.Chase:
 					//
@@ -154,5 +154,9 @@ namespace GameLogic.StateEnemy
 			}
 		}
 
+		private void ChangeStateInIdle()
+		{
+
+		}
 	}
 }

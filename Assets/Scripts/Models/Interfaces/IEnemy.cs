@@ -1,5 +1,6 @@
 using Codice.Client.BaseCommands.Differences;
 using UnityEngine;
+using UnityEngine.AI;
 
 namespace Models.Interfaces
 {
@@ -10,5 +11,6 @@ namespace Models.Interfaces
         float MaxHealth { get; }
         float Attack { get; }
         Vector3 EnemyPosition { get; }
+        NavMeshAgent Agent { get;}
     }
 }
