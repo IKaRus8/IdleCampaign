@@ -10,7 +10,10 @@ namespace GameInfoModels
     {
         public List<IEnemy> Enemies { get; set; } = new List<IEnemy>();
         public bool IsEnemyNotExist => Enemies.Count == 0;
-        public void RemoveDeadEnemies()
+
+        public Vector3 EnemySquadPosition => Enemies[0].EnemyPosition;
+
+		public void RemoveDeadEnemies()
         {
             Enemies.RemoveAll(u => u.IsDead == true);
         }

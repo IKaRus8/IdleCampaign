@@ -8,6 +8,7 @@ namespace GameInfoModels.Interfaces
     {
         List<IEnemy> Enemies { get; }
         bool IsEnemyNotExist { get; }
+        Vector3 EnemySquadPosition { get; }
         void RemoveDeadEnemies();
     }
 }

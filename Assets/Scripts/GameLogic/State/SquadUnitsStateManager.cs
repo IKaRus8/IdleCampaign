@@ -120,7 +120,6 @@ namespace GameLogic.State
                 default:
                     break;
             }
-            Debug.Log(_currentState.GameState);
         }
         private void ChangeStateInWalk()
         {

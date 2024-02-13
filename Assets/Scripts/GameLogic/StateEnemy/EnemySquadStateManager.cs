@@ -2,8 +2,10 @@
 using GameInfoModels.Interfaces;
 using GameLogic.Interfaces;
 using Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 namespace GameLogic.StateEnemy
 {
@@ -48,15 +50,63 @@ namespace GameLogic.StateEnemy
 
 		private void CheckPlayerUnits()
 		{
-			if(!CheckCurrentSquadEnemyNullable())
+			if (CheckCurrentSquadEnemyNullable())
 			{
-
+				return;
 			}
-
+			var playerPosition = _squadUnitsProvider.SquadUnitsPosition;
+			var enemyPosition = _enemySquadsProvider.EnemySquads[0].Enemies[0].EnemyPosition;
+			var distance = Vector3.Distance(playerPosition, enemyPosition);
+			switch (_currentState.GameState)
+			{
+				case GameState.Idle:
+					CheckPlayerForIdleState(distance);
+					break;
+				case GameState.Chase:
+					CheckPlayerForChaseState(distance);
+					break;
+				case GameState.Attack:
+					CheckPlayerForAttackState(distance);
+					break;
+				default:
+					break;
+			}
 		}
+		private void CheckPlayerForIdleState(float distance)
+		{
+			if (distance > _enemySquadChaseRadius)
+			{
+				return;
+			}
+			SwitchState(GameState.Chase);
+		}
+		private void CheckPlayerForChaseState(float distance)
+		{
+			if (distance < _enemySquadAttackRadius)
+			{
+				SwitchState(GameState.Attack);
+				return;
+			}
+			if (distance < _enemySquadChaseRadius)
+			{
+				return;
+			}
+			SwitchState(GameState.Idle);
+		}
+
+		private void CheckPlayerForAttackState(float distance)
+		{
+			if (distance < _enemySquadAttackRadius)
+			{
+				return;
+			}
+			SwitchState(GameState.Chase);
+		}
+
+
 		private bool CheckCurrentSquadEnemyNullable()
 		{
-			if(_currentSquadEnemy == null)
+			if (_currentSquadEnemy == null)
 			{
 				return TryInitializeCurrentSquadEnemy();
 			}
@@ -78,5 +128,31 @@ namespace GameLogic.StateEnemy
 			_currentSquadEnemy = null;
 			return true;
 		}
+		private void SwitchState(GameState gameState)
+		{
+			if (_currentState.GameState != gameState)
+			{
+				_currentState = _allStates[gameState];
+				ChangeEnemiesBehaviour();
+			}
+		}
+		private void ChangeEnemiesBehaviour()
+		{
+			switch (_currentState.GameState)
+			{
+				case GameState.Idle:
+					//
+					break;
+				case GameState.Chase:
+					//
+					break;
+				case GameState.Attack:
+					//
+					break;
+				default:
+					break;
+			}
+		}
+
 	}
 }
