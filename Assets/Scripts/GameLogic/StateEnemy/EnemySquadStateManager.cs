@@ -39,7 +39,14 @@ namespace GameLogic.StateEnemy
 				{GameState.Attack, new EnemySquadAttackState() }
 			};
 			_currentState = _allStates[GameState.Idle];
+			if(_enemySquadsProvider.EnemySquads.Count==0)
+			{
+				_currentSquadEnemy = null;
+			}
+			else
+			{
 			_currentSquadEnemy = _enemySquadsProvider.EnemySquads[0];
+			}
 		}
 
 		public void RunState()
@@ -112,7 +119,7 @@ namespace GameLogic.StateEnemy
 			}
 			if (!_currentSquadEnemy.IsEnemyNotExist)
 			{
-				return true;
+				return false;
 			}
 			_enemySquadsProvider.RemoveSquadEnemy(_currentSquadEnemy);
 			return TryInitializeCurrentSquadEnemy();

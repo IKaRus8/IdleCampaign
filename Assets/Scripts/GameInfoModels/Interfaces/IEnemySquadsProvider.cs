@@ -10,7 +10,8 @@ namespace GameInfoModels.Interfaces
 	public interface IEnemySquadsProvider
 	{
 		List<IEnemyProvider> EnemySquads { get; set; }
-
+		IEnemyProvider CreateNewSquad();
 		void RemoveSquadEnemy(IEnemyProvider enemyProvider);
+
 	}
 }

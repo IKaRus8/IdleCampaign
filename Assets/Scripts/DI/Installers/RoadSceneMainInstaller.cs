@@ -27,8 +27,8 @@ namespace DI.Installers
             Container.Bind<IAsyncInitialization>().To<SceneLoader>().AsSingle();
 
             //Bind models
-            Container.Bind<IEnemySquadsProvider>().To<EnemySquadsProvider>().AsSingle();
             Container.Bind<ISquadUnitsProvider>().To<SquadUnitsProvider>().AsSingle();
+            Container.Bind<IEnemySquadsProvider>().To<EnemySquadsProvider>().AsSingle();
 
             //Bind GameLogic services
             Container.Bind<IEnemyFactory>().To<EnemyFactory>().AsSingle();

@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using GameInfoModels.Interfaces;
-using GameInfoModels.Interfaces;
 using GameLogic.Interfaces;
 using GameLogic.State;
 using GameLogic.StateEnemy;
