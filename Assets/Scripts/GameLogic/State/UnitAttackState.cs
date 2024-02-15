@@ -23,12 +23,12 @@ namespace GameLogic.State
         public override void RunCurrentState(IUnit unit)
         {
             if(!unit.IsAttacking)
-                MainThreadDispatcher.StartCoroutine(AttackEnemy(unit,unit.Attack));
+                MainThreadDispatcher.StartCoroutine(AttackEnemy(unit));
         }
-        IEnumerator AttackEnemy(IUnit unit, float unitAttack)
+        IEnumerator AttackEnemy(IUnit unit)
         {
             unit.IsAttacking = true;
-            unit.TargetToPursue.TakeDamage(unitAttack);
+            unit.TargetToPursue.TakeDamage(unit.Attack);
             yield return new WaitForSeconds(_timeBetweenAttack);
             unit.IsAttacking = false;
         }

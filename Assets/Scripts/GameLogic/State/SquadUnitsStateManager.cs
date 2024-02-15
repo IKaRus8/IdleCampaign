@@ -1,6 +1,5 @@
 ﻿using Data.Enums;
 using GameInfoModels.Interfaces;
-using GameInfoModels.Interfaces;
 using GameLogic.Interfaces;
 using Models;
 using System.Collections.Generic;
@@ -51,6 +50,10 @@ namespace GameLogic.State
             if (_enemySquadsProvider.EnemySquads.Count()!=0)
             {
                 var enemyContainerPosition = _enemySquadsProvider.EnemySquads[0].Enemies[0].EnemyPosition;
+                if(enemyContainerPosition == Vector3.zero)
+                {
+
+                }
                 var distance = Vector3.Distance(enemyContainerPosition, _squadRigidbody.position);
                 switch (_currentState.GameState)
                 {

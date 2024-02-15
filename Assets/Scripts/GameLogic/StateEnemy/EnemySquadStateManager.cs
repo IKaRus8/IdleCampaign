@@ -154,10 +154,19 @@ namespace GameLogic.StateEnemy
 					//
 					break;
 				case GameState.Attack:
-					//
+					ChangeStateInAttack();
 					break;
 				default:
 					break;
+			}
+		}
+
+		private void ChangeStateInAttack()
+		{
+			foreach (var enemy in _enemySquadsProvider.EnemySquads[0].Enemies)
+			{
+				var rb = enemy.Rigidbody;
+				rb.velocity = Vector3.zero;
 			}
 		}
 
