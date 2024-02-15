@@ -12,5 +12,7 @@ namespace Models.Interfaces
         float Attack { get; }
         Vector3 EnemyPosition { get; }
         NavMeshAgent Agent { get;}
-    }
+		Rigidbody Rigidbody { get; }
+
+	}
 }

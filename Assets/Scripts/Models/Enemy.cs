@@ -11,6 +11,7 @@ namespace Models
         public float CurrentHealth { get; private set; }
         public Vector3 EnemyPosition => EnemyObject.transform.position;
 		public NavMeshAgent Agent { get; }
+		public Rigidbody Rigidbody { get; }
 
         public float MaxHealth { get; }
         public float Attack { get; }
@@ -23,7 +24,7 @@ namespace Models
             IsDead = false;
             CurrentHealth = MaxHealth;
             Agent = EnemyObject.GetComponent<NavMeshAgent>();
-
+			Rigidbody = EnemyObject.GetComponent<Rigidbody>();
 		}
 
         public void TakeDamage(float damageAmount)
