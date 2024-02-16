@@ -6,14 +6,14 @@ using UnityEngine;
 
 namespace GameLogic.State
 {
-    public class SquadAttackState : BaseState
-    {
+    public class SquadAttackState : UnitSquadBaseState
+	{
         private readonly ISquadUnitsProvider _squadUnitsProvider;
         private readonly UnitStateManager _unitStateManager;
         public SquadAttackState(IEnemySquadsProvider enemySquadsProvider, ISquadUnitsProvider squadUnitsProvider, float unitAttackRadius, float chaseRadius) : base(GameState.Attack)
         {
             _squadUnitsProvider = squadUnitsProvider;
-            _unitStateManager = new UnitStateManager(unitAttackRadius, chaseRadius, enemySquadsProvider);
+            _unitStateManager = new UnitStateManager(enemySquadsProvider, unitAttackRadius, chaseRadius);
         }
         public override void RunCurrentState()
         {

@@ -5,8 +5,8 @@ using UnityEngine;
 
 namespace GameLogic.State
 {
-    public class SquadChaseState : BaseState
-    {
+    public class SquadChaseState : UnitSquadBaseState
+	{
         private const float speedChase = 3f;
         private readonly Rigidbody _squadRigidbody;
         private readonly float _velocity;

@@ -20,23 +20,21 @@ namespace GameLogic.StateEnemy
 
 		private float _enemySquadAttackRadius;
 		private float _enemySquadChaseRadius;
-		private float _enemyUnitAttackRadius;
 
 		public EnemySquadStateManager(IEnemySquadsProvider enemySquadsProvider, ISquadUnitsProvider squadUnitsProvider,
-										float enemySquadAttackRadius, float enemySquadChaseRadius, float enemyUnitAttackRadius)
+										float enemySquadAttackRadius, float enemySquadChaseRadius, float enemyAttackRadius)
 		{
 			_enemySquadsProvider = enemySquadsProvider;
 			_squadUnitsProvider = squadUnitsProvider;
 
 			_enemySquadAttackRadius = enemySquadAttackRadius;
 			_enemySquadChaseRadius = enemySquadChaseRadius;
-			_enemyUnitAttackRadius = enemyUnitAttackRadius;
 
 			_allStates = new Dictionary<GameState, EnemySquadBaseState>()
 			{
 				{GameState.Idle, new EnemySquadIdleState() },
 				{GameState.Chase, new EnemySquadChaseState(enemySquadsProvider) },
-				{GameState.Attack, new EnemySquadAttackState() }
+				{GameState.Attack, new EnemySquadAttackState(enemySquadsProvider,squadUnitsProvider,enemyAttackRadius,enemySquadAttackRadius) }
 			};
 			_currentState = _allStates[GameState.Idle];
 			if(_enemySquadsProvider.EnemySquads.Count==0)

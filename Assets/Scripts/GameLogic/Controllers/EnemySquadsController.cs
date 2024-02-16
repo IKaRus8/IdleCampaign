@@ -14,7 +14,7 @@ public class EnemySquadsController : MonoBehaviour
 	[SerializeField]
 	private float _enemySquadAttackRadius;
 	[SerializeField]
-	private float _enemyUnitAttackRadius;
+	private float _enemyAttackRadius;
 
 	private IEnemySquadsProvider _enemySquadsProvider;
 	private ISquadUnitsProvider _squadUnitsProvider;
@@ -28,7 +28,7 @@ public class EnemySquadsController : MonoBehaviour
 	}
 	private void Start()
 	{
-		_enemySquadStateManager = new EnemySquadStateManager(_enemySquadsProvider,_squadUnitsProvider, _enemySquadAttackRadius,_enemySquadChaseRadius,_enemyUnitAttackRadius);
+		_enemySquadStateManager = new EnemySquadStateManager(_enemySquadsProvider,_squadUnitsProvider, _enemySquadAttackRadius,_enemySquadChaseRadius,_enemyAttackRadius);
 	}
 	private void FixedUpdate()
 	{

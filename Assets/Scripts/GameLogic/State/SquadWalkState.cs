@@ -5,8 +5,8 @@ using UnityEngine;
 
 namespace GameLogic.State
 {
-    public class SquadWalkState : BaseState
-    {
+    public class SquadWalkState : UnitSquadBaseState
+	{
         private readonly Rigidbody _squadRigidbody;
         private readonly float _velocity;
         public SquadWalkState(float Velocity, Rigidbody squadRigidbody) : base(GameState.Walk)

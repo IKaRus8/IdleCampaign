@@ -2,10 +2,10 @@ using Data.Enums;
 
 namespace Models
 {
-    public abstract class BaseState
+    public abstract class UnitSquadBaseState
     {
         public GameState GameState { get; }
-        public BaseState( GameState state)
+        public UnitSquadBaseState( GameState state)
         {
             GameState = state;
         }

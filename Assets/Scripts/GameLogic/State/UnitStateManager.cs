@@ -17,7 +17,7 @@ namespace GameLogic.State
 
         private Dictionary<GameState, UnitBaseState> _allStates;
 
-        public UnitStateManager(float unitAttackRadius, float chaseRadius, IEnemySquadsProvider enemySquadsProvider)
+        public UnitStateManager(IEnemySquadsProvider enemySquadsProvider, float unitAttackRadius, float chaseRadius)
         {
             _enemySquadsProvider = enemySquadsProvider;
             _chaseRadius = chaseRadius;

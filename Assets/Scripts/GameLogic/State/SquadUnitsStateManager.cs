@@ -18,9 +18,9 @@ namespace GameLogic.State
         private readonly float _squadChaseRadius;
         private readonly float _squadAttackRadius;
 
-        private BaseState _currentState;
+        private UnitSquadBaseState _currentState;
 
-        private Dictionary<GameState, BaseState> _allStates;
+        private Dictionary<GameState, UnitSquadBaseState> _allStates;
 
         public SquadUnitsStateManager(IEnemySquadsProvider enemySquadsProvider, ISquadUnitsProvider squadUnitsProvider, Rigidbody squadRigidbody,
                                     float squadVelocity, float squadChaseRadius, float squadAttackRadius, float unitAttackRadius)
@@ -31,7 +31,7 @@ namespace GameLogic.State
             _squadAttackRadius = squadAttackRadius;
             _squadRigidbody = squadRigidbody;
 
-            _allStates = new Dictionary<GameState, BaseState>()
+            _allStates = new Dictionary<GameState, UnitSquadBaseState>()
             {
                 { GameState.Walk, new SquadWalkState(squadVelocity,squadRigidbody) },
                 { GameState.Chase, new SquadChaseState(squadVelocity,squadRigidbody) },
@@ -50,10 +50,6 @@ namespace GameLogic.State
             if (_enemySquadsProvider.EnemySquads.Count()!=0)
             {
                 var enemyContainerPosition = _enemySquadsProvider.EnemySquads[0].Enemies[0].EnemyPosition;
-                if(enemyContainerPosition == Vector3.zero)
-                {
-
-                }
                 var distance = Vector3.Distance(enemyContainerPosition, _squadRigidbody.position);
                 switch (_currentState.GameState)
                 {
