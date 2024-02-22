@@ -19,7 +19,20 @@ namespace GameLogic.StateEnemy
 
 		public override void RunCurrentState(IEnemy enemy)
 		{
-			throw new NotImplementedException();
+			var enemyNavMesh = enemy.Agent;
+
+			if (enemyNavMesh.destination == enemy.TargetToPursue.UnitPosition)
+			{
+				return;
+			}
+
+			if (enemyNavMesh.SetDestination(enemy.TargetToPursue.UnitPosition))
+			{
+				enemyNavMesh.isStopped = false;
+				enemyNavMesh.stoppingDistance = _attackRadius;
+				return;
+			}
+			enemy.TargetToPursue = null;
 		}
 
 	}

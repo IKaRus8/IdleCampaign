@@ -11,6 +11,7 @@ namespace Models
 
 		public GameObject EnemyObject { get; set; }
         public bool IsDead { get; set; }
+		public bool IsAttacking { get; set; }
         public float CurrentHealth { get; private set; }
         public Vector3 EnemyPosition => EnemyObject.transform.position;
 		public NavMeshAgent Agent { get; }

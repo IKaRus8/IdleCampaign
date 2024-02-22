@@ -26,8 +26,6 @@ namespace GameLogic.StateEnemy
 			{
 				var rb = enemy.Rigidbody;
 				rb.velocity = Vector3.back * _velocity;
-
-
 			}
 		}
 	}
