@@ -14,6 +14,8 @@ namespace Models.Interfaces
         NavMeshAgent Agent { get; }
         Vector3 UnitPosition { get; }
         float MaxHealth { get; }
-        float Attack { get; }
-    }
+        float Damage { get; }
+		float TimeBetweenAttack { get; }
+
+	}
 }

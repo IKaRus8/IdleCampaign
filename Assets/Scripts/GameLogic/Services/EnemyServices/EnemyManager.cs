@@ -14,7 +14,7 @@ namespace GameLogic.Services
         private readonly IEnemySpawner _enemySpawner;
         private IEnemySquadsProvider _enemySquadsProvider;
 
-        private string enemyKey = "DogPolyartEnemy";
+        private string enemyKey = "DogPolyart";
         public EnemyManager(ISegmentContainer segmentContainer, IEnemySpawner enemySpawner,
 							IEnemySquadsProvider enemySquadsProvider)
         {

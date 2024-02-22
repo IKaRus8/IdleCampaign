@@ -13,7 +13,8 @@ namespace Models
         public bool IsDead { get; set; }
 		public bool IsAttacking { get; set; }
         public float CurrentHealth { get; private set; }
-        public Vector3 EnemyPosition => EnemyObject.transform.position;
+		public float TimeBetweenAttack { get; }
+		public Vector3 EnemyPosition => EnemyObject.transform.position;
 		public NavMeshAgent Agent { get; }
 		public Rigidbody Rigidbody { get; }
 
@@ -36,7 +37,7 @@ namespace Models
 		}
 
 		public float MaxHealth { get; }
-        public float Attack { get; }
+        public float Damage { get; }
 		public GameState EnemyState { get; set; }
 
 		public Enemy(GameObject enemyObject,Vector3 Position)
@@ -45,9 +46,13 @@ namespace Models
             EnemyState = GameState.Idle;
 			EnemyObject.transform.localPosition = Position;
             IsDead = false;
-            CurrentHealth = MaxHealth;
             Agent = EnemyObject.GetComponent<NavMeshAgent>();
 			Rigidbody = EnemyObject.GetComponent<Rigidbody>();
+			
+			MaxHealth = 40f;
+			CurrentHealth = MaxHealth;
+			TimeBetweenAttack = 2f;
+			Damage = 10f;
 		}
 
         public void TakeDamage(float damageAmount)

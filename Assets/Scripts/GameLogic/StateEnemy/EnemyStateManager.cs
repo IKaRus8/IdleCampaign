@@ -1,16 +1,10 @@
 ﻿using Data.Enums;
-using GameInfoModels.Interfaces;
 using GameLogic.Interfaces;
-using GameLogic.State;
 using Models;
 using Models.Interfaces;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UnityEngine.AI;
 using UnityEngine;
+using UnityEngine.AI;
 
 namespace GameLogic.StateEnemy
 {
@@ -75,6 +69,7 @@ namespace GameLogic.StateEnemy
 				return;
 			}
 			enemy.EnemyState = GameState.Chase;
+			ChangeStateInChase(enemy);
 			enemy.TargetToPursue = nearestUnit;
 
 		}
@@ -83,19 +78,21 @@ namespace GameLogic.StateEnemy
 			var enemyNavMesh = enemy.Agent;
 			if (enemy.TargetToPursue != null)
 			{
-				if (enemyNavMesh.destination != enemy.TargetToPursue.UnitPosition)
-				{
-					return;
-				}
+				//if (enemyNavMesh.destination != enemy.TargetToPursue.UnitPosition)
+				//{
+				//	return;
+				//}
 
 				if (enemyNavMesh.remainingDistance <= enemyNavMesh.stoppingDistance && !enemyNavMesh.pathPending)
 				{
 					enemy.EnemyState = GameState.Attack;
+					ChangeStateInAttack(enemy);
 					return;
 				}
+				return;
 			}
-			enemyNavMesh.isStopped = true;
 			enemy.EnemyState = GameState.Walk;
+			ChangeStateInWalk(enemy);
 		}
 		private void CheckUnitForAttackState(IEnemy enemy)
 		{
@@ -104,11 +101,11 @@ namespace GameLogic.StateEnemy
 				if (Vector3.Distance(enemy.TargetToPursue.UnitPosition, enemy.EnemyPosition) > _attackRadius)
 				{
 					enemy.EnemyState = GameState.Chase;
+					ChangeStateInChase(enemy);
 				}
 				return;
 			}
 			enemy.EnemyState = GameState.Idle;
-
 		}
 
 		private IUnit FindNearestUnit(NavMeshAgent enemyAgent)
@@ -138,5 +135,19 @@ namespace GameLogic.StateEnemy
 			return nearestUnit;
 		}
 
+		private void ChangeStateInWalk(IEnemy enemy)
+		{
+			enemy.Agent.isStopped = true;
+		}
+		private void ChangeStateInChase(IEnemy enemy)
+		{
+			enemy.Agent.isStopped = false;
+			enemy.Rigidbody.velocity = Vector3.zero;
+		}
+		private void ChangeStateInAttack(IEnemy enemy)
+		{
+			enemy.Agent.isStopped = true;
+
+		}
 	}
 }

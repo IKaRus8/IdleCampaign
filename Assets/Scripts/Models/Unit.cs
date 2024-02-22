@@ -36,15 +36,21 @@ namespace Models
         public Vector3 UnitPosition => UnitObject.transform.position;
 
         public float MaxHealth { get; }
-        public float Attack { get; }
+        public float Damage { get; }
 
-        public Unit(GameObject unitObject)
+		public float TimeBetweenAttack { get; }
+
+		public Unit(GameObject unitObject)
         {
             UnitObject = unitObject;
             UnitState = GameState.Idle;
             IsDead = false;
-            CurrentHealth = MaxHealth;
-        }
+
+            MaxHealth = 100f;
+			CurrentHealth = MaxHealth;
+            TimeBetweenAttack = 2f;
+            Damage = 10f;
+		}
 
         public void TakeDamage(float damageAmount)
         {

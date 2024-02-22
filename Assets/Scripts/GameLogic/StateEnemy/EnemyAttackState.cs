@@ -1,12 +1,7 @@
 ﻿using Data.Enums;
 using Models;
 using Models.Interfaces;
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UniRx;
 using UnityEngine;
 
@@ -15,8 +10,6 @@ namespace GameLogic.StateEnemy
 
 	internal class EnemyAttackState : EnemyBaseState
 	{
-		private float _timeBetweenAttack = 2f;
-
 		public EnemyAttackState() : base(GameState.Attack)
 		{
 		}
@@ -24,15 +17,14 @@ namespace GameLogic.StateEnemy
 		public override void RunCurrentState(IEnemy enemy)
 		{
 			if (!enemy.IsAttacking)
-				MainThreadDispatcher.StartCoroutine(AttackEnemy(enemy));
+				MainThreadDispatcher.StartCoroutine(AttackUnit(enemy));
 		}
-		IEnumerator AttackEnemy(IEnemy enemy)
+		IEnumerator AttackUnit(IEnemy enemy)
 		{
 			enemy.IsAttacking = true;
-			enemy.TargetToPursue.TakeDamage(enemy.Attack);
-			yield return new WaitForSeconds(_timeBetweenAttack);
+			enemy.TargetToPursue.TakeDamage(enemy.Damage);
+			yield return new WaitForSeconds(enemy.TimeBetweenAttack);
 			enemy.IsAttacking = false;
 		}
-
 	}
 }

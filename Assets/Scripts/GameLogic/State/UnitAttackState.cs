@@ -15,7 +15,6 @@ namespace GameLogic.State
 {
     public class UnitAttackState : UnitBaseState
     {
-        private float _timeBetweenAttack = 2f;
         public UnitAttackState() : base(GameState.Attack)
         {
         }
@@ -28,8 +27,8 @@ namespace GameLogic.State
         IEnumerator AttackEnemy(IUnit unit)
         {
             unit.IsAttacking = true;
-            unit.TargetToPursue.TakeDamage(unit.Attack);
-            yield return new WaitForSeconds(_timeBetweenAttack);
+            unit.TargetToPursue.TakeDamage(unit.Damage);
+            yield return new WaitForSeconds(unit.TimeBetweenAttack);
             unit.IsAttacking = false;
         }
     }

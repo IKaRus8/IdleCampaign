@@ -16,7 +16,8 @@ namespace Models.Interfaces
 		bool IsDead { get; set; }
 		bool IsAttacking { get; set; }
         float MaxHealth { get; }
-        float Attack { get; }
+        float Damage { get; }
+		float TimeBetweenAttack { get; }
 
 	}
 }

@@ -28,7 +28,6 @@ namespace GameLogic.StateEnemy
 
 			if (enemyNavMesh.SetDestination(enemy.TargetToPursue.UnitPosition))
 			{
-				enemyNavMesh.isStopped = false;
 				enemyNavMesh.stoppingDistance = _attackRadius;
 				return;
 			}

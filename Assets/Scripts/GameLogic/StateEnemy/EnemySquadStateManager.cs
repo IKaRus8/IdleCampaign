@@ -2,7 +2,6 @@
 using GameInfoModels.Interfaces;
 using GameLogic.Interfaces;
 using Models;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -37,13 +36,13 @@ namespace GameLogic.StateEnemy
 				{GameState.Attack, new EnemySquadAttackState(enemySquadsProvider,squadUnitsProvider,enemyAttackRadius,enemySquadAttackRadius) }
 			};
 			_currentState = _allStates[GameState.Idle];
-			if(_enemySquadsProvider.EnemySquads.Count==0)
+			if (_enemySquadsProvider.EnemySquads.Count == 0)
 			{
 				_currentSquadEnemy = null;
 			}
 			else
 			{
-			_currentSquadEnemy = _enemySquadsProvider.EnemySquads[0];
+				_currentSquadEnemy = _enemySquadsProvider.EnemySquads[0];
 			}
 		}
 
@@ -108,7 +107,6 @@ namespace GameLogic.StateEnemy
 			SwitchState(GameState.Chase);
 		}
 
-
 		private bool CheckCurrentSquadEnemyNullable()
 		{
 			if (_currentSquadEnemy == null)
@@ -125,13 +123,13 @@ namespace GameLogic.StateEnemy
 		}
 		private bool TryInitializeCurrentSquadEnemy()
 		{
-			if (_enemySquadsProvider.EnemySquads.Count() != 0)
+			if (_enemySquadsProvider.EnemySquads.Count() == 0 || _enemySquadsProvider.EnemySquads[0].Enemies.Count == 0)
 			{
-				_currentSquadEnemy = _enemySquadsProvider.EnemySquads[0];
-				return false;
+				_currentSquadEnemy = null;
+				return true;
 			}
-			_currentSquadEnemy = null;
-			return true;
+			_currentSquadEnemy = _enemySquadsProvider.EnemySquads[0];
+			return false;
 		}
 		private void SwitchState(GameState gameState)
 		{
