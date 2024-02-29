@@ -15,9 +15,8 @@ namespace GameLogic.StateEnemy
 		{
 		}
 
-		public override void RunCurrentState(IEnemy enemy)
+		public override void RunState(IEnemy enemy)
 		{
-			throw new NotImplementedException();
 		}
 	}
 }

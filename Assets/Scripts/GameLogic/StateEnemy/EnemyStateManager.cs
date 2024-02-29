@@ -50,15 +50,15 @@ namespace GameLogic.StateEnemy
 				default:
 					break;
 			}
-			RunCurrentStateEnemy(enemy);
+			RunStateEnemy(enemy);
 		}
-		private void RunCurrentStateEnemy(IEnemy enemy)
+		private void RunStateEnemy(IEnemy enemy)
 		{
-			_allStates[enemy.EnemyState].RunCurrentState(enemy);
+			_allStates[enemy.EnemyState].RunState(enemy);
 		}
 		private void CheckUnitForIdleState(IEnemy enemy)
 		{
-			enemy.EnemyState = GameState.Walk;
+			SwitchState(enemy, GameState.Walk);
 		}
 		private void CheckUnitForWalkState(IEnemy enemy)
 		{
@@ -68,41 +68,50 @@ namespace GameLogic.StateEnemy
 			{
 				return;
 			}
-			enemy.EnemyState = GameState.Chase;
-			ChangeStateInChase(enemy);
+			EnterChaseState(enemy);
+			SwitchState(enemy, GameState.Chase);
 			enemy.TargetToPursue = nearestUnit;
-
 		}
 		private void CheckUnitForChaseState(IEnemy enemy)
 		{
-			var enemyNavMesh = enemy.Agent;
 			if (enemy.TargetToPursue != null)
 			{
-				if (Vector3.Distance(enemy.EnemyPosition, enemy.TargetToPursue.UnitPosition) < _attackRadius)
+				var distance = Vector3.Distance(enemy.EnemyPosition, enemy.TargetToPursue.UnitPosition);
+				if (distance < _attackRadius)
 				{
-					enemy.EnemyState = GameState.Attack;
-					ChangeStateInAttack(enemy);
+					ExitFromChaseState(enemy);
+					SwitchState(enemy, GameState.Attack);
 					return;
 				}
 				return;
 			}
-			enemy.EnemyState = GameState.Walk;
-			ChangeStateInWalk(enemy);
+			ExitFromChaseState(enemy);
+			SwitchState(enemy, GameState.Walk);
 		}
 		private void CheckUnitForAttackState(IEnemy enemy)
 		{
 			if (enemy.TargetToPursue != null)
 			{
-				if (Vector3.Distance(enemy.TargetToPursue.UnitPosition, enemy.EnemyPosition) > _attackRadius)
+				var distance = Vector3.Distance(enemy.TargetToPursue.UnitPosition, enemy.EnemyPosition);
+				if (distance > _attackRadius)
 				{
-					enemy.EnemyState = GameState.Chase;
-					ChangeStateInChase(enemy);
+					EnterChaseState(enemy);
+					SwitchState(enemy, GameState.Chase);
 				}
 				return;
 			}
-			enemy.EnemyState = GameState.Idle;
+			SwitchState(enemy, GameState.Idle);
 		}
-
+		private void SwitchState(IEnemy enemy, GameState state)
+		{
+			if (enemy.EnemyState == state)
+			{
+				return;
+			}
+			_allStates[enemy.EnemyState].ExitState();
+			enemy.EnemyState = state;
+			_allStates[enemy.EnemyState].EnterState();
+		}
 		private IUnit FindNearestUnit(NavMeshAgent enemyAgent)
 		{
 			IUnit nearestUnit = null;
@@ -129,19 +138,13 @@ namespace GameLogic.StateEnemy
 			}
 			return nearestUnit;
 		}
-
-		private void ChangeStateInWalk(IEnemy enemy)
+		private void ExitFromChaseState(IEnemy enemy)
 		{
 			enemy.Agent.isStopped = true;
 		}
-		private void ChangeStateInChase(IEnemy enemy)
+		private void EnterChaseState(IEnemy enemy)
 		{
 			enemy.Rigidbody.velocity = Vector3.zero;
-		}
-		private void ChangeStateInAttack(IEnemy enemy)
-		{
-			enemy.Agent.isStopped = true;
-
 		}
 	}
 }

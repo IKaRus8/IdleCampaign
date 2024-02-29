@@ -3,6 +3,7 @@ using GameLogic.Interfaces;
 using Models;
 using Models.Interfaces;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace GameInfoModels
@@ -10,8 +11,8 @@ namespace GameInfoModels
     public class SquadUnitsProvider : ISquadUnitsProvider
     {
         public List<IUnit> Units { get; set; } = new List<IUnit>();
-        public Vector3 SquadUnitsPosition { get { if (Units.Count != 0) return Units[0].UnitPosition; return Vector3.zero; } }
-        public void AddUnit(IUnit unit)
+		public IUnit NearestUnit => Units.Where(s => !s.IsDead).OrderByDescending(o => o.UnitPosition.z).FirstOrDefault();
+		public void AddUnit(IUnit unit)
         {
             Units.Add(unit);
         }

@@ -10,7 +10,9 @@ namespace Models
 		{
 			GameState = state;
 		}
-		public abstract void RunCurrentState(IEnemy enemy);
+		public virtual void EnterState() { }
+		public abstract void RunState(IEnemy enemy);
+		public virtual void ExitState() { }
 
 	}
 }

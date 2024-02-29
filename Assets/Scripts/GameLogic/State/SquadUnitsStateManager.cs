@@ -33,7 +33,7 @@ namespace GameLogic.State
 
 			_allStates = new Dictionary<GameState, SquadUnitBaseState>()
 			{
-				{ GameState.Idle, new SquadWalkState(squadVelocity,squadRigidbody) },
+				{ GameState.Idle, new SquadIdleState() },
 				{ GameState.Walk, new SquadWalkState(squadVelocity,squadRigidbody) },
 				{ GameState.Chase, new SquadChaseState(squadVelocity,squadRigidbody) },
 				{ GameState.Attack, new SquadAttackState(enemySquadsProvider,squadUnitsProvider,unitAttackRadius,squadAttackRadius) }
@@ -60,13 +60,22 @@ namespace GameLogic.State
 				return;
 			}
 			var nearestEnemy = _enemySquadsProvider.EnemySquads[0].NearestEnemy;
+			var nearestUnit = _squadUnitsProvider.NearestUnit;
+			if(nearestUnit == null)
+			{
+				SwitchState(GameState.Idle);
+				return;
+			}
 			if (nearestEnemy == null)
 			{
 				SwitchState(GameState.Walk);
 				return;
 			}
 			var enemyContainerPosition = nearestEnemy.EnemyPosition;
-			var distance = Vector3.Distance(enemyContainerPosition, _squadRigidbody.position);
+			var unitContainerPosition = nearestUnit.UnitPosition;
+
+			var distance = Vector3.Distance(enemyContainerPosition, unitContainerPosition);
+
 			switch (_currentState.GameState)
 			{
 				case GameState.Walk:

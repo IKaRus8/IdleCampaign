@@ -60,13 +60,15 @@ namespace GameLogic.StateEnemy
 				SwitchState(GameState.Idle);
 				return;
 			}
-			var UnitContainerPosition = _squadUnitsProvider.SquadUnitsPosition;
+			var nearestUnit = _squadUnitsProvider.NearestUnit;
 			var nearestEnemy = _enemySquadsProvider.EnemySquads[0].NearestEnemy;
-			if (nearestEnemy == null)
+
+			if (nearestEnemy == null || nearestUnit == null)
 			{
 				SwitchState(GameState.Idle);
 				return;
 			}
+			var UnitContainerPosition = nearestUnit.UnitPosition;
 			var enemyContainerPosition = nearestEnemy.EnemyPosition;
 			var distance = Vector3.Distance(UnitContainerPosition, enemyContainerPosition);
 			switch (_currentState.GameState)

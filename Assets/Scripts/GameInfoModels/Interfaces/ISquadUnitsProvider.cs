@@ -7,7 +7,7 @@ namespace GameLogic.Interfaces
     public interface ISquadUnitsProvider
     {
         List<IUnit> Units { get; set; }
-		public Vector3 SquadUnitsPosition { get; }
+		public IUnit NearestUnit { get; }
 		void AddUnit(IUnit unit);
         void AddUnit(GameObject unit);
         void RemoveDeadUnits();

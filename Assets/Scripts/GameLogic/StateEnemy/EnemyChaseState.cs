@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UnityEngine;
+using static UnityEngine.EventSystems.EventTrigger;
 
 namespace GameLogic.StateEnemy
 {
@@ -15,7 +17,7 @@ namespace GameLogic.StateEnemy
 		{
 		}
 
-		public override void RunCurrentState(IEnemy enemy)
+		public override void RunState(IEnemy enemy)
 		{
 			var enemyNavMesh = enemy.Agent;
 
@@ -30,6 +32,5 @@ namespace GameLogic.StateEnemy
 			}
 			enemy.TargetToPursue = null;
 		}
-
 	}
 }

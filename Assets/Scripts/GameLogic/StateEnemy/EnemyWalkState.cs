@@ -18,11 +18,18 @@ namespace GameLogic.StateEnemy
 		public EnemyWalkState() : base(GameState.Walk)
 		{
 		}
+		public override void EnterState()
+		{
 
-		public override void RunCurrentState(IEnemy enemy)
+		}
+		public override void RunState(IEnemy enemy)
 		{
 				var rb = enemy.Rigidbody;
 				rb.velocity = Vector3.back * _velocity;
+		}
+		public override void ExitState()
+		{
+
 		}
 
 	}
