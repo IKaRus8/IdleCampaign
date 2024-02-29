@@ -11,10 +11,8 @@ namespace GameLogic.State
 {
     public class UnitChaseState : UnitBaseState
     {
-        private readonly float _attackRadius;
-        public UnitChaseState(float attackRadius) : base(GameState.Chase)
+        public UnitChaseState() : base(GameState.Chase)
         {
-            _attackRadius = attackRadius;
         }
 
         public override void RunCurrentState(IUnit unit)
@@ -28,8 +26,6 @@ namespace GameLogic.State
 
             if (unitNavMesh.SetDestination(unit.TargetToPursue.EnemyPosition))
             {
-                unitNavMesh.isStopped = false;
-                unitNavMesh.stoppingDistance = _attackRadius;
                 return;
             }
             unit.TargetToPursue = null;

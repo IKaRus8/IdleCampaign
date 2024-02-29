@@ -2,25 +2,26 @@
 using GameInfoModels.Interfaces;
 using GameLogic.Interfaces;
 using Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
 namespace GameLogic.StateEnemy
 {
-	public class EnemySquadStateManager
+	public class SquadEnemyStateManager
 	{
 		private IEnemySquadsProvider _enemySquadsProvider;
 		private ISquadUnitsProvider _squadUnitsProvider;
 		private IEnemyProvider _currentSquadEnemy;
-		private EnemySquadBaseState _currentState;
+		private SquadEnemyBaseState _currentState;
 
-		private Dictionary<GameState, EnemySquadBaseState> _allStates;
+		private Dictionary<GameState, SquadEnemyBaseState> _allStates;
 
 		private float _enemySquadAttackRadius;
 		private float _enemySquadChaseRadius;
 
-		public EnemySquadStateManager(IEnemySquadsProvider enemySquadsProvider, ISquadUnitsProvider squadUnitsProvider,
+		public SquadEnemyStateManager(IEnemySquadsProvider enemySquadsProvider, ISquadUnitsProvider squadUnitsProvider,
 										float enemySquadAttackRadius, float enemySquadChaseRadius, float enemyAttackRadius)
 		{
 			_enemySquadsProvider = enemySquadsProvider;
@@ -29,11 +30,11 @@ namespace GameLogic.StateEnemy
 			_enemySquadAttackRadius = enemySquadAttackRadius;
 			_enemySquadChaseRadius = enemySquadChaseRadius;
 
-			_allStates = new Dictionary<GameState, EnemySquadBaseState>()
+			_allStates = new Dictionary<GameState, SquadEnemyBaseState>()
 			{
-				{GameState.Idle, new EnemySquadIdleState() },
-				{GameState.Chase, new EnemySquadChaseState(enemySquadsProvider) },
-				{GameState.Attack, new EnemySquadAttackState(enemySquadsProvider,squadUnitsProvider,enemyAttackRadius,enemySquadAttackRadius) }
+				{GameState.Idle, new SquadEnemyIdleState() },
+				{GameState.Chase, new SquadEnemyChaseState(enemySquadsProvider) },
+				{GameState.Attack, new SquadEnemyAttackState(enemySquadsProvider,squadUnitsProvider,enemyAttackRadius,enemySquadAttackRadius) }
 			};
 			_currentState = _allStates[GameState.Idle];
 			if (_enemySquadsProvider.EnemySquads.Count == 0)
@@ -48,35 +49,42 @@ namespace GameLogic.StateEnemy
 
 		public void RunState()
 		{
-			CheckPlayerUnits();
-			_currentState.RunCurrentState();
+			CheckUnit();
+			_currentState.RunState();
 		}
 
-		private void CheckPlayerUnits()
+		private void CheckUnit()
 		{
 			if (CheckCurrentSquadEnemyNullable())
 			{
+				SwitchState(GameState.Idle);
 				return;
 			}
-			var playerPosition = _squadUnitsProvider.SquadUnitsPosition;
-			var enemyPosition = _enemySquadsProvider.EnemySquads[0].Enemies[0].EnemyPosition;
-			var distance = Vector3.Distance(playerPosition, enemyPosition);
+			var UnitContainerPosition = _squadUnitsProvider.SquadUnitsPosition;
+			var nearestEnemy = _enemySquadsProvider.EnemySquads[0].NearestEnemy;
+			if (nearestEnemy == null)
+			{
+				SwitchState(GameState.Idle);
+				return;
+			}
+			var enemyContainerPosition = nearestEnemy.EnemyPosition;
+			var distance = Vector3.Distance(UnitContainerPosition, enemyContainerPosition);
 			switch (_currentState.GameState)
 			{
 				case GameState.Idle:
-					CheckPlayerForIdleState(distance);
+					CheckUnitForIdleState(distance);
 					break;
 				case GameState.Chase:
-					CheckPlayerForChaseState(distance);
+					CheckUnitForChaseState(distance);
 					break;
 				case GameState.Attack:
-					CheckPlayerForAttackState(distance);
+					CheckUnitForAttackState(distance);
 					break;
 				default:
 					break;
 			}
 		}
-		private void CheckPlayerForIdleState(float distance)
+		private void CheckUnitForIdleState(float distance)
 		{
 			if (distance > _enemySquadChaseRadius)
 			{
@@ -84,7 +92,7 @@ namespace GameLogic.StateEnemy
 			}
 			SwitchState(GameState.Chase);
 		}
-		private void CheckPlayerForChaseState(float distance)
+		private void CheckUnitForChaseState(float distance)
 		{
 			if (distance < _enemySquadAttackRadius)
 			{
@@ -98,13 +106,18 @@ namespace GameLogic.StateEnemy
 			SwitchState(GameState.Idle);
 		}
 
-		private void CheckPlayerForAttackState(float distance)
+		private void CheckUnitForAttackState(float distance)
 		{
 			if (distance < _enemySquadAttackRadius)
 			{
 				return;
 			}
-			SwitchState(GameState.Chase);
+			if (distance < _enemySquadChaseRadius)
+			{
+				SwitchState(GameState.Chase);
+				return;
+			}
+			SwitchState(GameState.Idle);
 		}
 
 		private bool CheckCurrentSquadEnemyNullable()
@@ -117,58 +130,28 @@ namespace GameLogic.StateEnemy
 			{
 				return false;
 			}
-			_enemySquadsProvider.RemoveSquadEnemy(_currentSquadEnemy);
-			return TryInitializeCurrentSquadEnemy();
-
+				_enemySquadsProvider.RemoveSquadEnemy(_currentSquadEnemy);
+				return TryInitializeCurrentSquadEnemy();
 		}
 		private bool TryInitializeCurrentSquadEnemy()
 		{
-			if (_enemySquadsProvider.EnemySquads.Count() == 0 || _enemySquadsProvider.EnemySquads[0].Enemies.Count == 0)
+			var enemySquads = _enemySquadsProvider.EnemySquads;
+			if (enemySquads.Count() == 0 || enemySquads[0].Enemies.Count == 0)
 			{
 				_currentSquadEnemy = null;
 				return true;
 			}
-			_currentSquadEnemy = _enemySquadsProvider.EnemySquads[0];
+			_currentSquadEnemy = enemySquads[0];
 			return false;
 		}
 		private void SwitchState(GameState gameState)
 		{
 			if (_currentState.GameState != gameState)
 			{
+				_currentState.ExitState();
 				_currentState = _allStates[gameState];
-				ChangeEnemiesBehaviour();
+				_currentState.EnterState();
 			}
-		}
-		private void ChangeEnemiesBehaviour()
-		{
-			switch (_currentState.GameState)
-			{
-				case GameState.Idle:
-					ChangeStateInIdle();
-					break;
-				case GameState.Chase:
-					//
-					break;
-				case GameState.Attack:
-					ChangeStateInAttack();
-					break;
-				default:
-					break;
-			}
-		}
-
-		private void ChangeStateInAttack()
-		{
-			foreach (var enemy in _enemySquadsProvider.EnemySquads[0].Enemies)
-			{
-				var rb = enemy.Rigidbody;
-				rb.velocity = Vector3.zero;
-			}
-		}
-
-		private void ChangeStateInIdle()
-		{
-
 		}
 	}
 }

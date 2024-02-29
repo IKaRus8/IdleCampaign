@@ -18,9 +18,9 @@ namespace GameLogic.State
 		private readonly float _squadChaseRadius;
 		private readonly float _squadAttackRadius;
 
-		private UnitSquadBaseState _currentState;
+		private SquadUnitBaseState _currentState;
 
-		private Dictionary<GameState, UnitSquadBaseState> _allStates;
+		private Dictionary<GameState, SquadUnitBaseState> _allStates;
 
 		public SquadUnitsStateManager(IEnemySquadsProvider enemySquadsProvider, ISquadUnitsProvider squadUnitsProvider, Rigidbody squadRigidbody,
 									float squadVelocity, float squadChaseRadius, float squadAttackRadius, float unitAttackRadius)
@@ -31,8 +31,9 @@ namespace GameLogic.State
 			_squadAttackRadius = squadAttackRadius;
 			_squadRigidbody = squadRigidbody;
 
-			_allStates = new Dictionary<GameState, UnitSquadBaseState>()
+			_allStates = new Dictionary<GameState, SquadUnitBaseState>()
 			{
+				{ GameState.Idle, new SquadWalkState(squadVelocity,squadRigidbody) },
 				{ GameState.Walk, new SquadWalkState(squadVelocity,squadRigidbody) },
 				{ GameState.Chase, new SquadChaseState(squadVelocity,squadRigidbody) },
 				{ GameState.Attack, new SquadAttackState(enemySquadsProvider,squadUnitsProvider,unitAttackRadius,squadAttackRadius) }
@@ -47,12 +48,24 @@ namespace GameLogic.State
 		}
 		private void CheckEnemy()
 		{
-			if (_enemySquadsProvider.EnemySquads.Count() == 0 || _enemySquadsProvider.EnemySquads[0].Enemies.Count == 0)
+			if(_squadUnitsProvider.Units.Count==0)
+			{
+				SwitchState(GameState.Idle);
+				return;
+
+			}
+			if (_enemySquadsProvider.EnemySquads.Count() == 0)
 			{
 				SwitchState(GameState.Walk);
 				return;
 			}
-			var enemyContainerPosition = _enemySquadsProvider.EnemySquads[0].Enemies[0].EnemyPosition;
+			var nearestEnemy = _enemySquadsProvider.EnemySquads[0].NearestEnemy;
+			if (nearestEnemy == null)
+			{
+				SwitchState(GameState.Walk);
+				return;
+			}
+			var enemyContainerPosition = nearestEnemy.EnemyPosition;
 			var distance = Vector3.Distance(enemyContainerPosition, _squadRigidbody.position);
 			switch (_currentState.GameState)
 			{

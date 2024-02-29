@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace GameLogic.State
 {
-    public class SquadAttackState : UnitSquadBaseState
+    public class SquadAttackState : SquadUnitBaseState
 	{
         private readonly ISquadUnitsProvider _squadUnitsProvider;
         private readonly UnitStateManager _unitStateManager;

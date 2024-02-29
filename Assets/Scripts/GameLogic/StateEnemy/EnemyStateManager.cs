@@ -27,7 +27,7 @@ namespace GameLogic.StateEnemy
 			{
 				{GameState.Idle, new EnemyIdleState()},
 				{GameState.Walk, new EnemyWalkState()},
-				{GameState.Chase, new EnemyChaseState(attackRadius)},
+				{GameState.Chase, new EnemyChaseState()},
 				{GameState.Attack, new EnemyAttackState()}
 			};
 		}
@@ -78,12 +78,7 @@ namespace GameLogic.StateEnemy
 			var enemyNavMesh = enemy.Agent;
 			if (enemy.TargetToPursue != null)
 			{
-				//if (enemyNavMesh.destination != enemy.TargetToPursue.UnitPosition)
-				//{
-				//	return;
-				//}
-
-				if (enemyNavMesh.remainingDistance <= enemyNavMesh.stoppingDistance && !enemyNavMesh.pathPending)
+				if (Vector3.Distance(enemy.EnemyPosition, enemy.TargetToPursue.UnitPosition) < _attackRadius)
 				{
 					enemy.EnemyState = GameState.Attack;
 					ChangeStateInAttack(enemy);
@@ -141,7 +136,6 @@ namespace GameLogic.StateEnemy
 		}
 		private void ChangeStateInChase(IEnemy enemy)
 		{
-			enemy.Agent.isStopped = false;
 			enemy.Rigidbody.velocity = Vector3.zero;
 		}
 		private void ChangeStateInAttack(IEnemy enemy)

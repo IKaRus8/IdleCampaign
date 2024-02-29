@@ -7,15 +7,17 @@ using System.Threading.Tasks;
 
 namespace Models
 {
-	public abstract class EnemySquadBaseState
+	public abstract class SquadEnemyBaseState
 	{
 		public GameState GameState { get; }
-		public EnemySquadBaseState(GameState state)
+		public SquadEnemyBaseState(GameState state)
 		{
 			GameState = state;
 		}
 
-		public abstract void RunCurrentState();
+		public virtual void EnterState() { }
+		public abstract void RunState();
+		public virtual void ExitState() { }
 
 	}
 }

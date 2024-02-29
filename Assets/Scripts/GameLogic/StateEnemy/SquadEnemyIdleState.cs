@@ -8,13 +8,13 @@ using System.Threading.Tasks;
 
 namespace GameLogic.StateEnemy
 {
-	public class EnemySquadIdleState : EnemySquadBaseState
+	public class SquadEnemyIdleState : SquadEnemyBaseState
 	{
-		public EnemySquadIdleState() : base(GameState.Idle)
+		public SquadEnemyIdleState() : base(GameState.Idle)
 		{
 		}
 
-		public override void RunCurrentState()
+		public override void RunState()
 		{
 
 		}

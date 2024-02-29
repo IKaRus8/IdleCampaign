@@ -14,7 +14,7 @@ namespace Models
 		public bool IsAttacking { get; set; }
         public float CurrentHealth { get; private set; }
 		public float TimeBetweenAttack { get; }
-		public Vector3 EnemyPosition => EnemyObject.transform.position;
+		public Vector3 EnemyPosition { get { if (EnemyObject == null) return Vector3.zero;return EnemyObject.transform.position; } }
 		public NavMeshAgent Agent { get; }
 		public Rigidbody Rigidbody { get; }
 

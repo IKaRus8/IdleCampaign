@@ -18,7 +18,7 @@ public class EnemySquadsController : MonoBehaviour
 
 	private IEnemySquadsProvider _enemySquadsProvider;
 	private ISquadUnitsProvider _squadUnitsProvider;
-	private EnemySquadStateManager _enemySquadStateManager;
+	private SquadEnemyStateManager _enemySquadStateManager;
 
 	[Inject]
 	void Construct(IEnemySquadsProvider enemySquadsProvider, ISquadUnitsProvider squadUnitsProvider)
@@ -28,7 +28,7 @@ public class EnemySquadsController : MonoBehaviour
 	}
 	private void Start()
 	{
-		_enemySquadStateManager = new EnemySquadStateManager(_enemySquadsProvider,_squadUnitsProvider, _enemySquadAttackRadius,_enemySquadChaseRadius,_enemyAttackRadius);
+		_enemySquadStateManager = new SquadEnemyStateManager(_enemySquadsProvider,_squadUnitsProvider, _enemySquadAttackRadius,_enemySquadChaseRadius,_enemyAttackRadius);
 	}
 	private void FixedUpdate()
 	{

@@ -10,17 +10,17 @@ using UnityEngine;
 
 namespace GameLogic.StateEnemy
 {
-	public class EnemySquadChaseState : EnemySquadBaseState
+	public class SquadEnemyChaseState : SquadEnemyBaseState
 	{
 		private IEnemySquadsProvider _enemySquadsProvider;
 
 		private float _velocity = 10f;
-		public EnemySquadChaseState(IEnemySquadsProvider enemySquadsProvider) : base(GameState.Chase)
+		public SquadEnemyChaseState(IEnemySquadsProvider enemySquadsProvider) : base(GameState.Chase)
 		{
 			_enemySquadsProvider = enemySquadsProvider;
 		}
 
-		public override void RunCurrentState()
+		public override void RunState()
 		{
 			foreach(var enemy in _enemySquadsProvider.EnemySquads[0].Enemies)
 			{
@@ -28,5 +28,6 @@ namespace GameLogic.StateEnemy
 				rb.velocity = Vector3.back * _velocity;
 			}
 		}
+
 	}
 }
