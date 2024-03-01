@@ -48,8 +48,8 @@ namespace GameLogic.Controllers
                 EdgeSegmentPos.Value = wayPoint;
                 _edgeSegment.SetPosition(new Vector3(0, 0, wayPoint));
 
-                _navMeshSurface.BuildNavMesh();
-            }
+				_navMeshSurface.BuildNavMesh();
+			}
         }
     }
 }

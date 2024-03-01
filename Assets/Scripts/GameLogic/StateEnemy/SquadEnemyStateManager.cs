@@ -2,7 +2,6 @@
 using GameInfoModels.Interfaces;
 using GameLogic.Interfaces;
 using Models;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -14,8 +13,8 @@ namespace GameLogic.StateEnemy
 		private IEnemySquadsProvider _enemySquadsProvider;
 		private ISquadUnitsProvider _squadUnitsProvider;
 		private IEnemyProvider _currentSquadEnemy;
-		private SquadEnemyBaseState _currentState;
 
+		private SquadEnemyBaseState _currentState;
 		private Dictionary<GameState, SquadEnemyBaseState> _allStates;
 
 		private float _enemySquadAttackRadius;
@@ -37,14 +36,8 @@ namespace GameLogic.StateEnemy
 				{GameState.Attack, new SquadEnemyAttackState(enemySquadsProvider,squadUnitsProvider,enemyAttackRadius,enemySquadAttackRadius) }
 			};
 			_currentState = _allStates[GameState.Idle];
-			if (_enemySquadsProvider.EnemySquads.Count == 0)
-			{
-				_currentSquadEnemy = null;
-			}
-			else
-			{
-				_currentSquadEnemy = _enemySquadsProvider.EnemySquads[0];
-			}
+
+			_currentSquadEnemy = null;
 		}
 
 		public void RunState()
@@ -132,8 +125,8 @@ namespace GameLogic.StateEnemy
 			{
 				return false;
 			}
-				_enemySquadsProvider.RemoveSquadEnemy(_currentSquadEnemy);
-				return TryInitializeCurrentSquadEnemy();
+			_enemySquadsProvider.RemoveSquadEnemy(_currentSquadEnemy);
+			return TryInitializeCurrentSquadEnemy();
 		}
 		private bool TryInitializeCurrentSquadEnemy()
 		{

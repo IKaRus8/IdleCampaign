@@ -24,8 +24,8 @@ namespace GameLogic.StateEnemy
 		}
 		public override void RunState(IEnemy enemy)
 		{
-				var rb = enemy.Rigidbody;
-				rb.velocity = Vector3.back * _velocity;
+			var rb = enemy.Rigidbody;
+			rb.velocity = Vector3.back * _velocity;
 		}
 		public override void ExitState()
 		{

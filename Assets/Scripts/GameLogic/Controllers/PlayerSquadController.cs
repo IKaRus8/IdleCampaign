@@ -20,7 +20,7 @@ namespace GameLogic.Controllers
         private IEnemySquadsProvider _enemySquadsProvider;
         private ISquadUnitsProvider _squadUnitsProvider;
         private SquadUnitsStateManager _squadUnitsStateManager;
-        public float Velocity => 20f;
+        public float Velocity => 30f;
 
         [Inject]
         void Construct(IEnemySquadsProvider enemySquadsProvider, ISquadUnitsProvider squadUnitsProvider)

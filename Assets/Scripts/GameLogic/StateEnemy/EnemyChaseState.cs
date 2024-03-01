@@ -1,4 +1,5 @@
 ﻿using Data.Enums;
+using log4net.Util;
 using Models;
 using Models.Interfaces;
 using System;
@@ -25,8 +26,11 @@ namespace GameLogic.StateEnemy
 			{
 				return;
 			}
-
-			if (enemyNavMesh.SetDestination(enemy.TargetToPursue.UnitPosition))
+			var targetPosition = enemy.TargetToPursue.UnitPosition;
+			Vector3 targetBearing = targetPosition - enemy.EnemyPosition;
+			float radius = enemyNavMesh.radius+2;
+			targetPosition -= targetBearing.normalized * radius;
+			if (enemyNavMesh.SetDestination(targetPosition))
 			{
 				return;
 			}
