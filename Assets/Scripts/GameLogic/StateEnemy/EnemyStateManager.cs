@@ -68,8 +68,8 @@ namespace GameLogic.StateEnemy
 			{
 				return;
 			}
-			EnterChaseState(enemy);
 			SwitchState(enemy, GameState.Chase);
+			EnterChaseState(enemy);
 			enemy.TargetToPursue = nearestUnit;
 		}
 		private void CheckUnitForChaseState(IEnemy enemy)
