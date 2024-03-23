@@ -9,27 +9,14 @@ using Zenject;
 
 public class EnemySquadsController : MonoBehaviour
 {
-	[SerializeField]
-	private float _enemySquadChaseRadius;
-	[SerializeField]
-	private float _enemySquadAttackRadius;
-	[SerializeField]
-	private float _enemyAttackRadius;
-
-	private IEnemySquadsProvider _enemySquadsProvider;
-	private ISquadUnitsProvider _squadUnitsProvider;
-	private SquadEnemyStateManager _enemySquadStateManager;
+	private ISquadEnemyStateManager _enemySquadStateManager;
 
 	[Inject]
-	void Construct(IEnemySquadsProvider enemySquadsProvider, ISquadUnitsProvider squadUnitsProvider)
+	void Construct(ISquadEnemyStateManager squadEnemyStateManager)
 	{
-		_enemySquadsProvider = enemySquadsProvider;
-		_squadUnitsProvider = squadUnitsProvider;
+		_enemySquadStateManager = squadEnemyStateManager;
 	}
-	private void Start()
-	{
-		_enemySquadStateManager = new SquadEnemyStateManager(_enemySquadsProvider,_squadUnitsProvider, _enemySquadAttackRadius,_enemySquadChaseRadius,_enemyAttackRadius);
-	}
+
 	private void FixedUpdate()
 	{
 		_enemySquadStateManager.RunState();

@@ -5,35 +5,31 @@ using Models;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Zenject;
 
 namespace GameLogic.StateEnemy
 {
-	public class SquadEnemyStateManager
+	public class SquadEnemyStateManager : ISquadEnemyStateManager
 	{
 		private IEnemySquadsProvider _enemySquadsProvider;
 		private ISquadUnitsProvider _squadUnitsProvider;
+		private IEnemyOptions _enemyOptions;
 		private IEnemyProvider _currentSquadEnemy;
 
 		private SquadEnemyBaseState _currentState;
 		private Dictionary<GameState, SquadEnemyBaseState> _allStates;
 
-		private float _enemySquadAttackRadius;
-		private float _enemySquadChaseRadius;
-
-		public SquadEnemyStateManager(IEnemySquadsProvider enemySquadsProvider, ISquadUnitsProvider squadUnitsProvider,
-										float enemySquadAttackRadius, float enemySquadChaseRadius, float enemyAttackRadius)
+		public SquadEnemyStateManager(IEnemyOptions enemyOptions,IEnemySquadsProvider enemySquadsProvider, ISquadUnitsProvider squadUnitsProvider)
 		{
 			_enemySquadsProvider = enemySquadsProvider;
 			_squadUnitsProvider = squadUnitsProvider;
-
-			_enemySquadAttackRadius = enemySquadAttackRadius;
-			_enemySquadChaseRadius = enemySquadChaseRadius;
+			_enemyOptions = enemyOptions;
 
 			_allStates = new Dictionary<GameState, SquadEnemyBaseState>()
 			{
 				{GameState.Idle, new SquadEnemyIdleState() },
 				{GameState.Chase, new SquadEnemyChaseState(enemySquadsProvider) },
-				{GameState.Attack, new SquadEnemyAttackState(enemySquadsProvider,squadUnitsProvider,enemyAttackRadius,enemySquadAttackRadius) }
+				{GameState.Attack, new SquadEnemyAttackState(enemySquadsProvider,squadUnitsProvider,enemyOptions.EnemyAttackRadius,enemyOptions.EnemySquadAttackRadius) }
 			};
 			_currentState = _allStates[GameState.Idle];
 
@@ -53,8 +49,8 @@ namespace GameLogic.StateEnemy
 				SwitchState(GameState.Idle);
 				return;
 			}
-			var nearestUnit = _squadUnitsProvider.NearestUnit;
-			var nearestEnemy = _enemySquadsProvider.EnemySquads[0].NearestEnemy;
+			var nearestUnit = _squadUnitsProvider.NearestUnitToEnemyZAxis;
+			var nearestEnemy = _enemySquadsProvider.EnemySquads[0].NearestEnemyToUnitZAxis;
 
 			if (nearestEnemy == null || nearestUnit == null)
 			{
@@ -81,7 +77,7 @@ namespace GameLogic.StateEnemy
 		}
 		private void CheckUnitForIdleState(float distance)
 		{
-			if (distance > _enemySquadChaseRadius)
+			if (distance > _enemyOptions.EnemySquadChaseRadius)
 			{
 				return;
 			}
@@ -89,12 +85,12 @@ namespace GameLogic.StateEnemy
 		}
 		private void CheckUnitForChaseState(float distance)
 		{
-			if (distance < _enemySquadAttackRadius)
+			if (distance < _enemyOptions.EnemySquadAttackRadius)
 			{
 				SwitchState(GameState.Attack);
 				return;
 			}
-			if (distance < _enemySquadChaseRadius)
+			if (distance < _enemyOptions.EnemySquadChaseRadius)
 			{
 				return;
 			}
@@ -103,11 +99,11 @@ namespace GameLogic.StateEnemy
 
 		private void CheckUnitForAttackState(float distance)
 		{
-			if (distance < _enemySquadAttackRadius)
+			if (distance < _enemyOptions.EnemySquadAttackRadius)
 			{
 				return;
 			}
-			if (distance < _enemySquadChaseRadius)
+			if (distance < _enemyOptions.EnemySquadChaseRadius)
 			{
 				SwitchState(GameState.Chase);
 				return;

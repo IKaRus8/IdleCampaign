@@ -11,7 +11,7 @@ namespace GameInfoModels
     public class SquadUnitsProvider : ISquadUnitsProvider
     {
         public List<IUnit> Units { get; set; } = new List<IUnit>();
-		public IUnit NearestUnit => Units.Where(s => !s.IsDead).OrderByDescending(o => o.UnitPosition.z).FirstOrDefault();
+		public IUnit NearestUnitToEnemyZAxis => Units.Where(s => !s.IsDead).OrderByDescending(o => o.UnitPosition.z).FirstOrDefault();
 		public void AddUnit(IUnit unit)
         {
             Units.Add(unit);

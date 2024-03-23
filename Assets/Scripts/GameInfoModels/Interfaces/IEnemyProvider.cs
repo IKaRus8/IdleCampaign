@@ -8,7 +8,7 @@ namespace GameInfoModels.Interfaces
     {
         List<IEnemy> Enemies { get; }
         bool IsEnemyNotExist { get; }
-		IEnemy NearestEnemy { get; }
+		IEnemy NearestEnemyToUnitZAxis { get; }
 
 		void RemoveDeadEnemies();
     }

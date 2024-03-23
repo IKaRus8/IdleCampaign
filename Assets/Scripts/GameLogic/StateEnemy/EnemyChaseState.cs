@@ -14,6 +14,7 @@ namespace GameLogic.StateEnemy
 {
 	internal class EnemyChaseState : EnemyBaseState
 	{
+		private float _distanceBetweenOpponents = 2f;
 		public EnemyChaseState() : base(GameState.Chase)
 		{
 		}
@@ -21,15 +22,20 @@ namespace GameLogic.StateEnemy
 		public override void RunState(IEnemy enemy)
 		{
 			var enemyNavMesh = enemy.Agent;
+			var targetToPursue = enemy.TargetToPursue;
 
-			if (enemyNavMesh.destination == enemy.TargetToPursue.UnitPosition)
+			if (enemyNavMesh.destination == targetToPursue.UnitPosition)
 			{
 				return;
 			}
-			var targetPosition = enemy.TargetToPursue.UnitPosition;
-			Vector3 targetBearing = targetPosition - enemy.EnemyPosition;
-			float radius = enemyNavMesh.radius+2;
-			targetPosition -= targetBearing.normalized * radius;
+			var targetPosition = targetToPursue.UnitPosition;
+
+			Vector3 distance = targetPosition - enemy.EnemyPosition;
+			Vector3 directionVectorFromUnitToTarget = distance.normalized;
+			float offsetFromTargetCanter = targetToPursue.Agent.radius + _distanceBetweenOpponents;
+			targetPosition -= directionVectorFromUnitToTarget * offsetFromTargetCanter;
+
+
 			if (enemyNavMesh.SetDestination(targetPosition))
 			{
 				return;

@@ -11,7 +11,7 @@ namespace GameInfoModels
     {
         public List<IEnemy> Enemies { get; set; } = new List<IEnemy>();
         public bool IsEnemyNotExist => Enemies.Count == 0;
-        public IEnemy NearestEnemy => Enemies.Where(s => !s.IsDead).OrderBy(o => o.EnemyPosition.z).FirstOrDefault();
+        public IEnemy NearestEnemyToUnitZAxis => Enemies.Where(s => !s.IsDead).OrderBy(o => o.EnemyPosition.z).FirstOrDefault();
 		public void RemoveDeadEnemies()
         {
             Enemies.RemoveAll(u => u.IsDead == true);
