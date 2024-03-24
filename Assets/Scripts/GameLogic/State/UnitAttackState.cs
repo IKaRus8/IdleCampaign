@@ -15,7 +15,6 @@ namespace GameLogic.State
 {
     public class UnitAttackState : UnitBaseState
     {
-        private float _timeBetweenAttack = 2f;
         public UnitAttackState() : base(GameState.Attack)
         {
         }
@@ -23,13 +22,13 @@ namespace GameLogic.State
         public override void RunCurrentState(IUnit unit)
         {
             if(!unit.IsAttacking)
-                MainThreadDispatcher.StartCoroutine(AttackEnemy(unit,unit.Attack));
+                MainThreadDispatcher.StartCoroutine(AttackEnemy(unit));
         }
-        IEnumerator AttackEnemy(IUnit unit, float unitAttack)
+        IEnumerator AttackEnemy(IUnit unit)
         {
             unit.IsAttacking = true;
-            unit.TargetToPursue.TakeDamage(unitAttack);
-            yield return new WaitForSeconds(_timeBetweenAttack);
+            unit.TargetToPursue.TakeDamage(unit.Damage);
+            yield return new WaitForSeconds(unit.TimeBetweenAttack);
             unit.IsAttacking = false;
         }
     }

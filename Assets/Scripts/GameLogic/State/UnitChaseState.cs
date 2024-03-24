@@ -1,40 +1,41 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Data.Enums;
+﻿using Data.Enums;
 using Models;
 using Models.Interfaces;
+using UnityEngine;
 
 namespace GameLogic.State
 {
-    public class UnitChaseState : UnitBaseState
-    {
-        private readonly float _attackRadius;
-        public UnitChaseState(float attackRadius) : base(GameState.Chase)
-        {
-            _attackRadius = attackRadius;
-        }
+	public class UnitChaseState : UnitBaseState
+	{
+		private float _distanceBetweenOpponents = 2f;
 
-        public override void RunCurrentState(IUnit unit)
-        {
-            var unitNavMesh = unit.Agent;
+		public UnitChaseState() : base(GameState.Chase)
+		{
+		}
 
-            if (unitNavMesh.destination == unit.TargetToPursue.EnemyPosition)
-            {
-                return;
-            }
+		public override void RunCurrentState(IUnit unit)
+		{
+			var unitNavMesh = unit.Agent;
+			var targetToPursue = unit.TargetToPursue;
 
-            if (unitNavMesh.SetDestination(unit.TargetToPursue.EnemyPosition))
-            {
-                unitNavMesh.isStopped = false;
-                unitNavMesh.stoppingDistance = _attackRadius;
-                return;
-            }
-            unit.TargetToPursue = null;
+			if (unitNavMesh.destination == targetToPursue.EnemyPosition)
+			{
+				return;
+			}
+			var targetPosition = targetToPursue.EnemyPosition;
 
-        }
+			Vector3 distance = targetPosition - unit.UnitPosition;
+			Vector3 directionVectorFromUnitToTarget = distance.normalized;
+			float offsetFromTargetCanter = targetToPursue.Agent.radius + _distanceBetweenOpponents;
+			targetPosition -= directionVectorFromUnitToTarget * offsetFromTargetCanter;
 
-    }
+			if (unitNavMesh.SetDestination(targetPosition))
+			{
+				return;
+			}
+			unit.TargetToPursue = null;
+
+		}
+
+	}
 }

@@ -1,24 +1,59 @@
+using Data.Enums;
 using Models.Interfaces;
 using UnityEngine;
+using UnityEngine.AI;
 
 namespace Models
 {
     public class Enemy : IEnemy
     {
-        public GameObject EnemyObject { get; set; }
-        public bool IsDead { get; set; }
-        public float CurrentHealth { get; private set; }
-        public Vector3 EnemyPosition => EnemyObject.transform.position;
+		private IUnit targetToPursue;
 
-        public float MaxHealth { get; }
-        public float Attack { get; }
-        public Enemy(GameObject enemyObject,Vector3 Position)
+		public GameObject EnemyObject { get; set; }
+        public bool IsDead { get; set; }
+		public bool IsAttacking { get; set; }
+        public float CurrentHealth { get; private set; }
+		public float TimeBetweenAttack { get; }
+		public Vector3 EnemyPosition { get { if (EnemyObject == null) return Vector3.zero;return EnemyObject.transform.position; } }
+		public NavMeshAgent Agent { get; }
+		public Rigidbody Rigidbody { get; }
+
+		public IUnit TargetToPursue
+		{
+			get
+			{
+				if (targetToPursue == null)
+				{
+					return null;
+				}
+				if (targetToPursue.IsDead)
+				{
+					targetToPursue = null;
+					return null;
+				}
+				return targetToPursue;
+			}
+			set { targetToPursue = value; }
+		}
+
+		public float MaxHealth { get; }
+        public float Damage { get; }
+		public GameState EnemyState { get; set; }
+
+		public Enemy(GameObject enemyObject,Vector3 Position)
         {
             EnemyObject = enemyObject;
-            EnemyObject.transform.localPosition = Position;
+            EnemyState = GameState.Idle;
+			EnemyObject.transform.localPosition = Position;
             IsDead = false;
-            CurrentHealth = MaxHealth;
-        }
+            Agent = EnemyObject.GetComponent<NavMeshAgent>();
+			Rigidbody = EnemyObject.GetComponent<Rigidbody>();
+			
+			MaxHealth = 40f;
+			CurrentHealth = MaxHealth;
+			TimeBetweenAttack = 2f;
+			Damage = 10f;
+		}
 
         public void TakeDamage(float damageAmount)
         {

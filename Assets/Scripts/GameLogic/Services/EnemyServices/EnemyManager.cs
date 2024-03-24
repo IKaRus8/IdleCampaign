@@ -1,5 +1,5 @@
 ﻿using Codice.Client.Common;
-using GameInfoModels.Interface;
+using GameInfoModels.Interfaces;
 using GameLogic.Interfaces;
 using Models.Interfaces;
 using System;
@@ -12,31 +12,32 @@ namespace GameLogic.Services
     {
         private readonly IDisposable _disposable;
         private readonly IEnemySpawner _enemySpawner;
-        private IEnemyProvider _enemyProvider;
+        private IEnemySquadsProvider _enemySquadsProvider;
 
         private string enemyKey = "DogPolyart";
-        public EnemyManager(ISegmentContainer segmentContainer, IEnemySpawner enemySpawner, 
-                            IEnemyProvider enemyProvider)
+        public EnemyManager(ISegmentContainer segmentContainer, IEnemySpawner enemySpawner,
+							IEnemySquadsProvider enemySquadsProvider)
         {
-            _enemyProvider = enemyProvider;
+            _enemySquadsProvider = enemySquadsProvider;
             _enemySpawner = enemySpawner;
 
             _disposable = segmentContainer.EdgeSegmentPos.Subscribe(SpawnEnemy);
         }
         public async void SpawnEnemy(float edgeSegmentPos)
         {
-            if (edgeSegmentPos == 0)
+			if (edgeSegmentPos == 0)
             {
                 return;
             }
-            Vector3 enemyPos = new Vector3(0, 0, -edgeSegmentPos);
+            Vector3 enemyPos = new Vector3(0, 0, edgeSegmentPos);
             IEnemy enemy = await _enemySpawner.Spawn(enemyPos, enemyKey);
 
             if (enemy == null)
             {
                 return;
             }
-            _enemyProvider.Enemies.Add(enemy);
+            var squadEnemy = _enemySquadsProvider.CreateNewSquad();
+			squadEnemy.Enemies.Add(enemy);
 
         }
         public void EnemyDestroy(IEnemy enemyDestroy)

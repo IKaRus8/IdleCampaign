@@ -1,5 +1,5 @@
 ﻿using Data.Enums;
-using GameInfoModels.Interface;
+using GameInfoModels.Interfaces;
 using GameLogic.Interfaces;
 using Models;
 using System.Collections.Generic;
@@ -8,127 +8,141 @@ using UnityEngine;
 
 namespace GameLogic.State
 {
-    public class SquadUnitsStateManager
-    {
-        private readonly ISquadUnitsProvider _squadUnitsProvider;
-        private readonly IEnemyProvider _enemyProvider;
+	public class SquadUnitsStateManager : ISquadUnitsStateManager
+	{
+		private readonly ISquadUnitsProvider _squadUnitsProvider;
+		private readonly IEnemySquadsProvider _enemySquadsProvider;
+		private readonly IUnitOptions _unitOptions;
 
-        private readonly Rigidbody _squadRigidbody;
+		private SquadUnitBaseState _currentState;
 
-        private readonly float _squadChaseRadius;
-        private readonly float _squadAttackRadius;
+		private Dictionary<GameState, SquadUnitBaseState> _allStates;
 
-        private BaseState _currentState;
+		public SquadUnitsStateManager(IUnitOptions unitOptions, IEnemySquadsProvider enemySquadsProvider, ISquadUnitsProvider squadUnitsProvider)
+		{
+			_enemySquadsProvider = enemySquadsProvider;
+			_squadUnitsProvider = squadUnitsProvider;
+			_unitOptions = unitOptions;
 
-        private Dictionary<GameState, BaseState> _allStates;
+			_allStates = new Dictionary<GameState, SquadUnitBaseState>()
+			{
+				{ GameState.Idle, new SquadIdleState() },
+				{ GameState.Walk, new SquadWalkState(unitOptions.Velocity,unitOptions.SquadRigidbody) },
+				{ GameState.Chase, new SquadChaseState(unitOptions.Velocity,unitOptions.SquadRigidbody) },
+				{ GameState.Attack, new SquadAttackState(enemySquadsProvider,squadUnitsProvider,unitOptions.UnitAttackRadius,unitOptions.SquadAttackRadius) }
+			};
 
-        public SquadUnitsStateManager(IEnemyProvider enemyProvider, ISquadUnitsProvider squadUnitsProvider, Rigidbody squadRigidbody,
-                                    float squadVelocity, float squadChaseRadius, float squadAttackRadius, float unitAttackRadius)
-        {
-            _enemyProvider = enemyProvider;
-            _squadUnitsProvider = squadUnitsProvider;
-            _squadChaseRadius = squadChaseRadius;
-            _squadAttackRadius = squadAttackRadius;
-            _squadRigidbody = squadRigidbody;
+			_currentState = _allStates[GameState.Walk];
+		}
+		public void RunState()
+		{
+			CheckEnemy();
+			_currentState.RunCurrentState();
+		}
+		private void CheckEnemy()
+		{
+			if (_squadUnitsProvider.Units.Count == 0)
+			{
+				SwitchState(GameState.Idle);
+				return;
 
-            _allStates = new Dictionary<GameState, BaseState>()
-            {
-                { GameState.Walk, new SquadWalkState(squadVelocity,squadRigidbody) },
-                { GameState.Chase, new SquadChaseState(squadVelocity,squadRigidbody) },
-                { GameState.Attack, new SquadAttackState(enemyProvider,squadUnitsProvider,unitAttackRadius,squadAttackRadius) }
-            };
+			}
+			if (_enemySquadsProvider.EnemySquads.Count() == 0)
+			{
+				SwitchState(GameState.Walk);
+				return;
+			}
+			var nearestEnemy = _enemySquadsProvider.EnemySquads[0].NearestEnemyToUnitZAxis;
+			var nearestUnit = _squadUnitsProvider.NearestUnitToEnemyZAxis;
+			if (nearestUnit == null)
+			{
+				SwitchState(GameState.Idle);
+				return;
+			}
+			if (nearestEnemy == null)
+			{
+				SwitchState(GameState.Walk);
+				return;
+			}
+			var enemyContainerPosition = nearestEnemy.EnemyPosition;
+			var unitContainerPosition = nearestUnit.UnitPosition;
 
-            _currentState = _allStates[GameState.Walk];
-        }
-        public void RunState()
-        {
-            CheckEnemy();
-            _currentState.RunCurrentState();
-        }
-        private void CheckEnemy()
-        {
-            if (!_enemyProvider.IsEnemyNotExist)
-            {
-                var enemyContainerPosition = _enemyProvider.Enemies[0].EnemyPosition;
-                var distance = Vector3.Distance(enemyContainerPosition, _squadRigidbody.position);
-                switch (_currentState.GameState)
-                {
-                    case GameState.Walk:
-                        CheckEnemyForWalkState(distance);
-                        break;
-                    case GameState.Chase:
-                        CheckEnemyForChaseState(distance);
-                        break;
-                    case GameState.Attack:
-                        CheckEnemyForAttackState(distance);
-                        break;
-                    default:
-                        break;
-                }
-                return;
-            }
-            SwitchState(GameState.Walk);
-        }
-        private void CheckEnemyForWalkState(float distance)
-        {
-            if (distance > _squadChaseRadius)
-            {
-                return;
-            }
-            SwitchState(GameState.Chase);
-        }
-        private void CheckEnemyForChaseState(float distance)
-        {
-            if (distance < _squadAttackRadius)
-            {
-                SwitchState(GameState.Attack);
-                return;
-            }
-            if(distance< _squadChaseRadius)
-            {
-                return;
-            }
-            SwitchState(GameState.Walk);
-        }
-        private void CheckEnemyForAttackState(float distance)
-        {
-            if (distance < _squadAttackRadius)
-            {
-                return;
-            }
-            SwitchState(GameState.Walk);
-        }
-        public void SwitchState(GameState gameState)
-        {
-            if (_currentState.GameState != gameState)
-            {
-                _currentState = _allStates[gameState];
-                ChangePlayerBehaviour();
-            }
-        }
-        private void ChangePlayerBehaviour()
-        {
-            switch (_currentState.GameState)
-            {
-                case GameState.Walk:
-                    ChangeStateInWalk();
-                    break;
-                case GameState.Attack:
-                    ChangeStateInAttack();
-                    break;
-                default:
-                    break;
-            }
-            Debug.Log(_currentState.GameState);
-        }
-        private void ChangeStateInWalk()
-        {
-            _squadUnitsProvider.RemoveDeadUnits();
-            _squadUnitsProvider.ResetUnitsPosition();
-        }
-        private void ChangeStateInAttack()
-        {
-            _squadRigidbody.velocity = Vector3.forward;
-        }
-    }
+			var distance = Vector3.Distance(enemyContainerPosition, unitContainerPosition);
+
+			switch (_currentState.GameState)
+			{
+				case GameState.Walk:
+					CheckEnemyForWalkState(distance);
+					break;
+				case GameState.Chase:
+					CheckEnemyForChaseState(distance);
+					break;
+				case GameState.Attack:
+					CheckEnemyForAttackState(distance);
+					break;
+				default:
+					break;
+			}
+		}
+		private void CheckEnemyForWalkState(float distance)
+		{
+			if (distance > _unitOptions.SquadChaseRadius)
+			{
+				return;
+			}
+			SwitchState(GameState.Chase);
+		}
+		private void CheckEnemyForChaseState(float distance)
+		{
+			if (distance < _unitOptions.SquadAttackRadius)
+			{
+				SwitchState(GameState.Attack);
+				return;
+			}
+			if (distance < _unitOptions.SquadChaseRadius)
+			{
+				return;
+			}
+			SwitchState(GameState.Walk);
+		}
+		private void CheckEnemyForAttackState(float distance)
+		{
+			if (distance < _unitOptions.SquadAttackRadius)
+			{
+				return;
+			}
+			SwitchState(GameState.Walk);
+		}
+		public void SwitchState(GameState gameState)
+		{
+			if (_currentState.GameState != gameState)
+			{
+				_currentState = _allStates[gameState];
+				ChangePlayerBehaviour();
+			}
+		}
+		private void ChangePlayerBehaviour()
+		{
+			switch (_currentState.GameState)
+			{
+				case GameState.Walk:
+					ChangeStateInWalk();
+					break;
+				case GameState.Attack:
+					ChangeStateInAttack();
+					break;
+				default:
+					break;
+			}
+		}
+		private void ChangeStateInWalk()
+		{
+			_squadUnitsProvider.RemoveDeadUnits();
+			_squadUnitsProvider.ResetUnitsPosition();
+		}
+		private void ChangeStateInAttack()
+		{
+			_unitOptions.SquadRigidbody.velocity = Vector3.forward;
+		}
+	}
 }
